@@ -35,6 +35,15 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.categories-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 15px;
+  max-width: 1440px;
+  margin: auto;
+}
+
 
 
 

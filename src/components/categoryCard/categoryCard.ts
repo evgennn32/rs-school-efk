@@ -2,46 +2,18 @@ import Component from "../Component";
 import './categoryCard.scss';
 
 export default class CategoryCard extends Component {
-  public readonly image: string;
 
-  constructor(cardData:{image: string; title: string;}) {
-    super('div', ['card']);
-    this.image = cardData.image;
+  constructor(private cardData:{image: string; title: string;}) {
+    super('div', []);
   }
 
   buildHtml(): string {
     return `
-    <div class="card__container">
-    <div class="card__front"></div>
-    <div class="card__back" style="background-image: url('./assets/images/${this.image}')"></div>
-    </div>
+    <a href="/cards" class="category-card green">
+      <img class="category-card__image" src="./assets/cards/img/${this.cardData.image}.jpg"></img>
+      <div class="category-card__title"><h4>${this.cardData.title}</h4></div>
+    </a>
     `;
   }
 
-  flipToBack(): Promise<void> {
-    return this.flip(true)
-    // this.element.classList.remove('card-active');
-  }
-
-  flipToFront(): Promise<void> {
-    return this.flip(false)
-    // this.element.classList.remove('card-active')
-  }
-
-  flip(isFront = false): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.element.classList.toggle('card-active',!isFront);
-      this.element.addEventListener('transitionend',() => resolve(), {
-        once: true,
-      });
-    })
-  }
-
-  markCoincided(): void {
-    this.element.classList.add('coincided');
-  }
-
-  markNoCoincided(): void {
-    this.element.classList.add('no-coincided');
-  }
 }
