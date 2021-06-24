@@ -1,0 +1,22 @@
+.menu-activate {
+  cursor: pointer;
+
+  &__line-1,
+  &__line-2,
+  &__line-3 {
+    width: 45px;
+    height: 5px;
+    background-color: #E5E5E5;
+    margin: 5px 0;
+    transition: 0.3s;
+  }
+
+  .active &__line-1 {
+    transform: rotate(-45deg) translate(-9px, 6px);
+  }
+  .active &__line-3 {
+    transform: rotate(45deg) translate(-8px, -8px);
+  }
+
+  .active &__line-2 {opacity: 0;}
+}

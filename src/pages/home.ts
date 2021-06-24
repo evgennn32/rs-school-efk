@@ -17,6 +17,9 @@ export default class HomePage extends Component {
 
   render(): void {
     super.render();
+    const header = new Header(this.app);
+    this.renderChildComponent(header, 'header-placeholder');
+
   }
 
   buildHtml(): string {
@@ -24,7 +27,6 @@ export default class HomePage extends Component {
             <div class="header-placeholder"></div>
             <main class="main container">
               <div class="container__wrapper">
-
               </div>
             </main>
             `;

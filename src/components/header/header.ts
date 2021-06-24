@@ -1,6 +1,7 @@
 import Component from "../Component";
 import './header.scss';
 import type App from "../../app";
+import MenuActivateBtn from "../menuActivateBtn/menuActivateBtn";
 
 
 export default class Header extends Component {
@@ -14,11 +15,14 @@ export default class Header extends Component {
 
   render(): void {
     super.render();
+    const menuActivateBtnComponent = new MenuActivateBtn([]);
+    this.renderChildComponent(menuActivateBtnComponent,'menu-activate-btn-placeholder')
+
 
   }
 
   buildHtml(): string {
-    this.html = `<div class='logo-placeholder'></div>
+    this.html = `<div class='menu-activate-btn-placeholder'></div>
                 `;
     return this.html;
   }
