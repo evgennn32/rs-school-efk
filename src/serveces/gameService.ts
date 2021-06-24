@@ -1,24 +1,19 @@
 import Card from "../components/card/card";
 import type App from "../app";
-import CongratulationsPopup from "../components/congratulations/congratulationsPopup";
 import Button from "../components/button/button";
+import cards from "../assets/cards/cards";
 
 
 export default class GameService {
 
-  public timeToRemember: number;
-
-  public cardType: string;
-
-  public difficulty: number;
-
   private gameFinished: boolean;
 
+  public cardsData: (string[] | ({ image: string; audioSrc: string; translation: string; word: string } )[])[];
+
   constructor(protected app: App) {
-    this.timeToRemember = 5;
-    this.cardType = 'animal';
-    this.difficulty = 4;
+
     this.gameFinished = false;
+    this.cardsData = cards;
 
   }
 
@@ -38,9 +33,9 @@ export default class GameService {
     return this.gameFinished;
   }
 
-  allCardsActive(cards: Card[]): boolean {
+  allCardsActive(cardsAll: Card[]): boolean {
     let result = true;
-    cards.forEach(el => {
+    cardsAll.forEach(el => {
       if (!el.element.classList.contains('card-active')) {
         result = false;
       }
@@ -49,9 +44,9 @@ export default class GameService {
     return result;
   }
 
-  allCardsCoincided(cards: Card[]): boolean {
+  allCardsCoincided(cardsAll: Card[]): boolean {
     let result = true;
-    cards.forEach(el => {
+    cardsAll.forEach(el => {
       if (!el.element.classList.contains('coincided')) {
         result = false;
       }
@@ -80,8 +75,6 @@ export default class GameService {
       this.stopGame();
     }
   }
-
-
 
 
   showCongratulations(): void {

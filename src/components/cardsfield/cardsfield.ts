@@ -30,14 +30,11 @@ export default class CardsField extends Component {
 
     this.cards.forEach((card) => {
       card.flipToFront();
-      setTimeout(() => {
-        card.flipToBack()
-      }, this.gameService.timeToRemember * 1000);
+
       card.element.addEventListener('click', () => {
         this.cardHandler(card);
       });
     });
-    setTimeout(() => this.gameService.startGame(), this.gameService.timeToRemember * 1000);
   }
 
   private async cardHandler(card: Card): Promise<null | Promise<unknown>> {
@@ -80,9 +77,7 @@ export default class CardsField extends Component {
 
   getImages(): string[] {
     const images: string[] = [];
-    for (let i = 0; i < this.gameService.difficulty; i+=1) {
-      images.push(`${this.gameService.cardType}-${i}.svg`)
-    }
+    // TODO
     return images.concat(images).sort(() => Math.random() - .5);
   }
 }

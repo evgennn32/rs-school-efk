@@ -2,6 +2,7 @@ import HomePage from './pages/home';
 import RoutService from "./serveces/routService";
 import Component from "./components/Component";
 import GamePage from "./pages/game";
+import GameService from "./serveces/gameService";
 
 
 
@@ -11,7 +12,10 @@ export default class App {
 
   public router: RoutService;
 
+  public gameService: GameService;
+
   constructor(private rootElement: HTMLElement) {
+    this.gameService = new GameService(this);
     this.rootElement = rootElement;
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);

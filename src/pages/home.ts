@@ -8,17 +8,22 @@ export default class HomePage extends Component {
 
   private temp: boolean;
 
+  private categories: string[] | { image: string; audioSrc: string; translation: string; word: string }[];
+
   constructor(protected app: App) {
     super('div', ['main-container']);
     this.render();
     this.html = '';
     this.temp = false;
+    [this.categories] = this.app.gameService.cardsData;
   }
 
   render(): void {
     super.render();
     const header = new Header(this.app);
     this.renderChildComponent(header, 'header-placeholder');
+    console.log(this.categories)
+
 
   }
 
