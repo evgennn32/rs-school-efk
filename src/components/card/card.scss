@@ -1,0 +1,49 @@
+.card {
+  height: 168px;
+  width: 168px;
+  flex-basis: 20%;
+  position: relative;
+  transition: all .5s;
+  perspective: 15rem;
+  transform-style: preserve-3d;
+
+  &__back,
+  &__front {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    backface-visibility: hidden;
+  }
+
+  &__back {
+    background-size: contain;
+    transform: rotateY(180deg);
+
+  }
+
+  .coincided &__back {
+    opacity: .6;
+    background-color: #00df88;
+  }
+  .no-coincided &__back {
+    opacity: .6;
+    background-color: #ff4848;
+  }
+
+  &__front {
+    background-size: cover;
+   /* background-image: url('./../../assets/images/card_front.jpg');*/
+  }
+}
+
+.card-active {
+  transform: rotateY(180deg);
+}
+
+
+
+
+

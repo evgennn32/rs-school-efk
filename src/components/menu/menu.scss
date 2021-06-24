@@ -1,0 +1,55 @@
+.menu__wrapper {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 100%;
+  .menu__item {
+    list-style-type: none;
+    padding: 23px 10px;
+    padding-top: 35px;
+    color: #fff;
+    opacity: 0.7;
+    cursor: pointer;
+    position: relative;
+  }
+  .menu__item-active {
+    opacity: 1;
+    background-color: #1E88E5;
+  }
+
+  .menu__item_0:after,
+  .menu__item_0:before,
+  .menu__item_1:before,
+  .menu__item_2:before {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+    left: 44%;
+  }
+
+  .menu__item_0:before {
+    content:' ';
+    background-color: #fff;
+    border-radius: 50%;
+  }
+  .menu__item_0:after {
+    content: '?';
+    color: #1E88E5;
+    font-weight: 700;
+    left: 50%;
+  }
+
+  .menu__item_1:before {
+    content: url('../../assets/icons/score-icon.png');
+  }
+
+  .menu__item_2:before {
+    content: url('../../assets/icons/starssettings.png');
+
+  }
+
+
+}
+
+

@@ -1,7 +1,27 @@
+
+*.*~
+*[-\.]lock.json
+
+.vscode
+.vs
+.idea
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+
 # Logs
 logs
 *.log
 npm-debug.log*
+
+
+# Dependency directories
+node_modules/
+
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
@@ -44,6 +64,7 @@ jspm_packages/
 # TypeScript v1 declaration files
 typings/
 
+
 # TypeScript cache
 *.tsbuildinfo
 
@@ -52,6 +73,10 @@ typings/
 
 # Optional eslint cache
 .eslintcache
+
+
+# Build results
+dist
 
 # Microbundle cache
 .rpt2_cache/
@@ -102,3 +127,4 @@ dist
 
 # TernJS port file
 .tern-port
+
