@@ -14,7 +14,7 @@ export default class GameService {
 
   public cards: Card[];
 
-  public gameData: { gameStarted: boolean; gameMode: boolean; gameFinished: boolean };
+  public gameData: { gameStarted: boolean; gameMode: boolean; gameFinished: boolean; currentCardIndex: number };
 
   constructor(protected app: App) {
 
@@ -22,6 +22,7 @@ export default class GameService {
       gameMode: false,
       gameStarted: false,
       gameFinished: false,
+      currentCardIndex: 0,
     }
     this.cardsData = cards;
     this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
@@ -31,15 +32,17 @@ export default class GameService {
   }
 
   startGame(): void {
-    // this.initControlBtn();
+    this.gameData.gameStarted = true;
+    this.shuffleCards();
+    this.playSound(this.cards[0].cardData.audioSrc);
   }
 
   switchGameMode(isGameMode: boolean): void {
 
     this.gameData.gameMode = isGameMode;
     const cardsField = document.querySelector('.game__cards-field');
-    if(cardsField) {
-      if(isGameMode){
+    if (cardsField) {
+      if (isGameMode) {
         cardsField.classList.add('game-mode');
       } else {
         cardsField.classList.remove('game-mode');
@@ -95,16 +98,27 @@ export default class GameService {
     }
   }
 
-  startGameBtnHandler(event: Event): void {
-    if(!this.gameData.gameStarted) {
-      this.gameData.gameStarted = true;
-      const btn = <HTMLElement>event.target;
-      btn.classList.add('repeat');
-    }
+  repeatSound(): void {
+    const currentCard = this.cards[this.gameData.currentCardIndex]
+    this.playSound(currentCard.cardData.audioSrc);
 
-    console.log(event)
   }
 
+  startGameBtnHandler(event: Event): void {
+    if (!this.gameData.gameStarted) {
+      this.startGame();
+      const btn = <HTMLElement>event.target;
+      btn.classList.add('repeat');
+    } else {
+      this.repeatSound();
+    }
+
+    console.log(this.gameData.gameStarted)
+  }
+
+  shuffleCards(): void {
+    this.cards.sort(() => Math.random() - .5);
+  }
 
 
 }

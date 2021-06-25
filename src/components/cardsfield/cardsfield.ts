@@ -15,7 +15,6 @@ export default class CardsField extends Component {
   constructor(private app: App) {
     super('div', ['game__cards-field']);
     this.cards = this.app.gameService.cardsData[this.app.appData.categoryId];
-    this.shuffleCards();
     this.html = ``;
   }
 
@@ -35,7 +34,9 @@ export default class CardsField extends Component {
 
     const startGameBtn = new Button('Start game',[]);
     startGameBtn.render()
-    startGameBtn.element.addEventListener('click', this.app.gameService.startGameBtnHandler)
+    startGameBtn.element.addEventListener('click', (event)=> {
+      this.app.gameService.startGameBtnHandler(event)
+    });
     const btnsWrapper = document.createElement('div');
     btnsWrapper.classList.add('btns-wrapper');
     btnsWrapper.append(startGameBtn.element);
@@ -58,6 +59,7 @@ export default class CardsField extends Component {
   }
 
   private async cardHandler(card: Card): Promise<null | Promise<unknown>> {
+
     if (card.element.classList.contains('card-active')) {
       return;
     }
@@ -95,7 +97,5 @@ export default class CardsField extends Component {
     return this.html;
   }
 
-  shuffleCards(): void {
-    this.cards.sort(() => Math.random() - .5);
-  }
+
 }
