@@ -8,9 +8,6 @@ export default class MenuItem extends Component {
   constructor(classes: string[], protected title:string) {
     super('li', classes);
     this.html = title;
-  }
-
-  render(): void {
     super.render();
   }
 

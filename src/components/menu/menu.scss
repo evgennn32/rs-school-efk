@@ -1,55 +1,39 @@
+.menu {
+  position: fixed;
+  left: -320px;
+  top: 0;
+  background:
+    -webkit-gradient(linear, left top, left bottom,
+      from(#0099ae), color-stop(100%, #00bf82), color-stop(100%, #fff), to(#fff));
+  background: linear-gradient(
+      180deg
+    , #0099ae, #00bf82 100%, #fff 0, #fff);
+  width: 320px;
+  height: 100vh;
+  transition: left 1s;
+}
+
 .menu__wrapper {
+  margin-top: 50px;
   display: flex;
-  margin-top: 0;
-  margin-bottom: 0;
-  height: 100%;
+  flex-direction: column;
+
   .menu__item {
     list-style-type: none;
-    padding: 23px 10px;
-    padding-top: 35px;
     color: #fff;
-    opacity: 0.7;
     cursor: pointer;
-    position: relative;
+    padding: 15px 60px;
   }
   .menu__item-active {
     opacity: 1;
-    background-color: #1E88E5;
-  }
-
-  .menu__item_0:after,
-  .menu__item_0:before,
-  .menu__item_1:before,
-  .menu__item_2:before {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 5px;
-    left: 44%;
-  }
-
-  .menu__item_0:before {
-    content:' ';
-    background-color: #fff;
-    border-radius: 50%;
-  }
-  .menu__item_0:after {
-    content: '?';
-    color: #1E88E5;
-    font-weight: 700;
-    left: 50%;
-  }
-
-  .menu__item_1:before {
-    content: url('../../assets/icons/score-icon.png');
-  }
-
-  .menu__item_2:before {
-    content: url('../../assets/icons/starssettings.png');
-
+    text-decoration: underline;
   }
 
 
+}
+
+.menu_active {
+  left: 0;
 }
 
 

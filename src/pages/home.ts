@@ -38,16 +38,22 @@ export default class HomePage extends Component {
   }
 
   renderCategoriesCards(categoriesWrapper: HTMLElement): void {
-    console.log(this.categoriesImages)
-    const [categories] = this.app.gameService.cardsData;
-    categories.forEach((category,index) => {
-      if(typeof category === 'string'){
-        const newCategoryCard = new CategoryCard({title:category, image: `${this.categoriesImages[index]}` })
-        newCategoryCard.render();
-        categoriesWrapper.append(newCategoryCard.element)
-      }
+
+    this.app.gameService.categories.forEach((category,index) => {
+      const newCategoryCard = new CategoryCard({title:category, image: `${this.categoriesImages[index]}`});
+      newCategoryCard.render();
+      this.addCardHandler(newCategoryCard.element, index);
+      categoriesWrapper.append(newCategoryCard.element);
+    })
+  }
+
+  addCardHandler(card: HTMLElement, categoryId: number): void {
+    card.addEventListener('click', ev => {
+      ev.preventDefault();
 
     })
   }
+
+
 
 }

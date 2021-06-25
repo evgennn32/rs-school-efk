@@ -10,10 +10,13 @@ export default class GameService {
 
   public cardsData: (string[] | ({ image: string; audioSrc: string; translation: string; word: string } )[])[];
 
+  public categories: string[];
+
   constructor(protected app: App) {
 
     this.gameFinished = false;
     this.cardsData = cards;
+    this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions']
 
   }
 

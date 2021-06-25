@@ -13,28 +13,33 @@ export default class Menu extends Component {
 
   constructor(protected app: App) {
     super('nav', ['menu']);
+    this.element.id = 'sideMenu';
     this.ActivePageId = 1;
     this.detectActivePage();
-    this.menu = ['About Game', 'Best Score', 'Game Settings'];
-    this.html = `<ul class="menu__wrapper">
-                 <div class='menu-item-0-placeholder'></div>
-                 <div class='menu-item-1-placeholder'></div>
-                 <div class='menu-item-2-placeholder'></div>
-                 </ul>`
+    this.menu = this.app.gameService.categories
+    this.html = `<div class='menu-placeholder'></div>`;
   }
 
   render(): void {
     super.render();
+    const menuWrapper = document.createElement('ul');
+    menuWrapper.classList.add('menu__wrapper');
+    const homeLink = new MenuItem(['menu__item'],'Main page');
+    menuWrapper.append(homeLink.element);
+    console.log(this.menu)
     this.menu.forEach((el, index) => {
-      const menuClasses = ['menu__item',`menu__item_${index}`];
+      const menuClasses = ['menu__item'];
       if (this.ActivePageId === index) {
         menuClasses.push('menu__item-active');
       }
       const menuItem = new MenuItem(menuClasses, el);
       menuItem.element.dataset.page_index = `${index}`;
-      menuItem.element.addEventListener('click', () => this.app.navigatePage(index))
-      this.renderChildComponent(menuItem, `menu-item-${index}-placeholder`);
+      menuWrapper.append(menuItem.element);
+
+      // menuItem.element.addEventListener('click', () => this.app.navigatePage(index))
+
     })
+    this.renderChildElement(menuWrapper, `menu-placeholder`);
   }
 
   buildHtml(): string {
