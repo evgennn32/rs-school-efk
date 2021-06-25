@@ -26,7 +26,6 @@ export default class Menu extends Component {
     menuWrapper.classList.add('menu__wrapper');
     const homeLink = new MenuItem(['menu__item'],'Main page');
     menuWrapper.append(homeLink.element);
-    console.log(this.menu)
     this.menu.forEach((el, index) => {
       const menuClasses = ['menu__item'];
       if (this.ActivePageId === index) {

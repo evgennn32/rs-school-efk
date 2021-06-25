@@ -60,14 +60,14 @@ export default class GameService {
   }
 
   allCardsActive(): boolean {
-    const cardsAll = document.querySelectorAll('.card');
+    const cardsAll = document.querySelectorAll('.card__container');
     let result = true;
-    cardsAll.forEach(el => {
-      if (!el.classList.contains('card-active')) {
+    this.cards.forEach(theCard => {
+      if (!theCard.element.classList.contains('inactive')) {
         result = false;
       }
     });
-    // this.gameFinished = result;
+     this.gameData.gameFinished = result;
     return result;
   }
 
@@ -132,6 +132,14 @@ export default class GameService {
     this.playSound('audio/error.mp3');
     return false;
 
+
+  }
+
+  finishGame(): void {
+    // TODO send statistic
+    // TODO show congratulations
+    // TODO load home Page
+    console.log('game.finished')
 
   }
 

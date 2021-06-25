@@ -65,11 +65,15 @@ export default class CardsField extends Component {
     }
     if(!this.app.gameService.gameData.gameStarted) {
       this.app.gameService.playSound(card.cardData.audioSrc);
-      this.app.gameService.playNextCard();
     } else {
       const isCorrectCard = this.app.gameService.compareSounds(card.cardData.audioSrc);
       if (isCorrectCard) {
-        card.element.classList.add('inactive')
+        card.element.classList.add('inactive');
+        if(!this.app.gameService.allCardsActive()){
+          this.app.gameService.playNextCard();
+        } else {
+          this.app.gameService.finishGame()
+        }
       }
 
     }
