@@ -25,7 +25,10 @@ export default class CardsField extends Component {
 
       const newCard = new Card(cardData);
       newCard.render()
-      this.cardHandler(newCard);
+      newCard.element.addEventListener('click', () => {
+        this.cardHandler(newCard);
+      });
+
       this.element.append(newCard.element);
     })
 
@@ -45,9 +48,12 @@ export default class CardsField extends Component {
   }
 
   private async cardHandler(card: Card): Promise<null | Promise<unknown>> {
-    if (card.element.classList.contains('card-active') || this.app.gameService.gameStopped()) {
+    if (card.element.classList.contains('card-active')) {
       return;
     }
+    this.app.gameService.playSound(card.cardData.audioSrc);
+
+
     // await card.flipToFront();
 
     // if (!this.activeCard) {

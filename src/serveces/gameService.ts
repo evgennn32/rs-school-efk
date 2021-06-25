@@ -12,11 +12,14 @@ export default class GameService {
 
   public categories: string[];
 
+  private playingSound: boolean;
+
   constructor(protected app: App) {
 
     this.gameFinished = false;
     this.cardsData = cards;
-    this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions']
+    this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
+    this.playingSound = false;
 
   }
 
@@ -24,7 +27,7 @@ export default class GameService {
     this.initControlBtn();
   }
 
-  startNewGame():void {
+  startNewGame(): void {
     this.app.renderPage('game');
   }
 
@@ -61,9 +64,9 @@ export default class GameService {
 
   initControlBtn(): void {
     const controlBtn = document.querySelector('.start-btn');
-    const newControlBtn = new Button('STOP GAME',['game-control-btn'] );
+    const newControlBtn = new Button('STOP GAME', ['game-control-btn']);
     newControlBtn.render();
-    if (controlBtn){
+    if (controlBtn) {
       controlBtn.replaceWith(newControlBtn.element);
       newControlBtn.element.addEventListener('click', () => {
         this.controlBtnHandler(newControlBtn.element);
@@ -72,7 +75,7 @@ export default class GameService {
   }
 
   controlBtnHandler(controlBtn: HTMLElement): void {
-    if(this.gameFinished) {
+    if (this.gameFinished) {
       this.startNewGame();
     } else {
       controlBtn.innerHTML = "Start Game";
@@ -84,9 +87,17 @@ export default class GameService {
   showCongratulations(): void {
     const popupWrapper = <HTMLElement>document.getElementById('congratulations-popup');
     if (popupWrapper) {
-     // const congratulations = new CongratulationsPopup(this.timer.getTime(), this.app);
-    //  congratulations.render();
-     // popupWrapper.appendChild(congratulations.element);
+      // const congratulations = new CongratulationsPopup(this.timer.getTime(), this.app);
+      //  congratulations.render();
+      // popupWrapper.appendChild(congratulations.element);
     }
+  }
+
+  playSound(sound: string): void {
+    if (!this.playingSound) {
+      const audio = new Audio(`./../assets/cards/${sound}`);
+      audio.play();
+    }
+
   }
 }
