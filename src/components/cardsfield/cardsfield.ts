@@ -2,6 +2,7 @@ import Component from "../Component";
 import Card from "../card/card";
 import './cardsfield.scss';
 import type App from "../../app";
+import Button from "../button/button";
 
 export default class CardsField extends Component {
 
@@ -25,12 +26,21 @@ export default class CardsField extends Component {
 
       const newCard = new Card(cardData);
       newCard.render()
+      this.app.gameService.cards.push(newCard);
       newCard.element.addEventListener('click', () => {
         this.cardHandler(newCard);
       });
-
       this.element.append(newCard.element);
     })
+
+    const startGameBtn = new Button('Start game',[]);
+    startGameBtn.render()
+    startGameBtn.element.addEventListener('click', this.app.gameService.startGameBtnHandler)
+    const btnsWrapper = document.createElement('div');
+    btnsWrapper.classList.add('btns-wrapper');
+    btnsWrapper.append(startGameBtn.element);
+    this.element.append(btnsWrapper);
+
 
     // this.cards = this.images.map((image, index) => {
     //   const card = new Card(image);

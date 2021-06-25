@@ -5,3 +5,22 @@
   gap: 1rem;
   justify-content: center;
 }
+
+.btns-wrapper {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-mode .card-header,
+.game-mode .rotate {
+  display: none;
+}
+
+.game-mode .card .card__back,
+.game-mode .card .card__front {
+  background-size: cover;
+  background-position: 50%;
+}

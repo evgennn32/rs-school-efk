@@ -20,9 +20,10 @@ export default class Header extends Component {
     const menuActivateBtnComponent = new MenuActivateBtn([]);
     const gameSwitcher = new GameSwitcher([]);
     const menu = new Menu(this.app);
-    this.renderChildComponent(menuActivateBtnComponent,'menu-activate-btn-placeholder');
-    this.renderChildComponent(gameSwitcher,'gameSwitcher-btn-placeholder');
-    this.renderChildComponent(menu,'menu-placeholder');
+    this.renderChildComponent(menuActivateBtnComponent, 'menu-activate-btn-placeholder');
+    this.renderChildComponent(gameSwitcher, 'gameSwitcher-btn-placeholder');
+    this.renderChildComponent(menu, 'menu-placeholder');
+    this.addSwitcherHandler(gameSwitcher.element);
 
 
   }
@@ -34,5 +35,17 @@ export default class Header extends Component {
                   <div class='menu-placeholder'></div>
                 `;
     return this.html;
+  }
+
+  addSwitcherHandler(switcher: HTMLElement): void {
+    const switcherInput = <HTMLInputElement>switcher.querySelector('.switch-input');
+    if (switcherInput) {
+      switcherInput.addEventListener('change', () => {
+        this.app.gameService.switchGameMode(switcherInput.checked)
+
+
+      })
+    }
+
   }
 }

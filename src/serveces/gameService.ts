@@ -6,37 +6,54 @@ import cards from "../assets/cards/cards";
 
 export default class GameService {
 
-  private gameFinished: boolean;
-
   public cardsData: { image: string; audioSrc: string; translation: string; word: string } [][];
 
   public categories: string[];
 
   private playingSound: boolean;
 
+  public cards: Card[];
+
+  public gameData: { gameStarted: boolean; gameMode: boolean; gameFinished: boolean };
+
   constructor(protected app: App) {
 
-    this.gameFinished = false;
+    this.gameData = {
+      gameMode: false,
+      gameStarted: false,
+      gameFinished: false,
+    }
     this.cardsData = cards;
     this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
     this.playingSound = false;
+    this.cards = []
 
   }
 
   startGame(): void {
-    this.initControlBtn();
+    // this.initControlBtn();
   }
 
-  startNewGame(): void {
-    this.app.renderPage('game');
+  switchGameMode(isGameMode: boolean): void {
+
+    this.gameData.gameMode = isGameMode;
+    const cardsField = document.querySelector('.game__cards-field');
+    if(cardsField) {
+      if(isGameMode){
+        cardsField.classList.add('game-mode');
+      } else {
+        cardsField.classList.remove('game-mode');
+      }
+
+    }
   }
 
   stopGame(): void {
-    this.gameFinished = true;
+    // this.gameFinished = true;
   }
 
   gameStopped(): boolean {
-    return this.gameFinished;
+    return this.gameData.gameFinished;
   }
 
   allCardsActive(): boolean {
@@ -47,7 +64,7 @@ export default class GameService {
         result = false;
       }
     });
-    this.gameFinished = result;
+    // this.gameFinished = result;
     return result;
   }
 
@@ -58,31 +75,9 @@ export default class GameService {
         result = false;
       }
     });
-    this.gameFinished = result;
+    // this.gameFinished = result;
     return result;
   }
-
-  initControlBtn(): void {
-    const controlBtn = document.querySelector('.start-btn');
-    const newControlBtn = new Button('STOP GAME', ['game-control-btn']);
-    newControlBtn.render();
-    if (controlBtn) {
-      controlBtn.replaceWith(newControlBtn.element);
-      newControlBtn.element.addEventListener('click', () => {
-        this.controlBtnHandler(newControlBtn.element);
-      })
-    }
-  }
-
-  controlBtnHandler(controlBtn: HTMLElement): void {
-    if (this.gameFinished) {
-      this.startNewGame();
-    } else {
-      controlBtn.innerHTML = "Start Game";
-      this.stopGame();
-    }
-  }
-
 
   showCongratulations(): void {
     const popupWrapper = <HTMLElement>document.getElementById('congratulations-popup');
@@ -98,6 +93,18 @@ export default class GameService {
       const audio = new Audio(`./../assets/cards/${sound}`);
       audio.play();
     }
-
   }
+
+  startGameBtnHandler(event: Event): void {
+    if(!this.gameData.gameStarted) {
+      this.gameData.gameStarted = true;
+      const btn = <HTMLElement>event.target;
+      btn.classList.add('repeat');
+    }
+
+    console.log(event)
+  }
+
+
+
 }
