@@ -60,10 +60,20 @@ export default class CardsField extends Component {
 
   private async cardHandler(card: Card): Promise<null | Promise<unknown>> {
 
-    if (card.element.classList.contains('card-active')) {
+    if (card.element.classList.contains('inactive')) {
       return;
     }
-    this.app.gameService.playSound(card.cardData.audioSrc);
+    if(!this.app.gameService.gameData.gameStarted) {
+      this.app.gameService.playSound(card.cardData.audioSrc);
+      this.app.gameService.playNextCard();
+    } else {
+      const isCorrectCard = this.app.gameService.compareSounds(card.cardData.audioSrc);
+      if (isCorrectCard) {
+        card.element.classList.add('inactive')
+      }
+
+    }
+
 
 
     // await card.flipToFront();

@@ -98,6 +98,12 @@ export default class GameService {
     }
   }
 
+  playNextCard(): void {
+    console.log('here')
+    this.gameData.currentCardIndex += 1;
+    this.repeatSound();
+  }
+
   repeatSound(): void {
     const currentCard = this.cards[this.gameData.currentCardIndex]
     this.playSound(currentCard.cardData.audioSrc);
@@ -112,12 +118,21 @@ export default class GameService {
     } else {
       this.repeatSound();
     }
-
-    console.log(this.gameData.gameStarted)
   }
 
   shuffleCards(): void {
     this.cards.sort(() => Math.random() - .5);
+  }
+
+  compareSounds(sound: string): boolean {
+    if (sound === this.cards[this.gameData.currentCardIndex].cardData.audioSrc) {
+      this.playSound('audio/correct.mp3');
+      return true;
+    }
+    this.playSound('audio/error.mp3');
+    return false;
+
+
   }
 
 
