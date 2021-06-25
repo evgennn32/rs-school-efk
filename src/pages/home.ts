@@ -2,6 +2,8 @@ import Header from "../components/header/header";
 import Component from "../components/Component";
 import type App from "../app";
 import CategoryCard from "../components/categoryCard/categoryCard";
+import Card from "../components/card/card";
+import CardsField from "../components/cardsfield/cardsfield";
 
 
 export default class HomePage extends Component {
@@ -23,6 +25,7 @@ export default class HomePage extends Component {
     categoriesWrapper.classList.add('categories-wrap');
     this.renderCategoriesCards(categoriesWrapper);
     this.renderChildElement(categoriesWrapper,'categories-placeholder');
+    setTimeout(()=>{this.renderGameField()},1000)
   }
 
   buildHtml(): string {
@@ -50,8 +53,22 @@ export default class HomePage extends Component {
   addCardHandler(card: HTMLElement, categoryId: number): void {
     card.addEventListener('click', ev => {
       ev.preventDefault();
+      this.app.appData.categoryId = categoryId;
 
     })
+  }
+
+  renderGameField(): void {
+    const elToReplace = document.querySelector('.categories-wrap');
+    if (elToReplace) {
+      const newGameField = new CardsField(this.app);
+      newGameField.render();
+      elToReplace.replaceWith(newGameField.element)
+    }
+
+
+
+
   }
 
 

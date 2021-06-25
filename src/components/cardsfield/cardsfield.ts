@@ -1,83 +1,85 @@
 import Component from "../Component";
 import Card from "../card/card";
 import './cardsfield.scss';
-import GameService from "../../serveces/gameService";
+import type App from "../../app";
 
 export default class CardsField extends Component {
 
-  private images: string[];
-
-  private cards: Card[];
+  private cards: { image: string; audioSrc: string; translation: string; word: string }[];
 
   private activeCard?: Card;
 
-  private gameService: GameService;
+  private html: string;
 
-  constructor(gameService: GameService) {
+  constructor(private app: App) {
     super('div', ['game__cards-field']);
-    this.gameService = gameService;
-    this.images = this.getImages();
-    this.cards = [];
+    this.cards = this.app.gameService.cardsData[this.app.appData.categoryId];
+    this.shuffleCards();
+    this.html = ``;
   }
 
   render(): void {
     super.render();
-    this.cards = this.images.map((image, index) => {
-      const card = new Card(image);
-      this.renderChildComponent(card, `card-placeholder-${index}`);
-      return card;
-    });
 
-    this.cards.forEach((card) => {
-      card.flipToFront();
+    this.cards.forEach(cardData => {
 
-      card.element.addEventListener('click', () => {
-        this.cardHandler(card);
-      });
-    });
+      const newCard = new Card(cardData);
+      newCard.render()
+      this.cardHandler(newCard);
+      this.element.append(newCard.element);
+    })
+
+    // this.cards = this.images.map((image, index) => {
+    //   const card = new Card(image);
+    //   this.renderChildComponent(card, `card-placeholder-${index}`);
+    //   return card;
+    // });
+    //
+    // this.cards.forEach((card) => {
+    //   card.flipToFront();
+    //
+    //   card.element.addEventListener('click', () => {
+    //     this.cardHandler(card);
+    //   });
+    // });
   }
 
   private async cardHandler(card: Card): Promise<null | Promise<unknown>> {
-    if (card.element.classList.contains('card-active') || this.gameService.gameStopped()) {
+    if (card.element.classList.contains('card-active') || this.app.gameService.gameStopped()) {
       return;
     }
-    await card.flipToFront();
+    // await card.flipToFront();
 
-    if (!this.activeCard) {
-      this.activeCard = card;
+    // if (!this.activeCard) {
+    // this.activeCard = card;
 
-    } else {
+    // } else {
 
-      if (this.activeCard.image !== card.image) {
-        this.activeCard.markNoCoincided();
-        card.markNoCoincided();
-        this.activeCard.flipToBack();
-        card.flipToBack();
+    // if (this.activeCard.cardData.image !== card.cardData.image) {
+    //   this.activeCard.markNoCoincided();
+    //   card.markNoCoincided();
+    //   this.activeCard.flipToBack();
+    //
+    //
+    //   this.activeCard = undefined;
+    // } else {
+    //   this.activeCard.markCoincided();
+    //   card.markCoincided();
+    //   this.activeCard = undefined;
+    // }
 
-        this.activeCard = undefined;
-      } else {
-        this.activeCard.markCoincided();
-        card.markCoincided();
-        this.activeCard = undefined;
-      }
-      if (this.gameService.allCardsActive(this.cards)) {
-        this.gameService.stopGame();
-        this.gameService.showCongratulations();
-      }
+    // }
+    if (this.app.gameService.allCardsActive()) {
+      this.app.gameService.stopGame();
+      this.app.gameService.showCongratulations();
     }
   }
 
   buildHtml(): string {
-    let html = '';
-    this.images.forEach((el, index) => {
-      html = `${html}<div class="card-placeholder-${index}"></div>`
-    })
-    return html;
+    return this.html;
   }
 
-  getImages(): string[] {
-    const images: string[] = [];
-    // TODO
-    return images.concat(images).sort(() => Math.random() - .5);
+  shuffleCards(): void {
+    this.cards.sort(() => Math.random() - .5);
   }
 }

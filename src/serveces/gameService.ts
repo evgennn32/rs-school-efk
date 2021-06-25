@@ -8,7 +8,7 @@ export default class GameService {
 
   private gameFinished: boolean;
 
-  public cardsData: (string[] | ({ image: string; audioSrc: string; translation: string; word: string } )[])[];
+  public cardsData: { image: string; audioSrc: string; translation: string; word: string } [][];
 
   public categories: string[];
 
@@ -36,10 +36,11 @@ export default class GameService {
     return this.gameFinished;
   }
 
-  allCardsActive(cardsAll: Card[]): boolean {
+  allCardsActive(): boolean {
+    const cardsAll = document.querySelectorAll('.card');
     let result = true;
     cardsAll.forEach(el => {
-      if (!el.element.classList.contains('card-active')) {
+      if (!el.classList.contains('card-active')) {
         result = false;
       }
     });
@@ -65,7 +66,7 @@ export default class GameService {
     if (controlBtn){
       controlBtn.replaceWith(newControlBtn.element);
       newControlBtn.element.addEventListener('click', () => {
-        this.controlBtnHandler(newControlBtn.element)
+        this.controlBtnHandler(newControlBtn.element);
       })
     }
   }

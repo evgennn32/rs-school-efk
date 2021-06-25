@@ -14,12 +14,17 @@ export default class App {
 
   public gameService: GameService;
 
+  public appData: { categoryId: number };
+
   constructor(private rootElement: HTMLElement) {
     this.gameService = new GameService(this);
     this.rootElement = rootElement;
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);
     this.pageToDisplay = homePage.element;
+    this.appData = {
+      categoryId: 0
+    }
 
     // setTimeout(() => {
     //   this.router.navigate('settings');

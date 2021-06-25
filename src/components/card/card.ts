@@ -2,18 +2,30 @@ import Component from "../Component";
 import './card.scss';
 
 export default class Card extends Component {
-  public readonly image: string;
 
-  constructor(img:string) {
-    super('div', ['card']);
-    this.image = img;
+  constructor(public cardData: {word: string, translation: string, image: string, audioSrc: string }) {
+    super('div', ['card__container']);
+  }
+
+  render() {
+    super.render();
+    const rotateBtn = document.createElement('div');
+    rotateBtn.classList.add('rotate');
+    this.renderChildElement(rotateBtn,'rotate-placeholder');
+    this.addRotateHandler(rotateBtn);
+
   }
 
   buildHtml(): string {
     return `
-    <div class="card__container">
-    <div class="card__front"></div>
-    <div class="card__back" style="background-image: url('./assets/images/${this.image}')"></div>
+    <div class="card">
+      <div class="card__back" style="background-image: url('./assets/cards/${this.cardData.image}')">
+        <div class="card-header">${this.cardData.translation}</div>
+      </div>
+      <div class="card__front"  style="background-image: url('./assets/cards/${this.cardData.image}')">
+        <div class="card-header">${this.cardData.word}</div>
+      </div>
+      <div class="rotate-placeholder"></div>
     </div>
     `;
   }
@@ -44,4 +56,16 @@ export default class Card extends Component {
   markNoCoincided(): void {
     this.element.classList.add('no-coincided');
   }
+
+  addRotateHandler(rotateBtn: HTMLElement): void {
+    rotateBtn.addEventListener("click", ()=> {
+      this.element.classList.add('card-active');
+    })
+    this.element.addEventListener('mouseleave', ()=>{
+      this.element.classList.remove('card-active');
+    })
+  }
+
+
+
 }

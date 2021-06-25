@@ -19,13 +19,16 @@ export default class Game extends Component {
     super('div',['game__cards']);
     this.gameService = new GameService(this.app);
     this.timeToRemember = 5;
-    this.html = `<div class="timer-placeholder"></div>
-                 <div class="cards-field-placeholder"></div>`;
+    this.html = `
+                <div class="timer-placeholder"></div>
+                <div class="cards-field-placeholder"></div>
+                `;
+
   }
 
   render(): void {
     super.render();
-    const  cardsField = new CardsField(this.gameService);
+    const  cardsField = new CardsField(this.app);
     this.renderChildComponent(cardsField, `cards-field-placeholder`);
   }
 
