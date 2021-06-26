@@ -15,7 +15,7 @@ export default class CardsField extends Component {
   constructor(private app: App) {
     super('div', ['game__cards-field']);
     this.cards = this.app.gameService.cardsData[this.app.appData.categoryId];
-    this.html = ``;
+    this.html = `<div class="rating" id="rating"></div>`;
   }
 
   render(): void {
@@ -67,13 +67,17 @@ export default class CardsField extends Component {
       this.app.gameService.playSound(card.cardData.audioSrc);
     } else {
       const isCorrectCard = this.app.gameService.compareSounds(card.cardData.audioSrc);
+      this.app.gameService.addRating(isCorrectCard)
       if (isCorrectCard) {
+
         card.element.classList.add('inactive');
         if(!this.app.gameService.allCardsActive()){
           this.app.gameService.playNextCard();
         } else {
           this.app.gameService.finishGame()
         }
+      } else {
+
       }
 
     }

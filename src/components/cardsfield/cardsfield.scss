@@ -24,3 +24,22 @@
   background-size: cover;
   background-position: 50%;
 }
+
+.rating {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.star {
+  width: 34px;
+  height: 34px;
+}
+
+.star.grey {
+  background: url("../../assets/images/star_grey.png");
+}
+
+.star.yellow {
+  background: url("../../assets/images/star.png");
+}

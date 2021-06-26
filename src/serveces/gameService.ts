@@ -10,11 +10,18 @@ export default class GameService {
 
   public categories: string[];
 
-  private playingSound: boolean;
+  private readonly playingSound: boolean;
 
   public cards: Card[];
 
-  public gameData: { gameStarted: boolean; gameMode: boolean; gameFinished: boolean; currentCardIndex: number };
+  public gameData: {
+    gameStarted: boolean;
+    gameMode: boolean;
+    gameFinished: boolean;
+    currentCardIndex: number;
+    correctMoves: number;
+    incorrectMoves: number
+  };
 
   constructor(protected app: App) {
 
@@ -23,6 +30,8 @@ export default class GameService {
       gameStarted: false,
       gameFinished: false,
       currentCardIndex: 0,
+      correctMoves: 0,
+      incorrectMoves: 0,
     }
     this.cardsData = cards;
     this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
@@ -47,16 +56,11 @@ export default class GameService {
       } else {
         cardsField.classList.remove('game-mode');
       }
-
     }
   }
 
   stopGame(): void {
     // this.gameFinished = true;
-  }
-
-  gameStopped(): boolean {
-    return this.gameData.gameFinished;
   }
 
   allCardsActive(): boolean {
@@ -71,24 +75,10 @@ export default class GameService {
     return result;
   }
 
-  allCardsCoincided(cardsAll: Card[]): boolean {
-    let result = true;
-    cardsAll.forEach(el => {
-      if (!el.element.classList.contains('coincided')) {
-        result = false;
-      }
-    });
-    // this.gameFinished = result;
-    return result;
-  }
+
 
   showCongratulations(): void {
-    const popupWrapper = <HTMLElement>document.getElementById('congratulations-popup');
-    if (popupWrapper) {
-      // const congratulations = new CongratulationsPopup(this.timer.getTime(), this.app);
-      //  congratulations.render();
-      // popupWrapper.appendChild(congratulations.element);
-    }
+    // TODO show congrats
   }
 
   playSound(sound: string): void {
@@ -99,7 +89,6 @@ export default class GameService {
   }
 
   playNextCard(): void {
-    console.log('here')
     this.gameData.currentCardIndex += 1;
     this.repeatSound();
   }
@@ -107,7 +96,6 @@ export default class GameService {
   repeatSound(): void {
     const currentCard = this.cards[this.gameData.currentCardIndex]
     this.playSound(currentCard.cardData.audioSrc);
-
   }
 
   startGameBtnHandler(event: Event): void {
@@ -135,7 +123,25 @@ export default class GameService {
 
   }
 
+  addRating(isPositive: boolean): void {
+    let starType = 'yellow';
+    if(!isPositive) {
+      starType = 'grey';
+      this.gameData.incorrectMoves += 1;
+    } else {
+      this.gameData.correctMoves += 1;
+    }
+
+    const ratingContainer = document.querySelector('#rating');
+    const star = document.createElement('div');
+    star.classList.add('star',starType);
+    if(ratingContainer) {
+      ratingContainer.prepend(star);
+    }
+  }
+
   finishGame(): void {
+    console.log(this.gameData)
     // TODO send statistic
     // TODO show congratulations
     // TODO load home Page
