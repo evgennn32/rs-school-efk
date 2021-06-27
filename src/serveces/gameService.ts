@@ -54,7 +54,7 @@ export default class GameService {
       this.cards = [];
     }
     const startGameBtn = document.querySelector('.game__cards-field .repeat');
-    if(startGameBtn) {
+    if (startGameBtn) {
       startGameBtn.classList.remove('repeat');
       startGameBtn.innerHTML = 'Start game'
     }
@@ -112,8 +112,6 @@ export default class GameService {
     if (gameContainer) {
       gameContainer.replaceWith(congrats.element);
     }
-
-    // TODO show congrats
   }
 
   playSound(sound: string): void {

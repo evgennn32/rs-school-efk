@@ -25,7 +25,7 @@ export default class HomePage extends Component {
     categoriesWrapper.classList.add('categories-wrap');
     this.renderCategoriesCards(categoriesWrapper);
     this.renderChildElement(categoriesWrapper,'categories-placeholder');
-    setTimeout(()=>{this.renderGameField()},1000)
+    // setTimeout(()=>{this.renderGameField()},1000)
   }
 
   buildHtml(): string {
@@ -54,7 +54,10 @@ export default class HomePage extends Component {
     card.addEventListener('click', ev => {
       ev.preventDefault();
       this.app.appData.categoryId = categoryId;
-
+      this.app.router.navigate('cards');
+      setTimeout(()=>{
+        this.renderGameField();
+      },100);
     })
   }
 
@@ -63,7 +66,7 @@ export default class HomePage extends Component {
     if (elToReplace) {
       const newGameField = new CardsField(this.app);
       newGameField.render();
-      elToReplace.replaceWith(newGameField.element)
+      elToReplace.replaceWith(newGameField.element);
     }
 
 
