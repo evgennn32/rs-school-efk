@@ -92,7 +92,6 @@ export default class GameService {
   }
 
   allCardsActive(): boolean {
-    const cardsAll = document.querySelectorAll('.card__container');
     let result = true;
     this.cards.forEach(theCard => {
       if (!theCard.element.classList.contains('inactive')) {
@@ -100,7 +99,6 @@ export default class GameService {
       }
     });
     this.gameData.gameFinished = result;
-    console.log(this)
     return result;
   }
 

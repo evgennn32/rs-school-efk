@@ -1,7 +1,9 @@
+// eslint-disable-next-line import/no-cycle
 import HomePage from './pages/home';
+// eslint-disable-next-line import/no-cycle
 import RoutService from "./serveces/routService";
 import Component from "./components/Component";
-import GamePage from "./pages/game";
+// eslint-disable-next-line import/no-cycle
 import GameService from "./serveces/gameService";
 
 
@@ -41,11 +43,6 @@ export default class App {
       case 'home':
         this.createPage(new HomePage(this));
         break;
-      case 'game':
-        this.createPage(new GamePage(this));
-        break;
-
-
       default:
         this.createPage(new HomePage(this));
     }

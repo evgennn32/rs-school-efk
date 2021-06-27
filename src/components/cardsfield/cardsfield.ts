@@ -10,7 +10,7 @@ export default class CardsField extends Component {
 
   private activeCard?: Card;
 
-  private html: string;
+  private readonly html: string;
 
   constructor(private app: App) {
     super('div', ['game__cards-field']);
@@ -76,10 +76,7 @@ export default class CardsField extends Component {
         } else {
           this.app.gameService.finishGame()
         }
-      } else {
-        
       }
-
     }
 
 

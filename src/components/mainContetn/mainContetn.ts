@@ -1,5 +1,5 @@
 import Component from "../Component";
-import Game from "../game/game";
+// import Game from "../game/game";
 import type App from "../../app";
 
 export default class MainContent extends Component {
@@ -12,8 +12,8 @@ export default class MainContent extends Component {
 
   render(): void {
     super.render();
-    const game = new Game(this.app);
-    this.renderChildComponent(game, 'game-placeholder');
+    // const game = new Game(this.app);
+    // this.renderChildComponent(game, 'game-placeholder');
   }
 
   buildHtml(): string {

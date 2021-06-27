@@ -7,7 +7,7 @@ export default class Card extends Component {
     super('div', ['card__container']);
   }
 
-  render() {
+  render(): void {
     super.render();
     const rotateBtn = document.createElement('div');
     rotateBtn.classList.add('rotate');

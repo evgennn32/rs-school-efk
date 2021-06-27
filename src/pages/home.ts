@@ -2,7 +2,6 @@ import Header from "../components/header/header";
 import Component from "../components/Component";
 import type App from "../app";
 import CategoryCard from "../components/categoryCard/categoryCard";
-import Card from "../components/card/card";
 import CardsField from "../components/cardsfield/cardsfield";
 
 
