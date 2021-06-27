@@ -1,6 +1,5 @@
 import Card from "../components/card/card";
 import type App from "../app";
-import Button from "../components/button/button";
 import cards from "../assets/cards/cards";
 import Congratulations from "../components/congratulations/congratulations";
 
@@ -41,7 +40,7 @@ export default class GameService {
 
   }
 
-  clearGameData(): void {
+  clearGameData(clearCards = false): void {
     this.gameData = {
       gameMode: false,
       gameStarted: false,
@@ -50,7 +49,22 @@ export default class GameService {
       correctMoves: 0,
       incorrectMoves: 0,
     }
-    this.cards = [];
+    GameService.clearRating()
+    if (clearCards) {
+      this.cards = [];
+    }
+    const startGameBtn = document.querySelector('.game__cards-field .repeat');
+    if(startGameBtn) {
+      startGameBtn.classList.remove('repeat');
+      startGameBtn.innerHTML = 'Start game'
+    }
+  }
+
+  static clearRating(): void {
+    const ratingField = document.getElementById('rating')
+    if (ratingField) {
+      ratingField.innerHTML = '';
+    }
   }
 
   startGame(): void {
@@ -68,12 +82,13 @@ export default class GameService {
         cardsField.classList.add('game-mode');
       } else {
         cardsField.classList.remove('game-mode');
+        this.stopGame();
       }
     }
   }
 
   stopGame(): void {
-    // this.gameFinished = true;
+    this.clearGameData();
   }
 
   allCardsActive(): boolean {
@@ -84,18 +99,17 @@ export default class GameService {
         result = false;
       }
     });
-     this.gameData.gameFinished = result;
+    this.gameData.gameFinished = result;
     console.log(this)
     return result;
   }
-
 
 
   showCongratulations(): void {
     const congrats = new Congratulations(this.gameData.incorrectMoves);
     congrats.render();
     const gameContainer = document.querySelector('.game__cards-field');
-    if(gameContainer) {
+    if (gameContainer) {
       gameContainer.replaceWith(congrats.element);
     }
 
@@ -124,6 +138,7 @@ export default class GameService {
       this.startGame();
       const btn = <HTMLElement>event.target;
       btn.classList.add('repeat');
+      btn.innerHTML = '';
     } else {
       this.repeatSound();
     }
@@ -146,7 +161,7 @@ export default class GameService {
 
   addRating(isPositive: boolean): void {
     let starType = 'yellow';
-    if(!isPositive) {
+    if (!isPositive) {
       starType = 'grey';
       this.gameData.incorrectMoves += 1;
     } else {
@@ -155,8 +170,8 @@ export default class GameService {
 
     const ratingContainer = document.querySelector('#rating');
     const star = document.createElement('div');
-    star.classList.add('star',starType);
-    if(ratingContainer) {
+    star.classList.add('star', starType);
+    if (ratingContainer) {
       ratingContainer.prepend(star);
     }
   }
@@ -166,11 +181,11 @@ export default class GameService {
 
     this.showCongratulations();
     // TODO send statistic
-    setTimeout(()=>{
+    setTimeout(() => {
       this.app.renderPage('home');
-    },2000);
+    }, 2000);
 
-     this.clearGameData();
+    this.clearGameData();
   }
 
 
