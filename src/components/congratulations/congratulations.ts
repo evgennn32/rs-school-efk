@@ -1,30 +1,30 @@
 import Component from "../Component";
-import Button from "../button/button";
+import './congratulations.scss';
 
 export default class Congratulations extends Component {
 
   private html: string;
 
-  constructor(private readonly time: string) {
-    super('div', ['congratulations-wrapper']);
+  private readonly congratsText: string;
+
+  constructor(protected fails: number) {
+    super('div', ['congratulations']);
     this.html = ``;
+    const errorText = fails > 1 ? 'error' : 'errors';
+    this.congratsText = fails ? `Fail! ${fails} ${errorText}` : `Congratulations`;
+
   }
 
   render(): void {
     super.render();
-    const paragraph = document.createElement('p');
-    paragraph.innerHTML = this.getCongratulationsText();
-    this.element.appendChild(paragraph);
-    const okBtn = new Button('OK',['ok-btn']);
-    okBtn.render();
-    this.element.appendChild(okBtn.element);
+
   }
 
   buildHtml(): string {
+    this.html = `
+    <h2>${this.congratsText}</h2>
+    <div class="congratulations__smile${this.fails ? '-sad' : ''}"></div>
+    `;
     return this.html;
-  }
-
-  getCongratulationsText(): string {
-    return `Congratulations! You successfully found all matches on ${this.time} minutes.`
   }
 }

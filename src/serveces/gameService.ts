@@ -2,6 +2,7 @@ import Card from "../components/card/card";
 import type App from "../app";
 import Button from "../components/button/button";
 import cards from "../assets/cards/cards";
+import Congratulations from "../components/congratulations/congratulations";
 
 
 export default class GameService {
@@ -36,8 +37,20 @@ export default class GameService {
     this.cardsData = cards;
     this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
     this.playingSound = false;
-    this.cards = []
+    this.cards = [];
 
+  }
+
+  clearGameData(): void {
+    this.gameData = {
+      gameMode: false,
+      gameStarted: false,
+      gameFinished: false,
+      currentCardIndex: 0,
+      correctMoves: 0,
+      incorrectMoves: 0,
+    }
+    this.cards = [];
   }
 
   startGame(): void {
@@ -72,12 +85,20 @@ export default class GameService {
       }
     });
      this.gameData.gameFinished = result;
+    console.log(this)
     return result;
   }
 
 
 
   showCongratulations(): void {
+    const congrats = new Congratulations(this.gameData.incorrectMoves);
+    congrats.render();
+    const gameContainer = document.querySelector('.game__cards-field');
+    if(gameContainer) {
+      gameContainer.replaceWith(congrats.element);
+    }
+
     // TODO show congrats
   }
 
@@ -141,12 +162,15 @@ export default class GameService {
   }
 
   finishGame(): void {
-    console.log(this.gameData)
-    // TODO send statistic
-    // TODO show congratulations
-    // TODO load home Page
-    console.log('game.finished')
 
+
+    this.showCongratulations();
+    // TODO send statistic
+    setTimeout(()=>{
+      this.app.renderPage('home');
+    },2000);
+
+     this.clearGameData();
   }
 
 

@@ -77,7 +77,7 @@ export default class CardsField extends Component {
           this.app.gameService.finishGame()
         }
       } else {
-
+        
       }
 
     }
