@@ -41,7 +41,7 @@ export default class Header extends Component {
     const switcherInput = <HTMLInputElement>switcher.querySelector('.switch-input');
     if (switcherInput) {
       switcherInput.addEventListener('change', () => {
-        this.app.gameService.switchGameMode(switcherInput.checked)
+        this.app.gameService.switchGameMode(!switcherInput.checked)
 
 
       })

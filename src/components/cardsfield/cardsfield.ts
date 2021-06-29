@@ -23,6 +23,10 @@ export default class CardsField extends Component {
 
   render(): void {
     super.render();
+    console.log(this.app.gameService.gameData.gameMode)
+    if(this.app.gameService.gameData.gameMode) {
+      this.element.classList.add('game-mode')
+    }
 
     this.cards.forEach(cardData => {
 
