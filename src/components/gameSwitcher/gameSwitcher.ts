@@ -13,7 +13,7 @@ export default class GameSwitcher extends Component {
   buildHtml(): string {
     this.html = `
                 <label class="switch">
-                  <input class="switch-input" type="checkbox" />
+                  <input class="switch-input" type="checkbox" checked />
                   <span class="switch-label" data-on="Play" data-off="Train"></span>
                   <span class="switch-handle"></span>
                 </label>

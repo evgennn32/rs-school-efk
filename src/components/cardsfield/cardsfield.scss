@@ -4,6 +4,9 @@
   width: 100%;
   gap: 1rem;
   justify-content: center;
+  .h1 {
+    width: 100%;
+  }
 }
 
 .btns-wrapper {
@@ -43,3 +46,5 @@
 .star.yellow {
   background: url("../../assets/images/star.png");
 }
+
+

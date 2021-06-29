@@ -55,23 +55,12 @@ export default class HomePage extends Component {
       this.app.appData.categoryId = categoryId;
       this.app.router.navigate('cards');
       setTimeout(()=>{
-        this.renderGameField();
+        this.app.renderGameField();
       },100);
     })
   }
 
-  renderGameField(): void {
-    const elToReplace = document.querySelector('.categories-wrap');
-    if (elToReplace) {
-      const newGameField = new CardsField(this.app);
-      newGameField.render();
-      elToReplace.replaceWith(newGameField.element);
-    }
 
-
-
-
-  }
 
 
 

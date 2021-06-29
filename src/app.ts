@@ -5,6 +5,7 @@ import RoutService from "./serveces/routService";
 import Component from "./components/Component";
 // eslint-disable-next-line import/no-cycle
 import GameService from "./serveces/gameService";
+import CardsField from "./components/cardsfield/cardsfield";
 
 
 
@@ -25,7 +26,7 @@ export default class App {
     const homePage = new HomePage(this);
     this.pageToDisplay = homePage.element;
     this.appData = {
-      categoryId: 0
+      categoryId: -1
     }
 
     // setTimeout(() => {
@@ -53,7 +54,7 @@ export default class App {
     let page = ''
     switch (pageIndex) {
       case 0:
-        page = '/'
+        page = 'home'
         break;
       case 1:
         page = 'game'
@@ -67,6 +68,16 @@ export default class App {
   createPage(page: Component): void {
     page.render();
     this.pageToDisplay = page.element;
+  }
+
+  renderGameField(): void {
+    const elToInsert = document.querySelector('.main');
+    if (elToInsert) {
+      const newGameField = new CardsField(this);
+      newGameField.render();
+      elToInsert.innerHTML = '';
+      elToInsert.append(newGameField.element);
+    }
   }
 
 }

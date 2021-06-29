@@ -6,11 +6,16 @@
     -webkit-gradient(linear, left top, left bottom,
       from(#0099ae), color-stop(100%, #00bf82), color-stop(100%, #fff), to(#fff));
   background: linear-gradient(
-      180deg
-    , #0099ae, #00bf82 100%, #fff 0, #fff);
+      180deg,
+      #0099ae,
+      #00bf82 100%,
+      #fff 0,
+      #fff
+  );
   width: 320px;
   height: 100vh;
   transition: left 1s;
+  z-index: 10;
 }
 
 .menu__wrapper {

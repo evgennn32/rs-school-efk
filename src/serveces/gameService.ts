@@ -84,6 +84,7 @@ export default class GameService {
         cardsField.classList.remove('game-mode');
         this.stopGame();
       }
+
     }
   }
 

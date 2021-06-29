@@ -24,18 +24,25 @@ export default class Menu extends Component {
     super.render();
     const menuWrapper = document.createElement('ul');
     menuWrapper.classList.add('menu__wrapper');
-    const homeLink = new MenuItem(['menu__item'],'Main page');
+    const homeLink = new MenuItem(['menu__item'], 'Main page');
+    homeLink.element.classList.add('menu__item-active');
+    homeLink.element.addEventListener('click', () => {
+      this.app.renderPage('home');
+    })
     menuWrapper.append(homeLink.element);
     this.menu.forEach((el, index) => {
       const menuClasses = ['menu__item'];
-      if (this.ActivePageId === index) {
-        menuClasses.push('menu__item-active');
-      }
       const menuItem = new MenuItem(menuClasses, el);
       menuItem.element.dataset.page_index = `${index}`;
       menuWrapper.append(menuItem.element);
 
-      // menuItem.element.addEventListener('click', () => this.app.navigatePage(index))
+      menuItem.element.addEventListener('click', () => {
+        this.app.appData.categoryId = index;
+        this.app.renderGameField();
+        this.clearSelectedItems();
+        menuItem.element.classList.add('menu__item-active');
+        this.closeMenu();
+      })
 
     })
     this.renderChildElement(menuWrapper, `menu-placeholder`);
@@ -47,12 +54,27 @@ export default class Menu extends Component {
 
   detectActivePage(): void {
     const activePage = this.app.router.current
-    if(activePage === 'settings') {
+    if (activePage === 'settings') {
       this.ActivePageId = 2;
-    } else if(activePage === 'score'){
+    } else if (activePage === 'score') {
       this.ActivePageId = 1;
-    }else {
+    } else {
       this.ActivePageId = 0;
     }
+  }
+
+  clearSelectedItems(): void {
+    const menuItems = this.element.querySelectorAll('.menu__item');
+    menuItems.forEach(el => {
+      el.classList.remove('menu__item-active')
+    })
+  }
+
+  closeMenu(): void {
+    const menuBtn = document.querySelector('.menu-btn');
+    if (menuBtn) {
+      menuBtn.classList.remove('active');
+    }
+    this.element.classList.remove('menu_active');
   }
 }
