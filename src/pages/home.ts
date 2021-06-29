@@ -13,7 +13,7 @@ export default class HomePage extends Component {
   constructor(protected app: App) {
     super('div', ['main-container']);
     this.html = '';
-    this.categoriesImages = ['fish','ride','dog', 'bird', 'boot', 'happy'];
+    this.categoriesImages = this.app.gameService.categoriesImages;
   }
 
   render(): void {

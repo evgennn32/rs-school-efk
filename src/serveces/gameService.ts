@@ -1,6 +1,6 @@
 import Card from "../components/card/card";
 import type App from "../app";
-import { cards, categories } from "../assets/cards/cards";
+import { cards, categories, categoriesImages } from "../assets/cards/cards";
 import Congratulations from "../components/congratulations/congratulations";
 
 
@@ -23,6 +23,8 @@ export default class GameService {
     incorrectMoves: number
   };
 
+  public categoriesImages: string[];
+
   constructor(protected app: App) {
 
     this.gameData = {
@@ -35,7 +37,7 @@ export default class GameService {
     }
     this.cardsData = cards;
     this.categories = categories;
-    console.log(categories)
+    this.categoriesImages = categoriesImages;
     this.playingSound = false;
     this.cards = [];
 
