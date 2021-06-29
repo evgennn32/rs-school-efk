@@ -182,7 +182,7 @@ export default class GameService {
       this.app.renderPage('home');
     }, 2000);
 
-    this.clearGameData();
+    this.clearGameData(true);
   }
 
 

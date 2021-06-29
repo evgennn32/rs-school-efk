@@ -39,7 +39,7 @@ export default class CardsField extends Component {
       this.element.append(newCard.element);
     })
 
-    const startGameBtn = new Button('Start game',[]);
+    const startGameBtn = new Button('Start',[]);
     startGameBtn.render()
     startGameBtn.element.addEventListener('click', (event)=> {
       this.app.gameService.startGameBtnHandler(event)

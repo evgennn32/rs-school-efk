@@ -6,15 +6,17 @@
 }
 
 
-.congratulations__smile {
+.congratulations__smile,
+.congratulations__smile-sad{
+  height: 500px;
   width: 100%;
-  height: 430px;
+  max-width: 500px;
   background-repeat: no-repeat;
   background-position: center;
   margin: 40px 0;
   background-image: url("./../../assets/images/Big-Smile.png");
+}
 
-  &-sad {
-    background-image: url("./../../assets/images/sad_smile.png");
-  }
+.congratulations__smile-sad {
+  background-image: url("./../../assets/images/sad_smile.png");
 }
