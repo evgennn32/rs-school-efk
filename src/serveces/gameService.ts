@@ -1,6 +1,6 @@
 import Card from "../components/card/card";
 import type App from "../app";
-import cards from "../assets/cards/cards";
+import { cards, categories } from "../assets/cards/cards";
 import Congratulations from "../components/congratulations/congratulations";
 
 
@@ -34,7 +34,8 @@ export default class GameService {
       incorrectMoves: 0,
     }
     this.cardsData = cards;
-    this.categories = ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
+    this.categories = categories;
+    console.log(categories)
     this.playingSound = false;
     this.cards = [];
 
