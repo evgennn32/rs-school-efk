@@ -23,8 +23,7 @@ export default class CardsField extends Component {
 
   render(): void {
     super.render();
-    console.log(this.app.gameService.gameData.gameMode)
-    if(this.app.gameService.gameData.gameMode) {
+    if (this.app.gameService.gameData.gameMode) {
       this.element.classList.add('game-mode')
     }
 
@@ -33,15 +32,15 @@ export default class CardsField extends Component {
       const newCard = new Card(cardData);
       newCard.render()
       this.app.gameService.cards.push(newCard);
-      newCard.element.addEventListener('click', () => {
-        this.cardHandler(newCard);
+      newCard.element.addEventListener('click', (event) => {
+        this.cardHandler(newCard, event);
       });
       this.element.append(newCard.element);
     })
 
-    const startGameBtn = new Button('Start',[]);
+    const startGameBtn = new Button('Start', []);
     startGameBtn.render()
-    startGameBtn.element.addEventListener('click', (event)=> {
+    startGameBtn.element.addEventListener('click', (event) => {
       this.app.gameService.startGameBtnHandler(event)
     });
     const btnsWrapper = document.createElement('div');
@@ -50,30 +49,38 @@ export default class CardsField extends Component {
     this.element.append(btnsWrapper);
   }
 
-  private async cardHandler(card: Card): Promise<null | Promise<unknown>> {
+  private async cardHandler(card: Card, event: MouseEvent): Promise<null | Promise<unknown>> {
+    let isRotateBtn = false
+    if (event.target && event.target) {
+      const target = <HTMLElement>event.target;
+      if (target.classList.contains('rotate')) {
+        isRotateBtn = true;
+      }
+      if (card.element.classList.contains('inactive')) {
+        return;
+      }
+      if (!this.app.gameService.gameData.gameStarted) {
+        if (!isRotateBtn) {
+          this.app.gameService.playSound(card.cardData.audioSrc);
+        }
+      } else {
+        const isCorrectCard = this.app.gameService.compareSounds(card.cardData.audioSrc);
+        this.app.gameService.addRating(isCorrectCard)
+        if (isCorrectCard) {
 
-    if (card.element.classList.contains('inactive')) {
-      return;
-    }
-    if(!this.app.gameService.gameData.gameStarted) {
-      this.app.gameService.playSound(card.cardData.audioSrc);
-    } else {
-      const isCorrectCard = this.app.gameService.compareSounds(card.cardData.audioSrc);
-      this.app.gameService.addRating(isCorrectCard)
-      if (isCorrectCard) {
-
-        card.element.classList.add('inactive');
-        if(!this.app.gameService.allCardsActive()){
-          this.app.gameService.playNextCard();
-        } else {
-          this.app.gameService.finishGame()
+          card.element.classList.add('inactive');
+          if (!this.app.gameService.allCardsActive()) {
+            this.app.gameService.playNextCard();
+          } else {
+            this.app.gameService.finishGame()
+          }
         }
       }
-    }
 
-    if (this.app.gameService.allCardsActive()) {
-      this.app.gameService.stopGame();
-      this.app.gameService.showCongratulations();
+      if (this.app.gameService.allCardsActive()) {
+        this.app.gameService.stopGame();
+        this.app.gameService.showCongratulations();
+      }
     }
   }
 
