@@ -85,13 +85,14 @@ export default class Menu extends Component {
     const statisticLink = document.createElement('li');
     statisticLink.classList.add('menu__item');
     statisticLink.innerHTML = 'Statistic';
-    const loginLink = document.createElement('li');
-    loginLink.classList.add('menu__item', 'login-btn');
-    loginLink.innerHTML = 'Login';
+    const loginBtn = document.createElement('li');
+    loginBtn.classList.add('menu__item', 'login-btn');
+    loginBtn.innerHTML = 'Login';
+    loginBtn.addEventListener('click', () => {
+      this.app.showPopup('login-popup');
+    });
     menuBottom.append(statisticLink);
-    menuBottom.append(loginLink);
+    menuBottom.append(loginBtn);
     this.element.append(menuBottom);
-
-
   }
 }

@@ -80,5 +80,12 @@ export default class App {
     }
   }
 
+  showPopup(popupId: string): void {
+    const popup = this.rootElement.querySelector(`#${popupId}`);
+    if(popup) {
+      popup.classList.remove('hidden');
+    }
+  }
+
 }
 

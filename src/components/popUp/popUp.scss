@@ -5,6 +5,7 @@
   overflow:hidden;
   position:fixed;
   top:0;
+  z-index: 200;
 }
 .popup .popup__content{
   margin:40px auto 0 auto;

@@ -17,6 +17,7 @@ export default class LoginForm extends Component {
   render(): void {
     super.render();
     const btnCancel = new Button("Cancel", ['login-form__btn', 'login-form__btn_red'], 'button');
+    LoginForm.addCancelBtnHandler(btnCancel);
     const btnLogin = new Button("Login", ['login-form__btn'], 'submit');
     btnCancel.element.id = 'cancel-login-btn';
     this.renderChildComponent(btnCancel,'cancel-btn-placeholder');
@@ -44,6 +45,15 @@ export default class LoginForm extends Component {
                 `;
 
     return this.html;
+  }
+
+  static addCancelBtnHandler (btn: Button): void {
+    btn.element.addEventListener('click', () => {
+      const loginPopup = document.querySelector('#login-popup');
+      if(loginPopup) {
+        loginPopup.classList.add('hidden');
+      }
+    })
   }
 
 
