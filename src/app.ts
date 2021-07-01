@@ -5,7 +5,9 @@ import RoutService from "./services/routService";
 import Component from "./components/Component";
 // eslint-disable-next-line import/no-cycle
 import GameService from "./services/gameService";
+// eslint-disable-next-line import/no-cycle
 import CardsField from "./components/cardsfield/cardsfield";
+import StatisticService from "./services/statisticService";
 
 
 
@@ -19,8 +21,11 @@ export default class App {
 
   public appData: { categoryId: number };
 
+  private statisticService: StatisticService;
+
   constructor(private rootElement: HTMLElement) {
     this.gameService = new GameService(this);
+    this.statisticService = new StatisticService(this)
     this.rootElement = rootElement;
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);
