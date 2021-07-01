@@ -45,6 +45,7 @@ export default class Menu extends Component {
       })
 
     })
+    this.addMenuBottom()
     this.renderChildElement(menuWrapper, `menu-placeholder`);
   }
 
@@ -76,5 +77,21 @@ export default class Menu extends Component {
       menuBtn.classList.remove('active');
     }
     this.element.classList.remove('menu_active');
+  }
+
+  addMenuBottom(): void {
+    const menuBottom = document.createElement("ul");
+    menuBottom.classList.add('menu__wrapper','menu__wrapper_bottom');
+    const statisticLink = document.createElement('li');
+    statisticLink.classList.add('menu__item');
+    statisticLink.innerHTML = 'Statistic';
+    const loginLink = document.createElement('li');
+    loginLink.classList.add('menu__item', 'login-btn');
+    loginLink.innerHTML = 'Login';
+    menuBottom.append(statisticLink);
+    menuBottom.append(loginLink);
+    this.element.append(menuBottom);
+
+
   }
 }

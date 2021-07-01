@@ -1,0 +1,17 @@
+.popup{
+  width:100%;
+  min-height:100%;
+  background-color: rgba(0,0,0,0.5);
+  overflow:hidden;
+  position:fixed;
+  top:0;
+}
+.popup .popup__content{
+  margin:40px auto 0 auto;
+  width:812px;
+  height: 571px;
+  padding:10px;
+  background-color: #fff;
+  border-radius:5px;
+  box-shadow: 0 0 10px #000;
+}

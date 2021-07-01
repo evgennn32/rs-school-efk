@@ -4,6 +4,8 @@ import type App from "../../app";
 import MenuActivateBtn from "../menuActivateBtn/menuActivateBtn";
 import GameSwitcher from "../gameSwitcher/gameSwitcher";
 import Menu from "../menu/menu";
+import LoginForm from "../loginForm/loginForm";
+import PopUp from "../popUp/popUp";
 
 
 export default class Header extends Component {
@@ -25,7 +27,6 @@ export default class Header extends Component {
     this.renderChildComponent(menu, 'menu-placeholder');
     this.addSwitcherHandler(gameSwitcher.element);
 
-
   }
 
   buildHtml(): string {
@@ -42,8 +43,6 @@ export default class Header extends Component {
     if (switcherInput) {
       switcherInput.addEventListener('change', () => {
         this.app.gameService.switchGameMode(!switcherInput.checked);
-
-
       })
     }
 

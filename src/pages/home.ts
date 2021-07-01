@@ -3,6 +3,8 @@ import Component from "../components/Component";
 import type App from "../app";
 import CategoryCard from "../components/categoryCard/categoryCard";
 import CardsField from "../components/cardsfield/cardsfield";
+import LoginForm from "../components/loginForm/loginForm";
+import PopUp from "../components/popUp/popUp";
 
 
 export default class HomePage extends Component {
@@ -24,7 +26,10 @@ export default class HomePage extends Component {
     categoriesWrapper.classList.add('categories-wrap');
     this.renderCategoriesCards(categoriesWrapper);
     this.renderChildElement(categoriesWrapper,'categories-placeholder');
-    // setTimeout(()=>{this.renderGameField()},1000)
+
+    const loginForm = new LoginForm(this.app);
+    const loginPopUp = new PopUp('login-popup',loginForm);
+    this.renderChildComponent(loginPopUp,'login-pop-up-placeholder');
   }
 
   buildHtml(): string {
@@ -35,6 +40,9 @@ export default class HomePage extends Component {
                 <div class="categories-placeholder"></div>
               </div>
             </main>
+            <footer>
+            <div class='login-pop-up-placeholder'></div>
+</footer>
             `;
     return this.html;
   }
