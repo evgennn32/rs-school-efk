@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-cycle
 import HomePage from './pages/home';
 // eslint-disable-next-line import/no-cycle
-import RoutService from "./serveces/routService";
+import RoutService from "./services/routService";
 import Component from "./components/Component";
 // eslint-disable-next-line import/no-cycle
-import GameService from "./serveces/gameService";
+import GameService from "./services/gameService";
 import CardsField from "./components/cardsfield/cardsfield";
 
 
@@ -77,6 +77,16 @@ export default class App {
       newGameField.render();
       elToInsert.innerHTML = '';
       elToInsert.append(newGameField.element);
+    }
+  }
+
+  renderStatisticField(): void {
+    const elToInsert = document.querySelector('.main');
+    if (elToInsert) {
+      // const newGameField = new CardsField(this);
+      // newGameField.render();
+      elToInsert.innerHTML = '';
+      // elToInsert.append(newGameField.element);
     }
   }
 
