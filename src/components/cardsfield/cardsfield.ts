@@ -6,7 +6,7 @@ import Button from "../button/button";
 
 export default class CardsField extends Component {
 
-  private cards: { image: string; audioSrc: string; translation: string; word: string }[];
+  private cards: { image: string; audioSrc: string; translation: string; word: string; cardId: number }[];
 
   private activeCard?: Card;
 
@@ -62,18 +62,21 @@ export default class CardsField extends Component {
       if (!this.app.gameService.gameData.gameStarted) {
         if (!isRotateBtn) {
           this.app.gameService.playSound(card.cardData.audioSrc);
+          this.app.statisticService.updateCardStatistic(card.cardData.cardId, 'trainingModeClick');
         }
       } else {
         const isCorrectCard = this.app.gameService.compareSounds(card.cardData.audioSrc);
         this.app.gameService.addRating(isCorrectCard)
         if (isCorrectCard) {
-
+          this.app.statisticService.updateCardStatistic(card.cardData.cardId, 'wordGuessed');
           card.element.classList.add('inactive');
           if (!this.app.gameService.allCardsActive()) {
             this.app.gameService.playNextCard();
           } else {
-            this.app.gameService.finishGame()
+            this.app.gameService.finishGame();
           }
+        } else {
+          this.app.statisticService.updateCardStatistic(card.cardData.cardId, 'gameModeError');
         }
       }
 

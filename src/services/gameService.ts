@@ -6,7 +6,7 @@ import Congratulations from "../components/congratulations/congratulations";
 
 export default class GameService {
 
-  public cardsData: { image: string; audioSrc: string; translation: string; word: string } [][];
+  public cardsData: { image: string; audioSrc: string; translation: string; word: string; cardId: number; } [][];
 
   public categories: string[];
 

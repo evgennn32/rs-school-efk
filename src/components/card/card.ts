@@ -3,7 +3,7 @@ import './card.scss';
 
 export default class Card extends Component {
 
-  constructor(public cardData: {word: string, translation: string, image: string, audioSrc: string }) {
+  constructor(public cardData: {word: string, translation: string, image: string, audioSrc: string; cardId: number; }) {
     super('div', ['card__container']);
   }
 

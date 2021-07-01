@@ -21,7 +21,7 @@ export default class App {
 
   public appData: { categoryId: number };
 
-  private statisticService: StatisticService;
+  public statisticService: StatisticService;
 
   constructor(private rootElement: HTMLElement) {
     this.gameService = new GameService(this);
