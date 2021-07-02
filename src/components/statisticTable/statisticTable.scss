@@ -1,4 +1,27 @@
+.statistic {
+  margin: 0 auto;
+
+  .btn {
+    margin: 30px;
+    border: none;
+    padding: 15px;
+    font-size: 17px;
+  }
+
 th, td {
   padding: 15px;
   text-align: center;
 }
+  &__column-title {
+    cursor: pointer;
+    font-size: 19px;
+    letter-spacing: 1px;
+  }
+
+  .sorted-by {
+    background-color: #00bf82;
+    color: #fff;
+  }
+
+}
+

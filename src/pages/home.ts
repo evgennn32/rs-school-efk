@@ -62,7 +62,6 @@ export default class HomePage extends Component {
       ev.preventDefault();
       this.app.appData.categoryId = categoryId;
       this.app.navigatePage('cards');
-
     })
   }
 
