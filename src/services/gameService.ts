@@ -6,7 +6,13 @@ import Congratulations from "../components/congratulations/congratulations";
 
 export default class GameService {
 
-  public cardsData: { image: string; audioSrc: string; translation: string; word: string; cardId: number; } [][];
+  public cardsData: { image: string;
+    audioSrc: string;
+    translation: string;
+    word: string;
+    cardId: number;
+    categoryId: number;
+  } [][];
 
   public categories: string[];
 
@@ -177,15 +183,26 @@ export default class GameService {
   }
 
   finishGame(): void {
-
-
     this.showCongratulations();
-    // TODO send statistic
     setTimeout(() => {
       this.app.renderPage('home');
     }, 2000);
-
     this.clearGameData(true);
+  }
+
+  getCardsByCategoryId(id: number):{ image: string;
+    audioSrc: string;
+    translation: string;
+    word: string;
+    cardId: number;
+    categoryId: number;
+  } [] {
+
+    return this.cardsData[id]
+  }
+
+  getCategoryById(id: number): string {
+    return this.categories[id]
   }
 
 

@@ -8,6 +8,7 @@ import GameService from "./services/gameService";
 // eslint-disable-next-line import/no-cycle
 import CardsField from "./components/cardsfield/cardsfield";
 import StatisticService from "./services/statisticService";
+import StatisticTable from "./components/statisticTable/statisticTable";
 
 
 
@@ -88,10 +89,11 @@ export default class App {
   renderStatisticField(): void {
     const elToInsert = document.querySelector('.main');
     if (elToInsert) {
-      // const newGameField = new CardsField(this);
+       const statisticTable = new StatisticTable(this);
+      statisticTable.render()
       // newGameField.render();
       elToInsert.innerHTML = '';
-      // elToInsert.append(newGameField.element);
+      elToInsert.append(statisticTable.element);
     }
   }
 

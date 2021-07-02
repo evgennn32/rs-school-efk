@@ -2,8 +2,7 @@ import type App from "../app";
 
 export default class StatisticService {
 
-  // public statisticData: { trainingModeClick: number; wordGuessed: number; gameModeErrors: number; }[] | null
-  private statisticData: Map<number, { trainingModeClick: number; wordGuessed: number; gameModeErrors: number; }>;
+  private statisticData: Map<number, { trainingModeClicks: number; wordGuessed: number; gameModeErrors: number; }>;
 
   constructor(app: App) {
     this.statisticData = new Map();
@@ -12,7 +11,6 @@ export default class StatisticService {
 
   init(): void {
     if(localStorage.statisticData) {
-      console.log(Array.from(JSON.parse(localStorage.statisticData)))
       this.statisticData = new Map(JSON.parse(localStorage.statisticData));
     }
   }
@@ -21,6 +19,7 @@ export default class StatisticService {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     localStorage.statisticData = JSON.stringify([...this.statisticData]);
+    console.log(this.statisticData)
   }
 
   deleteStatistic(): void {
@@ -35,7 +34,7 @@ export default class StatisticService {
           cardStatistic.gameModeErrors += 1;
         }
         if(action === 'trainingModeClick' ) {
-          cardStatistic.trainingModeClick += 1;
+          cardStatistic.trainingModeClicks += 1;
         }
         if(action === 'wordGuessed' ) {
           cardStatistic.wordGuessed += 1;
@@ -46,9 +45,22 @@ export default class StatisticService {
       }
 
     } else {
-      this.statisticData.set(cardId,{gameModeErrors:0, wordGuessed: 0, trainingModeClick: 0});
+      this.statisticData.set(cardId,{gameModeErrors:0, wordGuessed: 0, trainingModeClicks: 0});
       this.updateCardStatistic(cardId, action);
     }
+  }
+
+  getCardStatistic(cardId: number): { gameModeErrors: number; trainingModeClicks: number; wordGuessed: number; } {
+    const statistic = this.statisticData.get(cardId);
+    let cardStatistic = {
+      gameModeErrors: 0,
+      trainingModeClicks: 0,
+      wordGuessed: 0
+    }
+    if(statistic) {
+      cardStatistic = statistic;
+    }
+    return cardStatistic
   }
 
 
