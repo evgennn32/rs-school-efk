@@ -27,7 +27,7 @@ export default class Menu extends Component {
     const homeLink = new MenuItem(['menu__item'], 'Main page');
     homeLink.element.classList.add('menu__item-active');
     homeLink.element.addEventListener('click', () => {
-      this.app.renderPage('home');
+      this.app.navigatePage('');
     })
     menuWrapper.append(homeLink.element);
     this.menu.forEach((el, index) => {
@@ -38,7 +38,7 @@ export default class Menu extends Component {
 
       menuItem.element.addEventListener('click', () => {
         this.app.appData.categoryId = index;
-        this.app.renderGameField();
+        this.app.navigatePage('cards');
         this.clearSelectedItems();
         menuItem.element.classList.add('menu__item-active');
         this.closeMenu();
@@ -86,7 +86,7 @@ export default class Menu extends Component {
     statisticLink.classList.add('menu__item');
     statisticLink.innerHTML = 'Statistic';
     statisticLink.addEventListener('click', () => {
-      this.app.renderStatisticField();
+      this.app.navigatePage('statistic')
       this.clearSelectedItems();
       statisticLink.classList.add('menu__item-active');
       this.closeMenu();

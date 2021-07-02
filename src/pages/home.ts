@@ -61,10 +61,8 @@ export default class HomePage extends Component {
     card.addEventListener('click', ev => {
       ev.preventDefault();
       this.app.appData.categoryId = categoryId;
-      this.app.router.navigate('cards');
-      setTimeout(()=>{
-        this.app.renderGameField();
-      },100);
+      this.app.navigatePage('cards');
+
     })
   }
 

@@ -56,18 +56,8 @@ export default class App {
     this.rootElement.appendChild(this.pageToDisplay);
   }
 
-  navigatePage(pageIndex: number): void {
-    let page = ''
-    switch (pageIndex) {
-      case 0:
-        page = 'home'
-        break;
-      case 1:
-        page = 'game'
-        break;
-      default:
-        page = '/'
-    }
+  navigatePage(page: string): void {
+
     this.router.navigate(page);
   }
 
@@ -89,11 +79,9 @@ export default class App {
   renderStatisticField(): void {
     const elToInsert = document.querySelector('.main');
     if (elToInsert) {
-
       const statisticTable = new StatisticTable(this);
       statisticTable.render();
       elToInsert.innerHTML = '';
-      console.log(statisticTable.element)
       elToInsert.append(statisticTable.element);
     }
   }

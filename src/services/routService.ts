@@ -18,18 +18,18 @@ export default class RoutService {
     this.current = '/'
     this.routes = [
       {
-        path: 'settings', cb: () => {
-          this.app.renderPage('settings')
+        path: 'cards', cb: () => {
+          this.app.renderGameField();
         }
       },
       {
-        path: 'score', cb: () => {
-          this.app.renderPage('score')
+        path: 'statistic', cb: () => {
+          this.app.renderStatisticField();
         }
       },
       {
         path: 'about', cb: () => {
-          this.app.renderPage('home')
+          this.app.renderPage('home');
         }
       },
       {
