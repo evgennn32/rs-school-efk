@@ -89,10 +89,11 @@ export default class App {
   renderStatisticField(): void {
     const elToInsert = document.querySelector('.main');
     if (elToInsert) {
-       const statisticTable = new StatisticTable(this);
-      statisticTable.render()
-      // newGameField.render();
+
+      const statisticTable = new StatisticTable(this);
+      statisticTable.render();
       elToInsert.innerHTML = '';
+      console.log(statisticTable.element)
       elToInsert.append(statisticTable.element);
     }
   }

@@ -24,6 +24,7 @@ export default class StatisticService {
 
   deleteStatistic(): void {
     localStorage.removeItem('statisticData');
+    this.statisticData = new Map();
   }
 
   updateCardStatistic(cardId:number, action: string):void {

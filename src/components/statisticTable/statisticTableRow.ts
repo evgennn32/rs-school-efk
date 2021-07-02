@@ -2,36 +2,40 @@ import Component from "../Component";
 import './statisticTable.scss';
 import type App from "../../app";
 
-export default class StatisticTable extends Component {
+export default class StatisticTableRow extends Component {
 
   private html: string;
 
 
-  constructor(public app: App) {
+  constructor(private cardData: {category: string;
+    word: string;
+    translation: string;
+    trainingModeClicks: number;
+    wordGuessed: number;
+    gameModeErrors: number;
+    correctAnswersPercent: number
+  }) {
 
-    super('table', ['statistic']);
+    super('tr', ['statistic__table-row']);
     this.html = ``;
-
   }
 
   render() {
     super.render();
-
-
   }
 
   buildHtml(): string {
     this.html = `
 
-    <tr>
-      <th>Category</th>
-      <th>Word</th>
-      <th>Translation</th>
-      <th>Training mode click</th>
-      <th>Word Guessed</th>
-      <th>Errors</th>
-      <th>Correct answers, %</th>
-    </tr>
+
+      <td>${this.cardData.category}</td>
+      <td>${this.cardData.word}</td>
+      <td>${this.cardData.translation}</td>
+      <td>${this.cardData.trainingModeClicks}</td>
+      <td>${this.cardData.wordGuessed}</td>
+      <td>${this.cardData.gameModeErrors}</td>
+      <td>${this.cardData.correctAnswersPercent} %</td>
+
         `;
     return this.html;
   }

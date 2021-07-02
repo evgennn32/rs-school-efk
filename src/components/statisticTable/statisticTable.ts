@@ -1,29 +1,46 @@
 import Component from "../Component";
 import './statisticTable.scss';
 import type App from "../../app";
+import StatisticTableRow from "./statisticTableRow";
+import card from "../card/card";
+import Button from "../button/button";
 
 export default class StatisticTable extends Component {
 
   private html: string;
+  
+  private sortBy: string;
 
 
   constructor(public app: App) {
 
-    super('div', ['statistic']);
+    super('table', ['statistic']);
     this.html = ``;
+    this.sortBy = 'category';
 
   }
 
   render() {
     super.render();
+    const clearStatisticBtn = new Button('Clear Statistic',[]);
+    clearStatisticBtn.render();
+    clearStatisticBtn.element.addEventListener('click', () => {
+      this.app.statisticService.deleteStatistic();
+      console.log('clear')
+      this.render();
+    })
+    this.element.prepend(clearStatisticBtn.element);
+
     const statisticData = this.getStatisticData();
-
-
+    statisticData.forEach( cardData => {
+      const tableRow = new StatisticTableRow(cardData)
+      tableRow.render();
+      this.element.append(tableRow.element)
+    });
   }
 
   buildHtml(): string {
     this.html = `
-    <table>
     <tr>
       <th>Category</th>
       <th>Word</th>
@@ -33,10 +50,6 @@ export default class StatisticTable extends Component {
       <th>Errors</th>
       <th>Correct answers, %</th>
     </tr>
-    <tr class="table-data-plh"></tr>
-
-    </table>
-
     `;
     return this.html;
   }
@@ -45,20 +58,29 @@ export default class StatisticTable extends Component {
     category: string;
     word: string;
     translation: string;
-    trainingModeClick: number;
+    trainingModeClicks: number;
     wordGuessed: number;
-    gameModeError: number;
-    correctAnswersPercent: string
+    gameModeErrors: number;
+    correctAnswersPercent: number
   }[] {
 
     // get all categories
     const allCategories = this.app.gameService.categories
-    const allCards = [];
+    const allCards = <{category: string;
+      word: string;
+      translation: string;
+      trainingModeClicks: number;
+      wordGuessed: number;
+      gameModeErrors: number;
+      correctAnswersPercent: number}[]>[];
     allCategories.forEach((category, index) => {
       const categoryCards = this.app.gameService.getCardsByCategoryId(index);
       categoryCards.forEach(card => {
         const cardData = this.getCardData(card)
-        console.log(cardData)
+        allCards.push(cardData)
+
+
+
       })
 
     })
@@ -66,7 +88,7 @@ export default class StatisticTable extends Component {
     // add data to each card
 
 
-    return []
+    return allCards
   }
 
   getCardData(
