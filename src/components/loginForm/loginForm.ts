@@ -8,9 +8,10 @@ import Button from "../button/button";
 export default class LoginForm extends Component {
   private html: string;
 
-  constructor(app: App) {
+  constructor(private app: App) {
     super('div', ['login-form__wrapper']);
     this.html = ``;
+
 
   }
 
@@ -18,8 +19,9 @@ export default class LoginForm extends Component {
     super.render();
     const btnCancel = new Button("Cancel", ['login-form__btn', 'login-form__btn_red'], 'button');
     LoginForm.addCancelBtnHandler(btnCancel);
-    const btnLogin = new Button("Login", ['login-form__btn'], 'submit');
     btnCancel.element.id = 'cancel-login-btn';
+    const btnLogin = new Button("Login", ['login-form__btn'], 'submit');
+    LoginForm.addCancelBtnHandler(btnLogin);
     this.renderChildComponent(btnCancel,'cancel-btn-placeholder');
     this.renderChildComponent(btnLogin,'login-btn-placeholder');
   }
@@ -52,7 +54,14 @@ export default class LoginForm extends Component {
       const loginPopup = document.querySelector('#login-popup');
       if(loginPopup) {
         loginPopup.classList.add('hidden');
+
       }
+    })
+  }
+
+  addSubmitBtnHandler (btn: Button): void {
+    btn.element.addEventListener('click', () => {
+      this.app.navigatePage('/')
     })
   }
 

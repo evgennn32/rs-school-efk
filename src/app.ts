@@ -26,7 +26,7 @@ export default class App {
 
   constructor(private rootElement: HTMLElement) {
     this.gameService = new GameService(this);
-    this.statisticService = new StatisticService(this)
+    this.statisticService = new StatisticService();
     this.rootElement = rootElement;
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);
@@ -34,10 +34,6 @@ export default class App {
     this.appData = {
       categoryId: -1
     }
-
-    // setTimeout(() => {
-    //   this.router.navigate('settings');
-    // }, 500);
 
     rootElement.appendChild(this.pageToDisplay);
   }

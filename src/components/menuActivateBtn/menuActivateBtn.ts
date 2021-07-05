@@ -23,7 +23,8 @@ export default class MenuActivateBtn extends Component {
   }
 
   addBtnHandler(): void {
-    this.element.addEventListener('click', ()=> {
+    this.element.addEventListener('click', (event)=> {
+      event.stopPropagation();
       this.element.classList.toggle('active');
       const menu = document.getElementById('sideMenu');
       if (menu) {

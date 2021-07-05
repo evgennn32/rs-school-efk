@@ -43,8 +43,8 @@ export default class Menu extends Component {
         menuItem.element.classList.add('menu__item-active');
         this.closeMenu();
       })
-
     })
+    this.addCloseMenuHandler();
     this.addMenuBottom()
     this.renderChildElement(menuWrapper, `menu-placeholder`);
   }
@@ -81,7 +81,7 @@ export default class Menu extends Component {
 
   addMenuBottom(): void {
     const menuBottom = document.createElement("ul");
-    menuBottom.classList.add('menu__wrapper','menu__wrapper_bottom');
+    menuBottom.classList.add('menu__wrapper', 'menu__wrapper_bottom');
     const statisticLink = document.createElement('li');
     statisticLink.classList.add('menu__item');
     statisticLink.innerHTML = 'Statistic';
@@ -101,5 +101,20 @@ export default class Menu extends Component {
     menuBottom.append(statisticLink);
     menuBottom.append(loginBtn);
     this.element.append(menuBottom);
+  }
+
+  addCloseMenuHandler(): void {
+    document.addEventListener('click', (event) => {
+      const specifiedElement = document.getElementById('sideMenu');
+      if (specifiedElement) {
+        if (event.target) {
+          const elem = <HTMLElement>event.target
+          const isClickInside = specifiedElement.contains(elem);
+          if (!isClickInside) {
+            this.closeMenu();
+          }
+        }
+      }
+    });
   }
 }

@@ -1,10 +1,9 @@
-import type App from "../app";
 
 export default class StatisticService {
 
   private statisticData: Map<number, { trainingModeClicks: number; wordGuessed: number; gameModeErrors: number; }>;
 
-  constructor(app: App) {
+  constructor() {
     this.statisticData = new Map();
     this.init()
   }
@@ -16,10 +15,7 @@ export default class StatisticService {
   }
 
   updateLocalStorage():void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     localStorage.statisticData = JSON.stringify([...this.statisticData]);
-    console.log(this.statisticData)
   }
 
   deleteStatistic(): void {

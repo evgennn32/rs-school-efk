@@ -1,11 +1,9 @@
 import Component from "../Component";
 import './statisticTable.scss';
-import type App from "../../app";
 
 export default class StatisticTableRow extends Component {
 
   private html: string;
-
 
   constructor(private cardData: {category: string;
     word: string;
@@ -20,14 +18,12 @@ export default class StatisticTableRow extends Component {
     this.html = ``;
   }
 
-  render() {
+  render():void {
     super.render();
   }
 
   buildHtml(): string {
     this.html = `
-
-
       <td>${this.cardData.category}</td>
       <td>${this.cardData.word}</td>
       <td>${this.cardData.translation}</td>
@@ -35,11 +31,7 @@ export default class StatisticTableRow extends Component {
       <td>${this.cardData.wordGuessed}</td>
       <td>${this.cardData.gameModeErrors}</td>
       <td>${this.cardData.correctAnswersPercent} %</td>
-
         `;
     return this.html;
   }
-
-
-
 }

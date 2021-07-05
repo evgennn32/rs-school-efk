@@ -528,7 +528,15 @@ const cards = [
     }
   ]
 ]
-const categories = ['Action (set A)', 'Action (set B)', 'Action (set C)', 'Adjective', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'];
+const categories = [
+  'Action (set A)',
+  'Action (set B)',
+  'Action (set C)',
+  'Adjective',
+  'Animal (set A)',
+  'Animal (set B)',
+  'Clothes',
+  'Emotions'];
 const categoriesImages = ['fish','ride','carry', 'big', 'dog', 'bird', 'boot', 'happy'];
 
 export {cards};
