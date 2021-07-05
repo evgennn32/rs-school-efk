@@ -19,7 +19,7 @@ export default class RoutService {
     this.routes = [
       {
         path: 'cards', cb: () => {
-          this.app.renderGameField();
+
         }
       },
       {

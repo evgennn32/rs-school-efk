@@ -39,6 +39,7 @@ export default class Menu extends Component {
       menuItem.element.addEventListener('click', () => {
         this.app.appData.categoryId = index;
         this.app.navigatePage('cards');
+        this.app.renderGameField();
         this.clearSelectedItems();
         menuItem.element.classList.add('menu__item-active');
         this.closeMenu();
