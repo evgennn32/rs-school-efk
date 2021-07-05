@@ -64,7 +64,6 @@ export default class App {
 
   renderGameField(): void {
     const elToInsert = document.querySelector('.main');
-    console.log('rendering game')
     if (elToInsert) {
       const newGameField = new CardsField(this);
       newGameField.render();
