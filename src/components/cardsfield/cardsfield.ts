@@ -14,6 +14,9 @@ export default class CardsField extends Component {
 
   constructor(private app: App) {
     super('div', ['game__cards-field']);
+    const currentGameMode = this.app.gameService.gameData.gameMode
+    this.app.gameService.clearGameData(true);
+    this.app.gameService.gameData.gameMode = currentGameMode
     this.cards = this.app.gameService.cardsData[this.app.appData.categoryId];
     this.html = `<div class="rating" id="rating"></div>
                   <h1 class="h1">${this.app.gameService.categories[this.app.appData.categoryId]}</h1>
@@ -90,6 +93,4 @@ export default class CardsField extends Component {
   buildHtml(): string {
     return this.html;
   }
-
-
 }
