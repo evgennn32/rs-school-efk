@@ -119,6 +119,12 @@ export default class GameService {
     const gameContainer = document.querySelector('.game__cards-field');
     if (gameContainer) {
       gameContainer.replaceWith(congrats.element);
+      if(this.gameData.incorrectMoves){
+        this.playSound('audio/failure.mp3');
+      } else {
+        this.playSound('audio/success.mp3');
+      }
+
     }
   }
 
