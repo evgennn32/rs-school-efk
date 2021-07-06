@@ -4,6 +4,7 @@ import type App from "../app";
 import CategoryCard from "../components/categoryCard/categoryCard";
 import LoginForm from "../components/loginForm/loginForm";
 import PopUp from "../components/popUp/popUp";
+import {changeCategory} from "../redux/actions";
 
 
 export default class HomePage extends Component {
@@ -59,9 +60,7 @@ export default class HomePage extends Component {
   addCardHandler(card: HTMLElement, categoryId: number): void {
     card.addEventListener('click', ev => {
       ev.preventDefault();
-      this.app.appData.categoryId = categoryId;
-      this.app.navigatePage('cards');
-      this.app.renderGameField();
+      this.app.store.dispatch(changeCategory(categoryId));
     })
   }
 

@@ -8,7 +8,7 @@
   const path = require('path');
 
   module.exports = {
-    entry: './src/index.ts',
+    entry: './src/rootReducer.ts',
     output: {
       filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist'),
@@ -198,7 +198,7 @@ module.exports = ({ development }) => ({
   mode: development ? 'development' : 'production',
   devtool: development ? 'inline-source-map' : false,
   entry: {
-    main: './src/index.ts',
+    main: './src/rootReducer.ts',
   },
   output: {
     filename: '[name].[contenthash].js',

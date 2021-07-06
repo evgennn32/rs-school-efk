@@ -1,4 +1,8 @@
-// eslint-disable-next-line import/no-cycle
+import {applyMiddleware, createStore} from 'redux'
+// eslint-disable-next-line import/no-cycle,import/no-extraneous-dependencies
+import logger from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk';
 import HomePage from './pages/home';
 // eslint-disable-next-line import/no-cycle
 import RoutService from "./services/routService";
@@ -9,7 +13,7 @@ import GameService from "./services/gameService";
 import CardsField from "./components/cardsfield/cardsfield";
 import StatisticService from "./services/statisticService";
 import StatisticTable from "./components/statisticTable/statisticTable";
-
+import rootReducer from "./redux/reducers/rootReducer";
 
 
 export default class App {
@@ -24,7 +28,13 @@ export default class App {
 
   public statisticService: StatisticService;
 
+  // @ts-ignore
+  public store: Store<EmptyObject & { menu: boolean } & S, AnyAction> & Store<S, A> & { dispatch: Dispatch<A> } ;
+
   constructor(private rootElement: HTMLElement) {
+    this.store = createStore(rootReducer,composeWithDevTools(
+      applyMiddleware(thunk, logger)
+    ))
     this.gameService = new GameService(this);
     this.statisticService = new StatisticService();
     this.rootElement = rootElement;
@@ -34,6 +44,9 @@ export default class App {
     this.appData = {
       categoryId: -1
     }
+
+    this.subscribeStore();
+
 
     rootElement.appendChild(this.pageToDisplay);
   }
@@ -87,6 +100,15 @@ export default class App {
     if(popup) {
       popup.classList.remove('hidden');
     }
+  }
+
+  subscribeStore():void {
+    this.store.subscribe(() => {
+      const state = this.store.getState();
+      this.appData.categoryId = state.category.activeCategory
+      this.navigatePage('cards');
+      this.renderGameField();
+    })
   }
 
 }

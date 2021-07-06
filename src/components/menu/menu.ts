@@ -2,6 +2,7 @@ import Component from "../Component";
 import './menu.scss';
 import type App from "../../app";
 import MenuItem from "./menuItem";
+import {changeCategory} from "../../redux/actions";
 
 export default class Menu extends Component {
 
@@ -37,9 +38,7 @@ export default class Menu extends Component {
       menuWrapper.append(menuItem.element);
 
       menuItem.element.addEventListener('click', () => {
-        this.app.appData.categoryId = index;
-        this.app.navigatePage('cards');
-        this.app.renderGameField();
+        this.app.store.dispatch(changeCategory(index));
         this.clearSelectedItems();
         menuItem.element.classList.add('menu__item-active');
         this.closeMenu();
