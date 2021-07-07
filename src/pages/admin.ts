@@ -1,13 +1,13 @@
 import Component from "../components/Component";
 import type App from "../app";
 import AdminHeader from "../components/adminHeader/AdminHeader";
+import AdminCategories from "../components/adminCategories/adminCategories";
 
 // import {changeCategory} from "../redux/actions";
 
 
 export default class AdminPage extends Component {
   private html: string;
-
 
 
   constructor(protected app: App) {
@@ -19,7 +19,8 @@ export default class AdminPage extends Component {
     super.render();
     const header = new AdminHeader(this.app);
     this.renderChildComponent(header, 'header-placeholder');
-
+    const categories = new AdminCategories(this.app);
+    this.renderChildComponent(categories, 'active-page-placeholder');
   }
 
   buildHtml(): string {
@@ -36,13 +37,6 @@ export default class AdminPage extends Component {
             `;
     return this.html;
   }
-
-
-
-
-
-
-
 
 
 }
