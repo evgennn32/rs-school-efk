@@ -15,13 +15,13 @@ function categoryReducer(
   action: { type: string; payload: number }) {
   switch (action.type) {
     case 'CHANGE_CATEGORY':
-      console.log(state);
       return {...state, activeCategory: action.payload}
-
     default:
       return state
   }
 }
+
+
 
 const rootReducer = combineReducers({
 

@@ -28,8 +28,8 @@ export default class RoutService {
         }
       },
       {
-        path: 'about', cb: () => {
-          this.app.renderPage('home');
+        path: 'admin', cb: () => {
+          this.app.renderPage('admin');
         }
       },
       {

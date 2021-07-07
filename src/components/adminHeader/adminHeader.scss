@@ -1,0 +1,24 @@
+.admin-header {
+  height: 97px;
+  background-color: #00BF82;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    margin: 0 80px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+
+
+@media screen and (max-width: 750px) {
+  .admin-header a {
+    margin: 10px;
+    font-size: 14px;
+  }
+}

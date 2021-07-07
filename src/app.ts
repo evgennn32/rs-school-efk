@@ -14,6 +14,7 @@ import CardsField from "./components/cardsfield/cardsfield";
 import StatisticService from "./services/statisticService";
 import StatisticTable from "./components/statisticTable/statisticTable";
 import rootReducer from "./redux/reducers/rootReducer";
+import AdminPage from "./pages/admin";
 
 
 export default class App {
@@ -28,8 +29,7 @@ export default class App {
 
   public statisticService: StatisticService;
 
-  // @ts-ignore
-  public store: Store<EmptyObject & { menu: boolean } & S, AnyAction> & Store<S, A> & { dispatch: Dispatch<A> } ;
+  public store: any ;
 
   constructor(private rootElement: HTMLElement) {
     this.store = createStore(rootReducer,composeWithDevTools(
@@ -41,6 +41,7 @@ export default class App {
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);
     this.pageToDisplay = homePage.element;
+    this.navigatePage('admin');
     this.appData = {
       categoryId: -1
     }
@@ -58,6 +59,9 @@ export default class App {
 
       case 'home':
         this.createPage(new HomePage(this));
+        break;
+      case 'admin':
+        this.createPage(new AdminPage(this));
         break;
       default:
         this.createPage(new HomePage(this));
@@ -105,10 +109,10 @@ export default class App {
   subscribeStore():void {
     this.store.subscribe(() => {
       const state = this.store.getState();
-      this.appData.categoryId = state.category.activeCategory
+      this.appData.categoryId = state.category.activeCategory;
       this.navigatePage('cards');
       this.renderGameField();
-    })
+    });
   }
 
 }
