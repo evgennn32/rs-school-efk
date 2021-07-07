@@ -15,6 +15,7 @@ import StatisticService from "./services/statisticService";
 import StatisticTable from "./components/statisticTable/statisticTable";
 import rootReducer from "./redux/reducers/rootReducer";
 import AdminPage from "./pages/admin";
+import APIService from "./services/APIService";
 
 
 export default class App {
@@ -31,7 +32,10 @@ export default class App {
 
   public store: any ;
 
+  public apiService: APIService;
+
   constructor(private rootElement: HTMLElement) {
+    this.apiService = new APIService();
     this.store = createStore(rootReducer,composeWithDevTools(
       applyMiddleware(thunk, logger)
     ))

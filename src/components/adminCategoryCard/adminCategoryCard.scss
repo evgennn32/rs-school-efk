@@ -2,6 +2,7 @@
   margin-top: 100px;
   display: flex;
   gap: 40px;
+  flex-wrap: wrap;
 
   &__card {
     position: relative;

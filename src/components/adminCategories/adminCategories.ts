@@ -15,9 +15,26 @@ export default class AdminCategories extends Component {
 
   render(): void {
     super.render();
-    const card = new AdminCategoryCard(this.app,{name: 'tesst', categoryId: 3}, 6)
-    card.render();
-    this.element.append(card.element);
+    try {
+      const categories = this.app.apiService.getCategories();
+      categories.then((allCategories) => {
+        allCategories.data.forEach((category:{name:string, categoryId: number}) => {
+          if(category.name){
+            const wordsNumberQuery = this.app.apiService.getCategoryWordsNumber(category.categoryId);
+            wordsNumberQuery.then(wordsNumber => {
+              const categoryCard = new AdminCategoryCard(this.app, category, wordsNumber);
+              categoryCard.render();
+              this.element.append(categoryCard.element);
+            });
+          }
+        });
+      });
+
+    } catch (e) {
+      throw Error(e)
+    }
+
+
 
   }
 

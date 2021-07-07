@@ -21,6 +21,13 @@ export default class AdminCategoryCard extends Component {
     this.renderChildComponent(updateBtn, 'update-btn-plh');
     this.renderChildComponent(addWordBtn, 'add-btn-plh');
     this.renderChildElement(removeBtn, 'remove-btn-plh');
+    addWordBtn.element.addEventListener('click', () => {
+
+      // this.app.apiService.getCategoryWords(1).then((words) => {
+      //   console.log(words)
+      // })
+
+    })
 
 
   }
