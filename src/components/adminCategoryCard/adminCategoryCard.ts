@@ -18,6 +18,7 @@ export default class AdminCategoryCard extends Component {
     const addWordBtn = new Button('Add word',['admin__btn']);
     const removeBtn =  document.createElement('div');
     removeBtn.classList.add('admin-categories__remove-bnt');
+    this.addRemoveBtnHandler(removeBtn);
     this.renderChildComponent(updateBtn, 'update-btn-plh');
     this.renderChildComponent(addWordBtn, 'add-btn-plh');
     this.renderChildElement(removeBtn, 'remove-btn-plh');
@@ -51,6 +52,14 @@ export default class AdminCategoryCard extends Component {
     `;
 
     return this.html;
+  }
+
+  addRemoveBtnHandler(removeBtn: HTMLElement):void {
+    removeBtn.addEventListener("click", () => {
+      this.app.apiService.removeCategory(this.category.categoryId).then((data) => {
+        this.element.remove();
+      })
+    })
   }
 
 

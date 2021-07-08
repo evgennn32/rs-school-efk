@@ -1,4 +1,4 @@
-import {cards, categories, categoriesImages} from "../assets/cards/cards";
+import {cards, categories} from "../assets/cards/cards";
 
 export default class APIService {
   private apiUrl: string;
@@ -64,7 +64,6 @@ export default class APIService {
     cardId: number;
     categoryId: number;
   }[]> {
-    console.log('categoryId',categoryId)
     try {
       const response = await fetch(`${this.apiUrl}${this.path.words}/${categoryId || ''}`);
       const responseData = await response.json()
@@ -92,6 +91,21 @@ export default class APIService {
       });
       const responseData = await response.json()
       return responseData.data
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+
+  async removeCategory(categoryId: number): Promise<void> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.category}/${categoryId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      });
+      return await response.json()
     } catch (e) {
       throw new Error(e);
     }
