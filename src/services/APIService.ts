@@ -111,6 +111,24 @@ export default class APIService {
     }
   }
 
+  async updateCategory(categoryName: string, categoryId: number): Promise<{ _id: string; name: string }> {
+    const category = {name: categoryName}
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.category}/${categoryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(category)
+      });
+      const responseData = await response.json()
+      console.log(response);
+      return responseData.data
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async addWord(wordData: {
     word: string;
     translation: string;
