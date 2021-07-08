@@ -2,6 +2,7 @@ import Component from "../Component";
 import './adminCategories.scss';
 import type App from "../../app";
 import AdminCategoryCard from "../adminCategoryCard/adminCategoryCard";
+import AddNewCategoryCard from "../adminCategoryCard/addNewCategoryCard";
 
 
 export default class AdminCategories extends Component {
@@ -15,6 +16,9 @@ export default class AdminCategories extends Component {
 
   render(): void {
     super.render();
+    const addNewCategoryCard = new AddNewCategoryCard(this.app);
+    addNewCategoryCard.render()
+    this.element.append(addNewCategoryCard.element);
     try {
       const categories = this.app.apiService.getCategories();
       categories.then((allCategories) => {

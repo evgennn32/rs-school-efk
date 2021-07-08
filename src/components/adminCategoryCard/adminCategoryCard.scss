@@ -28,6 +28,14 @@
     justify-content: space-around;
   }
 
+  &__name-input {
+    margin: 0 20px 30px 20px;
+    width: 88%;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #000;
+  }
+
   &__remove-bnt {
     position: absolute;
     cursor: pointer;
@@ -59,3 +67,5 @@
     transform: rotate(-45deg);
   }
 }
+
+

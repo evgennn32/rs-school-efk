@@ -40,8 +40,13 @@ export default class HomePage extends Component {
                 <div class="categories-placeholder"></div>
               </div>
             </main>
-            <footer>
+            <footer class="footer container">
             <div class='login-pop-up-placeholder'></div>
+            <a class="github" href="https://github.com/evgennn32" target="_blank" rel="noopener noreferrer">github</a>
+            <a class="rss" href="https://rs.school/js/" target="_blank" rel="noopener noreferrer">
+              <span class="rss-year">2021</span>
+            </a>
+
 </footer>
             `;
     return this.html;
@@ -63,9 +68,4 @@ export default class HomePage extends Component {
       this.app.store.dispatch(changeCategory(categoryId));
     })
   }
-
-
-
-
-
 }
