@@ -2,6 +2,7 @@ import Component from "../Component";
 import './adminCategoryCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
+import AdminCategoryCard from "./adminCategoryCard";
 
 
 export default class NewCategoryCard extends Component {
@@ -22,7 +23,7 @@ export default class NewCategoryCard extends Component {
     nameInput.type = 'text';
     nameInput.classList.add('admin-categories__name-input');
     this.renderChildElement(nameInput,'name-input-plh');
-    this.addCreateBtnHandler(createBtn);
+    this.addCreateBtnHandler(createBtn, nameInput);
     this.addCancelBtnHandler(cancelBtn);
 
 
@@ -43,10 +44,23 @@ export default class NewCategoryCard extends Component {
     return this.html;
   }
 
-  addCreateBtnHandler(btn: Button):void {
+  addCreateBtnHandler(btn: Button, nameInput: HTMLInputElement):void {
     btn.element.addEventListener('click', () => {
-      this.element.remove();
+      const categoryName = nameInput.value;
+      if(categoryName) {
+        this.app.apiService.addCategory(categoryName).then((newCardData) => {
+          // eslint-disable-next-line no-underscore-dangle
+          this.app.apiService.getCategoryByDBId(newCardData._id).then(renderCardData => {
+            const newCard = new AdminCategoryCard( this.app, renderCardData, 0 );
+            newCard.render();
+            this.element.replaceWith(newCard.element);
+          }).catch((e) => {
+            throw Error(e.message)
+          })
+        })
+      }
     })
+
   }
 
   addCancelBtnHandler(btn: Button):void {

@@ -48,7 +48,7 @@ export default class App {
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);
     this.pageToDisplay = homePage.element;
-    this.navigatePage('admin');
+    this.navigatePage('admin/categories');
     this.appData = {
       categoryId: -1,
       adminActivePage: 'categories',

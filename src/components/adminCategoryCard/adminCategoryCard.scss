@@ -28,12 +28,19 @@
     justify-content: space-around;
   }
 
+  &__name-input:focus-visible {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #000;
+  }
+
   &__name-input {
     margin: 0 20px 30px 20px;
     width: 88%;
     height: 40px;
     border: none;
     border-bottom: 2px solid #000;
+    font-size: 22px;
   }
 
   &__remove-bnt {

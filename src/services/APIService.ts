@@ -46,6 +46,16 @@ export default class APIService {
     }
   }
 
+  async getCategoryByDBId(id: string): Promise<{ name: string; categoryId: number; }> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.category}/get_by_db_id/${id}`);
+      const responseData = await response.json()
+      return responseData.data
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async getWords(categoryId: number): Promise<{
     word: string;
     translation: string;
@@ -70,16 +80,18 @@ export default class APIService {
   }
 
 
-  async addCategory(categoryName: string): Promise<void> {
+  async addCategory(categoryName: string): Promise<{ _id: string; name: string }> {
     const category = {name: categoryName}
     try {
-      await fetch(`${this.apiUrl}${this.path.category}`, {
+      const response = await fetch(`${this.apiUrl}${this.path.category}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(category)
       });
+      const responseData = await response.json()
+      return responseData.data
     } catch (e) {
       throw new Error(e);
     }
