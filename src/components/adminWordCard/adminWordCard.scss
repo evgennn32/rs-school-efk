@@ -1,0 +1,65 @@
+.admin-words {
+  margin-top: 100px;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+
+  &__card {
+    position: relative;
+    width: 360px;
+    border: 2px solid #C4C4C4;
+    padding: 15px;
+    font-size: 22px;
+    border-radius: 5px;
+  }
+
+  &__item {
+    margin: 30px 20px;
+  }
+
+  &__image {
+    width: 100%;
+  }
+
+  &__btns {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0 10px 0;
+    .btn {
+      width: 75%;
+      height: 70px;
+      font-size: 30px;
+    }
+  }
+
+  &__remove-bnt {
+    position: absolute;
+    cursor: pointer;
+    right: 15px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+  }
+
+  &__remove-bnt:hover {
+    opacity: 1;
+  }
+
+  &__remove-bnt:before, &__remove-bnt:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+  }
+
+  &__remove-bnt:before {
+    transform: rotate(45deg);
+  }
+
+  &__remove-bnt:after {
+    transform: rotate(-45deg);
+  }
+}

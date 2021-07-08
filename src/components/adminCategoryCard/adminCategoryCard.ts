@@ -22,7 +22,10 @@ export default class AdminCategoryCard extends Component {
     this.renderChildComponent(addWordBtn, 'add-btn-plh');
     this.renderChildElement(removeBtn, 'remove-btn-plh');
     addWordBtn.element.addEventListener('click', () => {
-
+      this.app.appData.adminWordsCategory = this.category.categoryId;
+      console.log('cat id',this.category.categoryId)
+      this.app.renderPage('adminWords')
+      // this.app.navigatePage(`${this.category.name.toLowerCase().replace(/\s/g, "-")}/words`);
       // this.app.apiService.getCategoryWords(1).then((words) => {
       //   console.log(words)
       // })

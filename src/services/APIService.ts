@@ -39,13 +39,14 @@ export default class APIService {
   async getCategories(): Promise<{ name: string; categoryId: number; }[]> {
     try {
       const response = await fetch(`${this.apiUrl}${this.path.category}`);
-      return await response.json();
+      const responseData = await response.json()
+      return responseData.data
     } catch (e) {
       throw new Error(e);
     }
   }
 
-  async getWordsByCategoryId(categoryId: number): Promise<{
+  async getWords(categoryId: number): Promise<{
     word: string;
     translation: string;
     image: string;
@@ -53,8 +54,9 @@ export default class APIService {
     cardId: number;
     categoryId: number;
   }[]> {
+    console.log('categoryId',categoryId)
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.words}/${categoryId}`);
+      const response = await fetch(`${this.apiUrl}${this.path.words}/${categoryId || ''}`);
       const responseData = await response.json()
       return responseData.data
     } catch (e) {
@@ -63,7 +65,7 @@ export default class APIService {
   }
 
   async getCategoryWordsNumber(categoryId: number): Promise<number> {
-    const words = await this.getWordsByCategoryId(categoryId)
+    const words = await this.getWords(categoryId)
     return words.length
   }
 

@@ -16,6 +16,7 @@ import StatisticTable from "./components/statisticTable/statisticTable";
 import rootReducer from "./redux/reducers/rootReducer";
 import AdminPage from "./pages/admin";
 import APIService from "./services/APIService";
+import AdminWordsPage from "./pages/adminWordsPage";
 
 
 export default class App {
@@ -26,13 +27,15 @@ export default class App {
 
   public gameService: GameService;
 
-  public appData: { categoryId: number };
+
 
   public statisticService: StatisticService;
 
   public store: any ;
 
   public apiService: APIService;
+
+  public appData: { adminWordsCategory: number; adminActivePage: string; categoryId: number };
 
   constructor(private rootElement: HTMLElement) {
     this.apiService = new APIService();
@@ -47,7 +50,9 @@ export default class App {
     this.pageToDisplay = homePage.element;
     this.navigatePage('admin');
     this.appData = {
-      categoryId: -1
+      categoryId: -1,
+      adminActivePage: 'categories',
+      adminWordsCategory: 0
     }
 
     this.subscribeStore();
@@ -66,6 +71,9 @@ export default class App {
         break;
       case 'admin':
         this.createPage(new AdminPage(this));
+        break;
+      case 'adminWords':
+        this.createPage(new AdminWordsPage(this));
         break;
       default:
         this.createPage(new HomePage(this));

@@ -18,7 +18,7 @@ export default class AdminCategories extends Component {
     try {
       const categories = this.app.apiService.getCategories();
       categories.then((allCategories) => {
-        allCategories.data.forEach((category:{name:string, categoryId: number}) => {
+        allCategories.forEach((category:{name:string, categoryId: number}) => {
           if(category.name){
             const wordsNumberQuery = this.app.apiService.getCategoryWordsNumber(category.categoryId);
             wordsNumberQuery.then(wordsNumber => {
