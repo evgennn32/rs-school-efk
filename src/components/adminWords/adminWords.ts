@@ -2,6 +2,7 @@ import Component from "../Component";
 import './adminWords.scss';
 import type App from "../../app";
 import AdminWordCard from "../adminWordCard/adminWordCard";
+import AddNewWordCard from "../adminWordCard/addNewWordCard";
 
 export default class AdminWords extends Component {
   private html: string;
@@ -14,6 +15,9 @@ export default class AdminWords extends Component {
 
   render(): void {
     super.render();
+    const addNewWordCard = new AddNewWordCard(this.app);
+    addNewWordCard.render();
+    this.element.append(addNewWordCard.element);
     try {
       const words = this.app.apiService.getWords(this.app.appData.adminWordsCategory);
       words.then((allWords) => {
