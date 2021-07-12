@@ -1,9 +1,11 @@
 import {cards, categories} from "../assets/cards/cards";
 
 export default class APIService {
-  private apiUrl: string;
+  private readonly apiUrl: string;
 
-  private path: { words: string; category: string };
+  private path: { words: string; file: string; category: string };
+
+
 
 
   constructor() {
@@ -11,6 +13,7 @@ export default class APIService {
     this.path = {
       category: 'category',
       words: 'words',
+      file: 'file',
     }
   }
 
@@ -147,6 +150,29 @@ export default class APIService {
     } catch (e) {
       throw new Error(e);
     }
+  }
+
+  async uploadFile(fileCategory: string, file: File):Promise <{fileName: string}> {
+    console.log('api service start uploading...')
+    const data = new FormData();
+    data.append('files',file);
+    data.append('file_category',fileCategory);
+    console.log('data',data)
+
+
+
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.file}`, {
+        method: 'POST',
+        body: data
+      });
+      const responseData = await response.json()
+      console.log(responseData);
+      return responseData
+    } catch (e) {
+      throw Error(e);
+    }
+
   }
 }
 
