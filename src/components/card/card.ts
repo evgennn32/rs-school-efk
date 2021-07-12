@@ -1,5 +1,6 @@
 import Component from "../Component";
 import './card.scss';
+import {APP_STORAGE, IMAGE_STORAGE} from "../../shared/constants";
 
 export default class Card extends Component {
 
@@ -19,10 +20,10 @@ export default class Card extends Component {
   buildHtml(): string {
     return `
     <div class="card">
-      <div class="card__back" style="background-image: url('./assets/cards/${this.cardData.image}')">
+      <div class="card__back" style="background-image: url('${IMAGE_STORAGE}/${this.cardData.image}')">
         <div class="card-header">${this.cardData.translation}</div>
       </div>
-      <div class="card__front"  style="background-image: url('./assets/cards/${this.cardData.image}')">
+      <div class="card__front"  style="background-image: url('${IMAGE_STORAGE}/${this.cardData.image}')">
         <div class="card-header">${this.cardData.word}</div>
       </div>
       <div class="rotate-placeholder"></div>

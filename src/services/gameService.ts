@@ -2,6 +2,7 @@ import Card from "../components/card/card";
 import type App from "../app";
 import { cards, categories, categoriesImages } from "../assets/cards/cards";
 import Congratulations from "../components/congratulations/congratulations";
+import {SOUND_STORAGE} from "../shared/constants";
 
 
 export default class GameService {
@@ -120,9 +121,9 @@ export default class GameService {
     if (gameContainer) {
       gameContainer.replaceWith(congrats.element);
       if(this.gameData.incorrectMoves){
-        this.playSound('audio/failure.mp3');
+        this.playSound('failure.mp3');
       } else {
-        this.playSound('audio/success.mp3');
+        this.playSound('success.mp3');
       }
 
     }
@@ -130,8 +131,10 @@ export default class GameService {
 
   playSound(sound: string): void {
     if (!this.playingSound) {
-      const audio = new Audio(`./../assets/cards/${sound}`);
-      audio.play();
+      const audio = new Audio(`${SOUND_STORAGE}/${sound}`);
+      audio.play().catch((e) => {
+        Error(e.message);
+      });
     }
   }
 
@@ -162,10 +165,10 @@ export default class GameService {
 
   compareSounds(sound: string): boolean {
     if (sound === this.cards[this.gameData.currentCardIndex].cardData.audioSrc) {
-      this.playSound('audio/correct.mp3');
+      this.playSound('correct.mp3');
       return true;
     }
-    this.playSound('audio/error.mp3');
+    this.playSound('error.mp3');
     return false;
 
 

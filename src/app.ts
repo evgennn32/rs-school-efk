@@ -27,8 +27,6 @@ export default class App {
 
   public gameService: GameService;
 
-
-
   public statisticService: StatisticService;
 
   public store: any ;
@@ -95,7 +93,6 @@ export default class App {
     const elToInsert = document.querySelector('.main');
     if (elToInsert) {
       const newGameField = new CardsField(this);
-      newGameField.render();
       elToInsert.innerHTML = '';
       elToInsert.append(newGameField.element);
     }

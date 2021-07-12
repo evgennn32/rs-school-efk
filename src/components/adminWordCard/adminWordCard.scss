@@ -32,6 +32,19 @@
     }
   }
 
+  .play-btn {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    background-image: url("../../assets/icons/play-button.svg");
+    background-size: contain;
+    cursor: pointer;
+    margin: 0 10px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    top: 7px;
+  }
+
   &__remove-bnt {
     position: absolute;
     cursor: pointer;
@@ -61,5 +74,9 @@
 
   &__remove-bnt:after {
     transform: rotate(-45deg);
+  }
+
+  &__image-wrap {
+    margin: 0 20px;
   }
 }
