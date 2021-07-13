@@ -152,10 +152,10 @@ export default class APIService {
     }
   }
 
-  async uploadFile(fileCategory: string, file: File):Promise <{fileName: string}> {
+  async uploadFile(fileCategory: string, file: File):Promise <{fileName: string; error: string}> {
     console.log('api service start uploading...')
     const data = new FormData();
-    data.append('files',file);
+    data.append('file',file);
     data.append('file_category',fileCategory);
     console.log('data',data)
 

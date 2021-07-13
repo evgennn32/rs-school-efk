@@ -3,7 +3,8 @@ import './adminWordCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
 import Input from "../input/input";
-import logger from "redux-logger";
+import Loader from "../loader/loader";
+
 
 
 
@@ -18,12 +19,21 @@ export default class NewWordCard extends Component {
 
   private soundInput: Input;
 
+  private imageSource: null | string;
+
+  private soundSource: null | string;
+
   constructor(protected app: App,) {
     super('div', ['admin-categories__card']);
     this.nameInput = new Input('name',['admin-words__name-input'],'text','name-input');
-    this.translationInput = new Input('translation',['admin-words__translation-input'],'text','translation-input');
-    this.imageInput = new Input('image',['admin-words__image-input','btn','avatar-btn'],'file','image-input');
-    this.soundInput = new Input('sound',['admin-words__sound-input','btn','avatar-btn'],'file','sound-input');
+    this.translationInput = new Input(
+      'translation',['admin-words__translation-input'],'text','translation-input');
+    this.imageInput = new Input(
+      'image',['admin-words__image-input','btn','avatar-btn'],'file','image-input');
+    this.soundInput = new Input(
+      'sound',['admin-words__sound-input','btn','avatar-btn'],'file','sound-input');
+    this.imageSource = null;
+    this.soundSource = null;
     this.html = '';
   }
 
@@ -31,40 +41,8 @@ export default class NewWordCard extends Component {
     super.render();
     const createBtn = new Button('Create',['admin__btn']);
     const cancelBtn = new Button('Cancel',['admin__btn','admin__btn_red']);
-
-    const btnAddImage = document.createElement('input');
-    btnAddImage.type = 'file';
-    btnAddImage.id = 'avatar-input'
-    btnAddImage.classList.add('btn','avatar-btn');
-    this.imageInput.element.addEventListener('change',() => {
-      console.log( "start uploading image...")
-      this.uploadFile('img','image-input').then(() => {
-        console.log( "upload finished")
-      } ).catch(e => {
-        Error(e);
-      })
-      // const uploadImageProcess = this.makeAvatar();
-      // makeAvatarProcess.then((avatar)=>{
-      //   this.avatar = avatar
-      //   this.updateFormAvatar();
-      // })
-    });
-    this.soundInput.element.addEventListener('change',() => {
-      console.log( "start uploading sound...")
-      this.uploadFile('sound','sound-input').then(() => {
-        console.log( "upload finished")
-      } ).catch(e => {
-        Error(e);
-      })
-      // const uploadImageProcess = this.makeAvatar();
-      // makeAvatarProcess.then((avatar)=>{
-      //   this.avatar = avatar
-      //   this.updateFormAvatar();
-      // })
-    });
-
-
-
+    this.addImageUploadHandler();
+    this.addSoundUploadHandler();
     this.addCreateBtnHandler(createBtn);
     this.addCancelBtnHandler(cancelBtn);
     this.renderChildComponent(createBtn, 'create-btn-plh');
@@ -73,9 +51,6 @@ export default class NewWordCard extends Component {
     this.renderChildComponent(this.translationInput,'translation-input-plh');
     this.renderChildComponent(this.imageInput,'image-input-plh');
     this.renderChildComponent(this.soundInput,'sound-input-plh');
-
-
-
   }
 
   buildHtml(): string {
@@ -88,14 +63,16 @@ export default class NewWordCard extends Component {
     <div class="translation-input-plh"></div>
     <div class="admin-words__file"> Sound:</div>
     <label for="sound-input" class="custom-file-upload btn avatar-btn">
-      Upload:
+      Upload
       <div class="sound-input-plh"></div>
     </label>
+    <div class="admin-words__file-src"><span>${this.soundSource || ''}</span></div>
     <div class="admin-words__file">Image:</div>
     <label for="image-input" class="custom-file-upload btn avatar-btn">
-      Upload:
+      Upload
       <div class="image-input-plh"></div>
     </label>
+    <div class="admin-words__file-src"><span>${this.imageSource || ''}</span></div>
     <div class="admin-categories__btns">
       <div class="create-btn-plh"></div>
       <div class="cancel-btn-plh"></div>
@@ -103,6 +80,47 @@ export default class NewWordCard extends Component {
     <div class="remove-btn-plh"></div>
     `;
     return this.html;
+  }
+
+  addImageUploadHandler(): void {
+    this.imageInput.element.addEventListener('change',() => {
+      const loader = new Loader([]);
+      loader.render();
+      this.imageInput.element.before(loader.element);
+      this.uploadFile('img','image-input').then((response) => {
+        loader.element.remove();
+        if(!response.error && response.fileName) {
+          this.imageSource = response.fileName
+          this.render();
+        }
+      } ).catch(e => {
+        loader.element.remove();
+        Error(e);
+      })
+
+    });
+  }
+
+  addSoundUploadHandler(): void{
+    this.soundInput.element.addEventListener('change',() => {
+      const loader = new Loader([]);
+      loader.render();
+      this.soundInput.element.before(loader.element);
+      this.uploadFile('sound','sound-input').then((response) => {
+
+        loader.element.remove();
+        if(!response.error && response.fileName) {
+          this.soundSource = response.fileName
+          const soundFileName = document.createElement('span');
+          soundFileName.innerHTML = this.soundSource;
+          this.render();
+        }
+      } ).catch(e => {
+        loader.element.remove()
+        // TODO show error
+        Error(e);
+      })
+    });
   }
 
   addCreateBtnHandler(btn: Button):void {
@@ -133,7 +151,7 @@ export default class NewWordCard extends Component {
     })
   }
 
-  uploadFile(type: string, itputId: string) :Promise<{fileName:string}>{
+  uploadFile(type: string, itputId: string) :Promise<{fileName:string; error: string}>{
     console.log('here')
     return new Promise((resolve, reject) => {
       const fileInput = <HTMLInputElement>document.querySelector(`#${itputId}`);
@@ -143,11 +161,11 @@ export default class NewWordCard extends Component {
         this.app.apiService.uploadFile(type,file ).then((response) => {
           console.log(response)
           resolve(response)
-          // if(!response.error){
-          //   resolve(response.fileName);
-          // } else {
-          //   reject(response.error)
-          // }
+          if(!response.error){
+            resolve(response);
+          } else {
+            reject(response.error)
+          }
         })
         // const reader = new FileReader();
         // reader.readAsBinaryString(file);
@@ -162,6 +180,7 @@ export default class NewWordCard extends Component {
 
     });
   }
+
 
 
 }
