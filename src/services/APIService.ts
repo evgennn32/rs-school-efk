@@ -91,6 +91,20 @@ export default class APIService {
     }
   }
 
+  async removeWord(wordId: number): Promise<void> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.words}/${wordId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      });
+      return await response.json()
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async getCategoryWordsNumber(categoryId: number): Promise<number> {
     const words = await this.getWords(categoryId)
     return words.length

@@ -31,14 +31,22 @@ export default class NewWordCard extends Component {
   constructor(protected app: App,) {
     super('div', ['admin-categories__card']);
     this.nameInput = new Input('name',['admin-words__name-input'],'text','name-input');
+    const nameInput = this.nameInput.element as HTMLInputElement
+    nameInput.minLength = 2
+    nameInput.required = true;
     this.translation = null;
     this.word = null;
     this.translationInput = new Input(
       'translation',['admin-words__translation-input'],'text','translation-input');
+    const translationInput = this.translationInput.element as HTMLInputElement
+    translationInput.minLength = 2
+    translationInput.required = true;
     this.imageInput = new Input(
       'image',['admin-words__image-input','btn','avatar-btn'],'file','image-input');
     this.soundInput = new Input(
       'sound',['admin-words__sound-input','btn','avatar-btn'],'file','sound-input');
+    const soundInput = this.soundInput.element as HTMLInputElement
+    soundInput.required = true;
     this.imageSource = null;
     this.soundSource = null;
     this.html = '';
@@ -46,7 +54,7 @@ export default class NewWordCard extends Component {
 
   render(): void {
     super.render();
-    const createBtn = new Button('Create',['admin__btn']);
+    const createBtn = new Button('Create',['admin__btn'], 'submit');
     const cancelBtn = new Button('Cancel',['admin__btn','admin__btn_red']);
     this.addImageUploadHandler();
     this.addSoundUploadHandler();
@@ -63,7 +71,7 @@ export default class NewWordCard extends Component {
 
   buildHtml(): string {
 
-    this.html = `
+    this.html = `<form action="/">
     <div class="admin-words__name">Word:</div>
     <div class="name-input-plh"></div>
     <div class="admin-words__name">Translation:</div>
@@ -84,13 +92,14 @@ export default class NewWordCard extends Component {
       <div class="create-btn-plh"></div>
       <div class="cancel-btn-plh"></div>
     </div>
-    <div class="remove-btn-plh"></div>
+    </form>
     `;
     return this.html;
   }
 
   addImageUploadHandler(): void {
     this.imageInput.element.addEventListener('change',() => {
+
       const loader = new Loader([]);
       loader.render();
       this.imageInput.element.before(loader.element);
@@ -103,8 +112,7 @@ export default class NewWordCard extends Component {
       } ).catch(e => {
         loader.element.remove();
         Error(e);
-      })
-
+      });
     });
   }
 
@@ -136,17 +144,18 @@ export default class NewWordCard extends Component {
   }
 
   addCreateBtnHandler(btn: Button):void {
-    btn.element.addEventListener('click', () => {
+    btn.element.addEventListener('click', (e) => {
+      e.preventDefault();
       if(this.validateFields()) {
         const nameInput = this.nameInput.element as HTMLInputElement
         const translationInput = this.translationInput.element as HTMLInputElement
         const word = nameInput.value;
         const translation = translationInput.value;
-        if(word && translation && this.soundSource && this.imageSource) {
+        if(word && translation && this.soundSource) {
           const wordData =  {
             word,
             translation,
-            image: this.imageSource,
+            image: this.imageSource || 'no-image.jpg',
             audioSrc: this.soundSource,
             categoryId: this.app.appData.adminWordsCategory
           }
@@ -155,11 +164,10 @@ export default class NewWordCard extends Component {
             const newCard = new AdminWordCard(this.app,newCardData)
             newCard.render()
             this.element.after(newCard.element)
-          })
+          });
         }
       }
-
-    })
+    });
 
   }
 
@@ -170,32 +178,20 @@ export default class NewWordCard extends Component {
   }
 
   uploadFile(type: string, itputId: string) :Promise<{fileName:string; error: string}>{
-    console.log('here')
     return new Promise((resolve, reject) => {
       const fileInput = <HTMLInputElement>document.querySelector(`#${itputId}`);
       if (fileInput && fileInput.files) {
         const file = fileInput.files[0];
 
         this.app.apiService.uploadFile(type,file ).then((response) => {
-          console.log(response)
           resolve(response)
           if(!response.error){
             resolve(response);
           } else {
             reject(response.error)
           }
-        })
-        // const reader = new FileReader();
-        // reader.readAsBinaryString(file);
-        // reader.onload =  (e) => {
-        //   if (e.target) {
-        //     avatarEncoded = e.target.result;
-        //   }
-        //   resolve(avatarEncoded);
-        //   // reject(this.avatar);
-        // }
+        });
       }
-
     });
   }
 

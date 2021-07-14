@@ -30,6 +30,15 @@ export default class AdminWordCard extends Component {
     this.renderChildElement(removeBtn, 'remove-btn-plh');
     const playBtn = document.createElement('div');
     playBtn.classList.add('play-btn');
+    removeBtn.addEventListener('click', () => {
+      this.app.apiService.removeWord(this.word.wordId)
+        .then(() =>{
+          this.element.remove()
+        })
+        .catch(e => {
+          throw Error(e);
+        })
+    });
     playBtn.addEventListener('click', () => {
       this.app.gameService.playSound(this.word.audioSrc)
     });
