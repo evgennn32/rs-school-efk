@@ -4,7 +4,7 @@ import {APP_STORAGE, IMAGE_STORAGE} from "../../shared/constants";
 
 export default class Card extends Component {
 
-  constructor(public cardData: {word: string, translation: string, image: string, audioSrc: string; cardId: number; }) {
+  constructor(public cardData: {word: string, translation: string, image: string, audioSrc: string; wordId: number; }) {
     super('div', ['card__container']);
   }
 

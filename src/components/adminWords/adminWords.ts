@@ -27,7 +27,7 @@ export default class AdminWords extends Component {
             translation: string;
             image: string;
             audioSrc: string;
-            cardId: number;
+            wordId: number;
             categoryId: number;
           }) => {
             if (word.word) {

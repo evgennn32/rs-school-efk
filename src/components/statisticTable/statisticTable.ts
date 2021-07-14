@@ -191,7 +191,7 @@ export default class StatisticTable extends Component {
 
 
   getCardData(
-    theCard: {image: string; audioSrc: string; translation: string; word: string; cardId: number; categoryId: number; })
+    theCard: {image: string; audioSrc: string; translation: string; word: string; wordId: number; categoryId: number; })
     : {category: string;
       word: string;
       translation: string;
@@ -200,7 +200,7 @@ export default class StatisticTable extends Component {
       gameModeErrors: number;
       correctAnswersPercent: number
     } {
-    const cardStatistic = this.app.statisticService.getCardStatistic(theCard.cardId);
+    const cardStatistic = this.app.statisticService.getCardStatistic(theCard.wordId);
 
     return {
       category: this.app.gameService.getCategoryById(theCard.categoryId),

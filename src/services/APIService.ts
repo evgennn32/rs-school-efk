@@ -6,8 +6,6 @@ export default class APIService {
   private path: { words: string; file: string; category: string };
 
 
-
-
   constructor() {
     this.apiUrl = 'http://evgennn32.cloudno.de/api/';
     this.path = {
@@ -59,12 +57,29 @@ export default class APIService {
     }
   }
 
+  async getWordByDBId(id: string): Promise<{
+    word: string;
+    translation: string;
+    image: string;
+    audioSrc: string;
+    wordId: number;
+    categoryId: number;
+  }> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.words}/get_by_db_id/${id}`);
+      const responseData = await response.json()
+      return responseData.data
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async getWords(categoryId: number): Promise<{
     word: string;
     translation: string;
     image: string;
     audioSrc: string;
-    cardId: number;
+    wordId: number;
     categoryId: number;
   }[]> {
     try {
@@ -138,36 +153,33 @@ export default class APIService {
     image: string;
     audioSrc: string;
     categoryId: number
-  }): Promise<void> {
+  }): Promise<{word: string; translation: string;image: string; audioSrc: string; wordId: number; categoryId: number}> {
     try {
-      await fetch(`${this.apiUrl}${this.path.words}`, {
+      const response = await fetch(`${this.apiUrl}${this.path.words}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(wordData)
       });
+      const responseData = await response.json()
+      // eslint-disable-next-line no-underscore-dangle
+      return await this.getWordByDBId(responseData.data._id);
     } catch (e) {
       throw new Error(e);
     }
   }
 
-  async uploadFile(fileCategory: string, file: File):Promise <{fileName: string; error: string}> {
-    console.log('api service start uploading...')
+  async uploadFile(fileCategory: string, file: File): Promise<{ fileName: string; error: string }> {
     const data = new FormData();
-    data.append('file',file);
-    data.append('file_category',fileCategory);
-    console.log('data',data)
-
-
-
+    data.append('file', file);
+    data.append('file_category', fileCategory);
     try {
       const response = await fetch(`${this.apiUrl}${this.path.file}`, {
         method: 'POST',
         body: data
       });
       const responseData = await response.json()
-      console.log(responseData);
       return responseData
     } catch (e) {
       throw Error(e);

@@ -23,9 +23,9 @@ export default class StatisticService {
     this.statisticData = new Map();
   }
 
-  updateCardStatistic(cardId:number, action: string):void {
-    if(this.statisticData.has(cardId)) {
-      const cardStatistic = this.statisticData.get(cardId);
+  updateCardStatistic(wordId:number, action: string):void {
+    if(this.statisticData.has(wordId)) {
+      const cardStatistic = this.statisticData.get(wordId);
       if (cardStatistic) {
         if(action === 'gameModeError' ) {
           cardStatistic.gameModeErrors += 1;
@@ -37,18 +37,18 @@ export default class StatisticService {
           cardStatistic.wordGuessed += 1;
         }
 
-        this.statisticData.set(cardId, cardStatistic);
+        this.statisticData.set(wordId, cardStatistic);
         this.updateLocalStorage();
       }
 
     } else {
-      this.statisticData.set(cardId,{gameModeErrors:0, wordGuessed: 0, trainingModeClicks: 0});
-      this.updateCardStatistic(cardId, action);
+      this.statisticData.set(wordId,{gameModeErrors:0, wordGuessed: 0, trainingModeClicks: 0});
+      this.updateCardStatistic(wordId, action);
     }
   }
 
-  getCardStatistic(cardId: number): { gameModeErrors: number; trainingModeClicks: number; wordGuessed: number; } {
-    const statistic = this.statisticData.get(cardId);
+  getCardStatistic(wordId: number): { gameModeErrors: number; trainingModeClicks: number; wordGuessed: number; } {
+    const statistic = this.statisticData.get(wordId);
     let cardStatistic = {
       gameModeErrors: 0,
       trainingModeClicks: 0,

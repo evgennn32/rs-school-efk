@@ -11,7 +11,7 @@ export default class GameService {
     audioSrc: string;
     translation: string;
     word: string;
-    cardId: number;
+    wordId: number;
     categoryId: number;
   } [][];
 
@@ -203,7 +203,7 @@ export default class GameService {
     audioSrc: string;
     translation: string;
     word: string;
-    cardId: number;
+    wordId: number;
     categoryId: number;
   } [] {
 

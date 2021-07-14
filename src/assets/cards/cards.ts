@@ -5,7 +5,7 @@ const cards = [
       translation: 'плакать',
       image: 'img/cry.jpg',
       audioSrc: 'audio/cry.mp3',
-      cardId: 1,
+      wordId: 1,
       categoryId: 0
     },
     {
@@ -13,7 +13,7 @@ const cards = [
       translation: 'танцевать',
       image: 'img/dance.jpg',
       audioSrc: 'audio/dance.mp3',
-      cardId: 2,
+      wordId: 2,
       categoryId: 0
     },
     {
@@ -21,7 +21,7 @@ const cards = [
       translation: 'нырять',
       image: 'img/dive.jpg',
       audioSrc: 'audio/dive.mp3',
-      cardId: 3,
+      wordId: 3,
       categoryId: 0
     },
     {
@@ -29,7 +29,7 @@ const cards = [
       translation: 'рисовать',
       image: 'img/draw.jpg',
       audioSrc: 'audio/draw.mp3',
-      cardId: 4,
+      wordId: 4,
       categoryId: 0
     },
     {
@@ -37,7 +37,7 @@ const cards = [
       translation: 'ловить рыбу',
       image: 'img/fish.jpg',
       audioSrc: 'audio/fish.mp3',
-      cardId: 5,
+      wordId: 5,
       categoryId: 0
     },
     {
@@ -45,7 +45,7 @@ const cards = [
       translation: 'летать',
       image: 'img/fly.jpg',
       audioSrc: 'audio/fly.mp3',
-      cardId: 6,
+      wordId: 6,
       categoryId: 0
     },
     {
@@ -53,7 +53,7 @@ const cards = [
       translation: 'обнимать',
       image: 'img/hug.jpg',
       audioSrc: 'audio/hug.mp3',
-      cardId: 7,
+      wordId: 7,
       categoryId: 0
     },
     {
@@ -61,7 +61,7 @@ const cards = [
       translation: 'прыгать',
       image: 'img/jump.jpg',
       audioSrc: 'audio/jump.mp3',
-      cardId: 8,
+      wordId: 8,
       categoryId: 0
     }
   ],
@@ -71,7 +71,7 @@ const cards = [
       translation: 'открывать',
       image: 'img/open.jpg',
       audioSrc: 'audio/open.mp3',
-      cardId: 9,
+      wordId: 9,
       categoryId: 1
     },
     {
@@ -79,7 +79,7 @@ const cards = [
       translation: 'играть',
       image: 'img/play.jpg',
       audioSrc: 'audio/play.mp3',
-      cardId: 10,
+      wordId: 10,
       categoryId: 1
     },
     {
@@ -87,7 +87,7 @@ const cards = [
       translation: 'указывать',
       image: 'img/point.jpg',
       audioSrc: 'audio/point.mp3',
-      cardId: 11,
+      wordId: 11,
       categoryId: 1
     },
     {
@@ -95,7 +95,7 @@ const cards = [
       translation: 'ездить',
       image: 'img/ride.jpg',
       audioSrc: 'audio/ride.mp3',
-      cardId: 12,
+      wordId: 12,
       categoryId: 1
     },
     {
@@ -103,7 +103,7 @@ const cards = [
       translation: 'бегать',
       image: 'img/run.jpg',
       audioSrc: 'audio/run.mp3',
-      cardId: 13,
+      wordId: 13,
       categoryId: 1
     },
     {
@@ -111,7 +111,7 @@ const cards = [
       translation: 'петь',
       image: 'img/sing.jpg',
       audioSrc: 'audio/sing.mp3',
-      cardId: 14,
+      wordId: 14,
       categoryId: 1
     },
     {
@@ -119,7 +119,7 @@ const cards = [
       translation: 'пропускать, прыгать',
       image: 'img/skip.jpg',
       audioSrc: 'audio/skip.mp3',
-      cardId: 15,
+      wordId: 15,
       categoryId: 1
     },
     {
@@ -127,7 +127,7 @@ const cards = [
       translation: 'плавать',
       image: 'img/swim.jpg',
       audioSrc: 'audio/swim.mp3',
-      cardId: 16,
+      wordId: 16,
       categoryId: 1
     }
   ],
@@ -137,7 +137,7 @@ const cards = [
       translation: 'нести',
       image: 'img/carry.jpg',
       audioSrc: 'audio/carry.mp3',
-      cardId: 17,
+      wordId: 17,
       categoryId: 2
     },
     {
@@ -145,7 +145,7 @@ const cards = [
       translation: 'толкать',
       image: 'img/push.jpg',
       audioSrc: 'audio/push.mp3',
-      cardId: 18,
+      wordId: 18,
       categoryId: 2
     },
     {
@@ -153,7 +153,7 @@ const cards = [
       translation: 'строить',
       image: 'img/build.jpg',
       audioSrc: 'audio/build.mp3',
-      cardId: 19,
+      wordId: 19,
       categoryId: 2
     },
     {
@@ -161,7 +161,7 @@ const cards = [
       translation: 'ловить',
       image: 'img/catch.jpg',
       audioSrc: 'audio/catch.mp3',
-      cardId: 2,
+      wordId: 2,
       categoryId: 2
     },
     {
@@ -169,7 +169,7 @@ const cards = [
       translation: 'ловить',
       image: 'img/drop.jpg',
       audioSrc: 'audio/drop.mp3',
-      cardId: 21,
+      wordId: 21,
       categoryId: 2
     },
     {
@@ -177,7 +177,7 @@ const cards = [
       translation: 'тянуть',
       image: 'img/pull.jpg',
       audioSrc: 'audio/pull.mp3',
-      cardId: 22,
+      wordId: 22,
       categoryId: 2
     },
     {
@@ -185,7 +185,7 @@ const cards = [
       translation: 'спорить',
       image: 'img/argue.jpg',
       audioSrc: 'audio/argue.mp3',
-      cardId: 23,
+      wordId: 23,
       categoryId: 2
     },
     {
@@ -193,7 +193,7 @@ const cards = [
       translation: 'водить',
       image: 'img/drive.jpg',
       audioSrc: 'audio/drive.mp3',
-      cardId: 24,
+      wordId: 24,
       categoryId: 2
     },
   ],
@@ -203,7 +203,7 @@ const cards = [
       translation: 'большой',
       image: 'img/big.jpg',
       audioSrc: 'audio/big.mp3',
-      cardId: 25,
+      wordId: 25,
       categoryId: 3
     },
     {
@@ -211,7 +211,7 @@ const cards = [
       translation: 'маленький',
       image: 'img/small.jpg',
       audioSrc: 'audio/small.mp3',
-      cardId: 26,
+      wordId: 26,
       categoryId: 3
     },
     {
@@ -219,7 +219,7 @@ const cards = [
       translation: 'быстрый',
       image: 'img/fast.jpg',
       audioSrc: 'audio/fast.mp3',
-      cardId: 27,
+      wordId: 27,
       categoryId: 3
     },
     {
@@ -227,7 +227,7 @@ const cards = [
       translation: 'медленный',
       image: 'img/slow.jpg',
       audioSrc: 'audio/slow.mp3',
-      cardId: 28,
+      wordId: 28,
       categoryId: 3
     },
     {
@@ -235,7 +235,7 @@ const cards = [
       translation: 'дружелюбный',
       image: 'img/friendly.jpg',
       audioSrc: 'audio/friendly.mp3',
-      cardId: 29,
+      wordId: 29,
       categoryId: 3
     },
     {
@@ -243,7 +243,7 @@ const cards = [
       translation: 'недружелюбный',
       image: 'img/unfriendly.jpg',
       audioSrc: 'audio/unfriendly.mp3',
-      cardId: 30,
+      wordId: 30,
       categoryId: 3
     },
     {
@@ -251,7 +251,7 @@ const cards = [
       translation: 'молодой',
       image: 'img/young.jpg',
       audioSrc: 'audio/young.mp3',
-      cardId: 31,
+      wordId: 31,
       categoryId: 3
     },
     {
@@ -259,7 +259,7 @@ const cards = [
       translation: 'старый',
       image: 'img/old.jpg',
       audioSrc: 'audio/old.mp3',
-      cardId: 32,
+      wordId: 32,
       categoryId: 3
     },
   ],
@@ -269,7 +269,7 @@ const cards = [
       translation: 'кот',
       image: 'img/cat.jpg',
       audioSrc: 'audio/cat.mp3',
-      cardId: 33,
+      wordId: 33,
       categoryId: 4
     },
     {
@@ -277,7 +277,7 @@ const cards = [
       translation: 'цыплёнок',
       image: 'img/chick.jpg',
       audioSrc: 'audio/chick.mp3',
-      cardId: 34,
+      wordId: 34,
       categoryId: 4
     },
     {
@@ -285,7 +285,7 @@ const cards = [
       translation: 'курица',
       image: 'img/chicken.jpg',
       audioSrc: 'audio/chicken.mp3',
-      cardId: 35,
+      wordId: 35,
       categoryId: 4
     },
     {
@@ -293,7 +293,7 @@ const cards = [
       translation: 'собака',
       image: 'img/dog.jpg',
       audioSrc: 'audio/dog.mp3',
-      cardId: 36,
+      wordId: 36,
       categoryId: 4
     },
     {
@@ -301,7 +301,7 @@ const cards = [
       translation: 'лошадь',
       image: 'img/horse.jpg',
       audioSrc: 'audio/horse.mp3',
-      cardId: 37,
+      wordId: 37,
       categoryId: 4
     },
     {
@@ -309,7 +309,7 @@ const cards = [
       translation: 'свинья',
       image: 'img/pig.jpg',
       audioSrc: 'audio/pig.mp3',
-      cardId: 38,
+      wordId: 38,
       categoryId: 4
     },
     {
@@ -317,7 +317,7 @@ const cards = [
       translation: 'кролик',
       image: 'img/rabbit.jpg',
       audioSrc: 'audio/rabbit.mp3',
-      cardId: 39,
+      wordId: 39,
       categoryId: 4
     },
     {
@@ -325,7 +325,7 @@ const cards = [
       translation: 'овца',
       image: 'img/sheep.jpg',
       audioSrc: 'audio/sheep.mp3',
-      cardId: 40,
+      wordId: 40,
       categoryId: 4
     }
   ],
@@ -335,7 +335,7 @@ const cards = [
       translation: 'птица',
       image: 'img/bird.jpg',
       audioSrc: 'audio/bird.mp3',
-      cardId: 41,
+      wordId: 41,
       categoryId: 5
     },
     {
@@ -343,7 +343,7 @@ const cards = [
       translation: 'рыба',
       image: 'img/fish1.jpg',
       audioSrc: 'audio/fish.mp3',
-      cardId: 42,
+      wordId: 42,
       categoryId: 5
     },
     {
@@ -351,7 +351,7 @@ const cards = [
       translation: 'жаба',
       image: 'img/frog.jpg',
       audioSrc: 'audio/frog.mp3',
-      cardId: 43,
+      wordId: 43,
       categoryId: 5
     },
     {
@@ -359,7 +359,7 @@ const cards = [
       translation: 'жирафа',
       image: 'img/giraffe.jpg',
       audioSrc: 'audio/giraffe.mp3',
-      cardId: 44,
+      wordId: 44,
       categoryId: 5
     },
     {
@@ -367,7 +367,7 @@ const cards = [
       translation: 'лев',
       image: 'img/lion.jpg',
       audioSrc: 'audio/lion.mp3',
-      cardId: 45,
+      wordId: 45,
       categoryId: 5
     },
     {
@@ -375,7 +375,7 @@ const cards = [
       translation: 'мышь',
       image: 'img/mouse.jpg',
       audioSrc: 'audio/mouse.mp3',
-      cardId: 46,
+      wordId: 46,
       categoryId: 5
     },
     {
@@ -383,7 +383,7 @@ const cards = [
       translation: 'черепаха',
       image: 'img/turtle.jpg',
       audioSrc: 'audio/turtle.mp3',
-      cardId: 47,
+      wordId: 47,
       categoryId: 5
     },
     {
@@ -391,7 +391,7 @@ const cards = [
       translation: 'дельфин',
       image: 'img/dolphin.jpg',
       audioSrc: 'audio/dolphin.mp3',
-      cardId: 48,
+      wordId: 48,
       categoryId: 5
     }
   ],
@@ -401,7 +401,7 @@ const cards = [
       translation: 'юбка',
       image: 'img/skirt.jpg',
       audioSrc: 'audio/skirt.mp3',
-      cardId: 49,
+      wordId: 49,
       categoryId: 6
     },
     {
@@ -409,7 +409,7 @@ const cards = [
       translation: 'брюки',
       image: 'img/pants.jpg',
       audioSrc: 'audio/pants.mp3',
-      cardId: 50,
+      wordId: 50,
       categoryId: 6
     },
     {
@@ -417,7 +417,7 @@ const cards = [
       translation: 'блузка',
       image: 'img/blouse.jpg',
       audioSrc: 'audio/blouse.mp3',
-      cardId: 51,
+      wordId: 51,
       categoryId: 6
     },
     {
@@ -425,7 +425,7 @@ const cards = [
       translation: 'платье',
       image: 'img/dress.jpg',
       audioSrc: 'audio/dress.mp3',
-      cardId: 52,
+      wordId: 52,
       categoryId: 6
     },
     {
@@ -433,7 +433,7 @@ const cards = [
       translation: 'ботинок',
       image: 'img/boot.jpg',
       audioSrc: 'audio/boot.mp3',
-      cardId: 53,
+      wordId: 53,
       categoryId: 6
     },
     {
@@ -441,7 +441,7 @@ const cards = [
       translation: 'рубашка',
       image: 'img/shirt.jpg',
       audioSrc: 'audio/shirt.mp3',
-      cardId: 54,
+      wordId: 54,
       categoryId: 6
     },
     {
@@ -449,7 +449,7 @@ const cards = [
       translation: 'пальто',
       image: 'img/coat.jpg',
       audioSrc: 'audio/coat.mp3',
-      cardId: 55,
+      wordId: 55,
       categoryId: 6
     },
     {
@@ -457,7 +457,7 @@ const cards = [
       translation: 'туфли',
       image: 'img/shoe.jpg',
       audioSrc: 'audio/shoe.mp3',
-      cardId: 56,
+      wordId: 56,
       categoryId: 6
     }
   ],
@@ -467,7 +467,7 @@ const cards = [
       translation: 'грустный',
       image: 'img/sad.jpg',
       audioSrc: 'audio/sad.mp3',
-      cardId: 57,
+      wordId: 57,
       categoryId: 7
     },
     {
@@ -475,7 +475,7 @@ const cards = [
       translation: 'сердитый',
       image: 'img/angry.jpg',
       audioSrc: 'audio/angry.mp3',
-      cardId: 58,
+      wordId: 58,
       categoryId: 7
     },
     {
@@ -483,7 +483,7 @@ const cards = [
       translation: 'счастливый',
       image: 'img/happy.jpg',
       audioSrc: 'audio/happy.mp3',
-      cardId: 59,
+      wordId: 59,
       categoryId: 7
     },
     {
@@ -491,7 +491,7 @@ const cards = [
       translation: 'уставший',
       image: 'img/tired.jpg',
       audioSrc: 'audio/tired.mp3',
-      cardId: 60,
+      wordId: 60,
       categoryId: 7
     },
     {
@@ -499,7 +499,7 @@ const cards = [
       translation: 'удивлённый',
       image: 'img/surprised.jpg',
       audioSrc: 'audio/surprised.mp3',
-      cardId: 61,
+      wordId: 61,
       categoryId: 7
     },
     {
@@ -507,7 +507,7 @@ const cards = [
       translation: 'испуганный',
       image: 'img/scared.jpg',
       audioSrc: 'audio/scared.mp3',
-      cardId: 62,
+      wordId: 62,
       categoryId: 7
     },
     {
@@ -515,7 +515,7 @@ const cards = [
       translation: 'улыбка',
       image: 'img/smile.jpg',
       audioSrc: 'audio/smile.mp3',
-      cardId: 63,
+      wordId: 63,
       categoryId: 7
     },
     {
@@ -523,7 +523,7 @@ const cards = [
       translation: 'смех',
       image: 'img/laugh.jpg',
       audioSrc: 'audio/laugh.mp3',
-      cardId: 64,
+      wordId: 64,
       categoryId: 7
     }
   ]

@@ -4,6 +4,7 @@ import type App from "../../app";
 import Button from "../button/button";
 import Input from "../input/input";
 import Loader from "../loader/loader";
+import AdminWordCard from "./adminWordCard";
 
 
 
@@ -23,9 +24,15 @@ export default class NewWordCard extends Component {
 
   private soundSource: null | string;
 
+  private translation: null;
+
+  private word: null;
+
   constructor(protected app: App,) {
     super('div', ['admin-categories__card']);
     this.nameInput = new Input('name',['admin-words__name-input'],'text','name-input');
+    this.translation = null;
+    this.word = null;
     this.translationInput = new Input(
       'translation',['admin-words__translation-input'],'text','translation-input');
     this.imageInput = new Input(
@@ -43,10 +50,11 @@ export default class NewWordCard extends Component {
     const cancelBtn = new Button('Cancel',['admin__btn','admin__btn_red']);
     this.addImageUploadHandler();
     this.addSoundUploadHandler();
-    this.addCreateBtnHandler(createBtn);
-    this.addCancelBtnHandler(cancelBtn);
     this.renderChildComponent(createBtn, 'create-btn-plh');
     this.renderChildComponent(cancelBtn, 'cancel-btn-plh');
+    this.addCreateBtnHandler(createBtn);
+    this.addCancelBtnHandler(cancelBtn);
+
     this.renderChildComponent(this.nameInput,'name-input-plh');
     this.renderChildComponent(this.translationInput,'translation-input-plh');
     this.renderChildComponent(this.imageInput,'image-input-plh');
@@ -56,7 +64,6 @@ export default class NewWordCard extends Component {
   buildHtml(): string {
 
     this.html = `
-<input id="uploadInput" type="file" name="myFiles" onchange="updateSize();" multiple>
     <div class="admin-words__name">Word:</div>
     <div class="name-input-plh"></div>
     <div class="admin-words__name">Translation:</div>
@@ -106,7 +113,7 @@ export default class NewWordCard extends Component {
       const loader = new Loader([]);
       loader.render();
       this.soundInput.element.before(loader.element);
-      this.uploadFile('sound','sound-input').then((response) => {
+      this.uploadFile('audio','sound-input').then((response) => {
 
         loader.element.remove();
         if(!response.error && response.fileName) {
@@ -123,24 +130,35 @@ export default class NewWordCard extends Component {
     });
   }
 
+  validateFields(): boolean {
+    // TODO add fields validation
+    return true
+  }
+
   addCreateBtnHandler(btn: Button):void {
     btn.element.addEventListener('click', () => {
-      const nameInput = this.nameInput.element as HTMLInputElement
-      const translationInput = this.translationInput.element as HTMLInputElement
-      const word = nameInput.value;
-      const translation = translationInput.value;
-      if(word && translation) {
-        // this.app.apiService.addCategory(categoryName).then((newCardData) => {
-          // eslint-disable-next-line no-underscore-dangle
-          // this.app.apiService.getCategoryByDBId(newCardData._id).then(renderCardData => {
-          //    const newCard = new AdminCategoryCard( this.app, renderCardData, 0 );
-          //    newCard.render();
-          //    this.element.replaceWith(newCard.element);
-          // }).catch((e) => {
-          //   throw Error(e.message)
-          // })
-       //  })
+      if(this.validateFields()) {
+        const nameInput = this.nameInput.element as HTMLInputElement
+        const translationInput = this.translationInput.element as HTMLInputElement
+        const word = nameInput.value;
+        const translation = translationInput.value;
+        if(word && translation && this.soundSource && this.imageSource) {
+          const wordData =  {
+            word,
+            translation,
+            image: this.imageSource,
+            audioSrc: this.soundSource,
+            categoryId: this.app.appData.adminWordsCategory
+          }
+          this.app.apiService.addWord(wordData).then((newCardData) => {
+
+            const newCard = new AdminWordCard(this.app,newCardData)
+            newCard.render()
+            this.element.after(newCard.element)
+          })
+        }
       }
+
     })
 
   }

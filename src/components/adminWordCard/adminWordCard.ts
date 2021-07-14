@@ -14,7 +14,7 @@ export default class AdminWordCard extends Component {
       translation: string;
       image: string;
       audioSrc: string;
-      cardId: number;
+      wordId: number;
       categoryId: number;
     }) {
     super('div', ['admin-words__card']);
@@ -32,10 +32,8 @@ export default class AdminWordCard extends Component {
     playBtn.classList.add('play-btn');
     playBtn.addEventListener('click', () => {
       this.app.gameService.playSound(this.word.audioSrc)
-    })
-
+    });
     this.renderChildElement(playBtn,'play-btn-plh');
-
   }
 
   buildHtml(): string {
@@ -45,9 +43,8 @@ export default class AdminWordCard extends Component {
     <div class="admin-words__item"><b>Translation:</b> ${this.word.translation}</div>
     <div class="admin-words__item"><b>Sound file:</b> ${this.word.audioSrc}<div class="play-btn-plh"></div></div>
     <div class="admin-words__item"><b>Image:</b></div>
-
     <div class="admin-words__image-wrap">
-    <img class="admin-words__image" src="${IMAGE_STORAGE}/${this.word.image}" alt="${this.word.word}">
+      <img class="admin-words__image" src="${IMAGE_STORAGE}/${this.word.image}" alt="${this.word.word}">
     </div>
     <div class="admin-words__btns">
       <div class="change-btn-plh"></div>
