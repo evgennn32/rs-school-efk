@@ -3,7 +3,7 @@ import {cards, categories} from "../assets/cards/cards";
 export default class APIService {
   private readonly apiUrl: string;
 
-  private path: { words: string; file: string; category: string };
+  private path: { words: string; file: string; singleWord: string; category: string };
 
 
   constructor() {
@@ -11,6 +11,7 @@ export default class APIService {
     this.path = {
       category: 'category',
       words: 'words',
+      singleWord: 'words/word',
       file: 'file',
     }
   }
@@ -57,7 +58,7 @@ export default class APIService {
     }
   }
 
-  async getWordByDBId(id: string): Promise<{
+  async getWordByDBId(id: number): Promise<{
     word: string;
     translation: string;
     image: string;
@@ -66,8 +67,25 @@ export default class APIService {
     categoryId: number;
   }> {
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.words}/get_by_db_id/${id}`);
+      const response = await fetch(`${this.apiUrl}${this.path.singleWord}/get_by_db_id/${id}`);
       const responseData = await response.json()
+      return responseData.data
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async getWord(id: number): Promise<{
+    word: string;
+    translation: string;
+    image: string;
+    audioSrc: string;
+    wordId: number;
+    categoryId: number;
+  }> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.singleWord}/${id}`);
+      const responseData = await response.json();
       return responseData.data
     } catch (e) {
       throw new Error(e);
@@ -93,7 +111,7 @@ export default class APIService {
 
   async removeWord(wordId: number): Promise<void> {
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.words}/${wordId}`, {
+      const response = await fetch(`${this.apiUrl}${this.path.singleWord}/${wordId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
@@ -169,7 +187,7 @@ export default class APIService {
     categoryId: number
   }): Promise<{word: string; translation: string;image: string; audioSrc: string; wordId: number; categoryId: number}> {
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.words}`, {
+      const response = await fetch(`${this.apiUrl}${this.path.singleWord}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
@@ -184,6 +202,30 @@ export default class APIService {
     }
   }
 
+  async updateWord(wordData: {
+    word: string;
+    translation: string;
+    image: string;
+    audioSrc: string;
+    wordId: number;
+    categoryId: number
+  }): Promise<{word: string; translation: string;image: string; audioSrc: string; wordId: number; categoryId: number}> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.singleWord}/${wordData.wordId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(wordData)
+      });
+      const responseData = await response.json()
+      // eslint-disable-next-line no-underscore-dangle
+      return await this.getWord(wordData.wordId);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async uploadFile(fileCategory: string, file: File): Promise<{ fileName: string; error: string }> {
     const data = new FormData();
     data.append('file', file);
@@ -193,8 +235,7 @@ export default class APIService {
         method: 'POST',
         body: data
       });
-      const responseData = await response.json()
-      return responseData
+      return await response.json()
     } catch (e) {
       throw Error(e);
     }

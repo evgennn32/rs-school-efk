@@ -7,8 +7,6 @@ import Loader from "../loader/loader";
 import AdminWordCard from "./adminWordCard";
 
 
-
-
 export default class NewWordCard extends Component {
   private html: string;
 
@@ -24,49 +22,68 @@ export default class NewWordCard extends Component {
 
   private soundSource: null | string;
 
-  private translation: null;
+  private translation: string | null;
 
-  private word: null;
+  private word: string | null;
 
-  constructor(protected app: App,) {
+  constructor(
+    protected app: App,
+    protected wordData: {
+      wordCard: AdminWordCard;
+      word: string;
+      translation: string;
+      image: string;
+      audioSrc: string;
+      wordId: number;
+      categoryId: number;
+    } | null =  null ) {
     super('div', ['admin-categories__card']);
-    this.nameInput = new Input('name',['admin-words__name-input'],'text','name-input');
-    const nameInput = this.nameInput.element as HTMLInputElement
-    nameInput.minLength = 2
+    this.translation = this.wordData ? this.wordData.translation : null;
+    this.word = this.wordData ? this.wordData.word : null;
+    this.imageSource = this.wordData ? this.wordData.image : null;
+    this.soundSource = this.wordData ? this.wordData.audioSrc : null;
+    this.nameInput = new Input('name', ['admin-words__name-input'], 'text', 'name-input');
+    const nameInput = this.nameInput.element as HTMLInputElement;
+    nameInput.minLength = 2;
     nameInput.required = true;
-    this.translation = null;
-    this.word = null;
+    nameInput.value = this.word || '';
+
     this.translationInput = new Input(
-      'translation',['admin-words__translation-input'],'text','translation-input');
+      'translation', ['admin-words__translation-input'], 'text', 'translation-input');
     const translationInput = this.translationInput.element as HTMLInputElement
     translationInput.minLength = 2
     translationInput.required = true;
+    translationInput.value = this.translation || '';
     this.imageInput = new Input(
-      'image',['admin-words__image-input','btn','avatar-btn'],'file','image-input');
+      'image', ['admin-words__image-input', 'btn', 'avatar-btn'], 'file', 'image-input');
     this.soundInput = new Input(
-      'sound',['admin-words__sound-input','btn','avatar-btn'],'file','sound-input');
+      'sound', ['admin-words__sound-input', 'btn', 'avatar-btn'], 'file', 'sound-input');
     const soundInput = this.soundInput.element as HTMLInputElement
     soundInput.required = true;
-    this.imageSource = null;
-    this.soundSource = null;
     this.html = '';
   }
 
   render(): void {
     super.render();
-    const createBtn = new Button('Create',['admin__btn'], 'submit');
-    const cancelBtn = new Button('Cancel',['admin__btn','admin__btn_red']);
-    this.addImageUploadHandler();
-    this.addSoundUploadHandler();
+    const createBtnText = this.wordData ? 'Update' : 'Create'
+    const createBtn = new Button(createBtnText, ['admin__btn'], 'submit');
+    const cancelBtn = new Button('Cancel', ['admin__btn', 'admin__btn_red']);
+    this.imageInput = new Input(
+      'image', ['admin-words__image-input', 'btn', 'avatar-btn'], 'file', 'image-input');
+    this.soundInput = new Input(
+      'sound', ['admin-words__sound-input', 'btn', 'avatar-btn'], 'file', 'sound-input');
+    const soundInput = this.soundInput.element as HTMLInputElement
+    soundInput.required = true;
+    this.imageInput.element.addEventListener('change', this.imageUploadHandler.bind(this));
+    this.soundInput.element.addEventListener('change', this.soundUploadHandler.bind(this));
     this.renderChildComponent(createBtn, 'create-btn-plh');
     this.renderChildComponent(cancelBtn, 'cancel-btn-plh');
     this.addCreateBtnHandler(createBtn);
     this.addCancelBtnHandler(cancelBtn);
-
-    this.renderChildComponent(this.nameInput,'name-input-plh');
-    this.renderChildComponent(this.translationInput,'translation-input-plh');
-    this.renderChildComponent(this.imageInput,'image-input-plh');
-    this.renderChildComponent(this.soundInput,'sound-input-plh');
+    this.renderChildComponent(this.nameInput, 'name-input-plh');
+    this.renderChildComponent(this.translationInput, 'translation-input-plh');
+    this.renderChildComponent(this.imageInput, 'image-input-plh');
+    this.renderChildComponent(this.soundInput, 'sound-input-plh');
   }
 
   buildHtml(): string {
@@ -97,45 +114,39 @@ export default class NewWordCard extends Component {
     return this.html;
   }
 
-  addImageUploadHandler(): void {
-    this.imageInput.element.addEventListener('change',() => {
-
-      const loader = new Loader([]);
-      loader.render();
-      this.imageInput.element.before(loader.element);
-      this.uploadFile('img','image-input').then((response) => {
-        loader.element.remove();
-        if(!response.error && response.fileName) {
-          this.imageSource = response.fileName
-          this.render();
-        }
-      } ).catch(e => {
-        loader.element.remove();
-        Error(e);
-      });
+  imageUploadHandler(): void {
+    const loader = new Loader([]);
+    loader.render();
+    this.imageInput.element.before(loader.element);
+    this.uploadFile('img', 'image-input').then((response) => {
+      loader.element.remove();
+      if (!response.error && response.fileName) {
+        this.imageSource = response.fileName;
+        this.render();
+      }
+    }).catch(e => {
+      loader.element.remove();
+      Error(e);
     });
   }
 
-  addSoundUploadHandler(): void{
-    this.soundInput.element.addEventListener('change',() => {
-      const loader = new Loader([]);
-      loader.render();
-      this.soundInput.element.before(loader.element);
-      this.uploadFile('audio','sound-input').then((response) => {
-
-        loader.element.remove();
-        if(!response.error && response.fileName) {
-          this.soundSource = response.fileName
-          const soundFileName = document.createElement('span');
-          soundFileName.innerHTML = this.soundSource;
-          this.render();
-        }
-      } ).catch(e => {
-        loader.element.remove()
-        // TODO show error
-        Error(e);
-      })
-    });
+  soundUploadHandler(): void {
+    const loader = new Loader([]);
+    loader.render();
+    this.soundInput.element.before(loader.element);
+    this.uploadFile('audio', 'sound-input').then((response) => {
+      loader.element.remove();
+      if (!response.error && response.fileName) {
+        this.soundSource = response.fileName
+        const soundFileName = document.createElement('span');
+        soundFileName.innerHTML = this.soundSource;
+        this.render();
+      }
+    }).catch(e => {
+      loader.element.remove()
+      // TODO show error
+      Error(e);
+    })
   }
 
   validateFields(): boolean {
@@ -143,49 +154,65 @@ export default class NewWordCard extends Component {
     return true
   }
 
-  addCreateBtnHandler(btn: Button):void {
+  addCreateBtnHandler(btn: Button): void {
     btn.element.addEventListener('click', (e) => {
       e.preventDefault();
-      if(this.validateFields()) {
+      if (this.validateFields()) {
         const nameInput = this.nameInput.element as HTMLInputElement
         const translationInput = this.translationInput.element as HTMLInputElement
         const word = nameInput.value;
         const translation = translationInput.value;
-        if(word && translation && this.soundSource) {
-          const wordData =  {
+        if (word && translation && this.soundSource) {
+          const wordData = {
             word,
             translation,
             image: this.imageSource || 'no-image.jpg',
             audioSrc: this.soundSource,
-            categoryId: this.app.appData.adminWordsCategory
+            categoryId: this.app.appData.adminWordsCategory,
+            wordId: this.wordData ? this.wordData.wordId : 0,
           }
-          this.app.apiService.addWord(wordData).then((newCardData) => {
+          if(this.wordData) {
+            this.app.apiService.updateWord(wordData).then((newCardData) => {
+              const newCard = new AdminWordCard(this.app, newCardData)
+              newCard.render()
+              if(this.wordData)
+                this.wordData.wordCard.element.replaceWith(newCard.element);
+              this.element.remove();
+            });
+          } else {
 
-            const newCard = new AdminWordCard(this.app,newCardData)
-            newCard.render()
-            this.element.after(newCard.element)
-          });
+            this.app.apiService.addWord(wordData).then((newCardData) => {
+
+              const newCard = new AdminWordCard(this.app, newCardData)
+              newCard.render()
+              this.element.replaceWith(newCard.element);
+            });
+          }
+
         }
       }
     });
 
   }
 
-  addCancelBtnHandler(btn: Button):void {
+  addCancelBtnHandler(btn: Button): void {
     btn.element.addEventListener('click', () => {
+      if(this.wordData) {
+        this.wordData.wordCard.element.classList.remove('hidden');
+      }
       this.element.remove();
     })
   }
 
-  uploadFile(type: string, itputId: string) :Promise<{fileName:string; error: string}>{
+  uploadFile(type: string, itputId: string): Promise<{ fileName: string; error: string }> {
     return new Promise((resolve, reject) => {
       const fileInput = <HTMLInputElement>document.querySelector(`#${itputId}`);
       if (fileInput && fileInput.files) {
         const file = fileInput.files[0];
 
-        this.app.apiService.uploadFile(type,file ).then((response) => {
+        this.app.apiService.uploadFile(type, file).then((response) => {
           resolve(response)
-          if(!response.error){
+          if (!response.error) {
             resolve(response);
           } else {
             reject(response.error)
@@ -194,7 +221,6 @@ export default class NewWordCard extends Component {
       }
     });
   }
-
 
 
 }

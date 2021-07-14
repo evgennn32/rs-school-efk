@@ -3,6 +3,8 @@ import './adminWordCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
 import {APP_STORAGE, IMAGE_STORAGE} from "../../shared/constants";
+import NewWordCard from "./newWordCard";
+
 
 
 export default class AdminWordCard extends Component {
@@ -24,6 +26,7 @@ export default class AdminWordCard extends Component {
   render(): void {
     super.render();
     const changeBtn = new Button('Change',['admin__btn']);
+    changeBtn.element.addEventListener('click', this.updateWord.bind(this))
     this.renderChildComponent(changeBtn,'change-btn-plh')
     const removeBtn =  document.createElement('div');
     removeBtn.classList.add('admin-categories__remove-bnt');
@@ -46,7 +49,6 @@ export default class AdminWordCard extends Component {
   }
 
   buildHtml(): string {
-
     this.html = `
     <div class="admin-words__item"><b>Word:</b> ${this.word.word}</div>
     <div class="admin-words__item"><b>Translation:</b> ${this.word.translation}</div>
@@ -59,12 +61,25 @@ export default class AdminWordCard extends Component {
       <div class="change-btn-plh"></div>
     </div>
     <div class="remove-btn-plh"></div>
-
-
-
     `;
 
     return this.html;
+  }
+
+  updateWord(): void{
+    const updateCardData = {
+      word: this.word.word,
+      translation: this.word.translation,
+      image: this.word.image,
+      audioSrc: this.word.audioSrc,
+      wordId: this.word.wordId,
+      categoryId: this.word.categoryId,
+      wordCard : this,
+    }
+    const updateCard = new NewWordCard(this.app,updateCardData);
+    updateCard.render();
+    this.element.classList.add('hidden');
+    this.element.after(updateCard.element);
   }
 
 

@@ -2,7 +2,7 @@ import Component from "../Component";
 import './adminCategoryCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
-import AdminCategoryCard from "./adminCategoryCard";
+import type AdminCategoryCard from "./adminCategoryCard";
 
 
 export default class UpdateCategoryCard extends Component {
@@ -29,9 +29,6 @@ export default class UpdateCategoryCard extends Component {
     this.renderChildElement(nameInput,'name-input-plh');
     this.addUpdateBtnHandler(updateBtn, nameInput);
     this.addCancelBtnHandler(cancelBtn);
-
-
-
   }
 
   buildHtml(): string {
