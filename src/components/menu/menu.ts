@@ -10,14 +10,11 @@ export default class Menu extends Component {
 
   private readonly html: string;
 
-  private menu: string[];
-
   constructor(protected app: App) {
     super('nav', ['menu']);
     this.element.id = 'sideMenu';
     this.ActivePageId = 1;
     this.detectActivePage();
-    this.menu = this.app.gameService.categories
     this.html = `<div class='menu-placeholder'></div>`;
   }
 
@@ -29,21 +26,24 @@ export default class Menu extends Component {
     homeLink.element.classList.add('menu__item-active');
     homeLink.element.addEventListener('click', () => {
       this.app.navigatePage('');
-    })
+    });
     menuWrapper.append(homeLink.element);
-    this.menu.forEach((el, index) => {
-      const menuClasses = ['menu__item'];
-      const menuItem = new MenuItem(menuClasses, el);
-      menuItem.element.dataset.page_index = `${index}`;
-      menuWrapper.append(menuItem.element);
-
-      menuItem.element.addEventListener('click', () => {
-        this.app.store.dispatch(changeCategory(index));
-        this.clearSelectedItems();
-        menuItem.element.classList.add('menu__item-active');
-        this.closeMenu();
-      })
-    })
+    this.app.apiService.getCategories().then((categories) => {
+      categories.forEach((category, index) => {
+        const menuClasses = ['menu__item'];
+        if(category.name) {
+          const menuItem = new MenuItem(menuClasses, category.name);
+          menuItem.element.dataset.page_index = `${index}`;
+          menuWrapper.append(menuItem.element);
+          menuItem.element.addEventListener('click', () => {
+            this.app.store.dispatch(changeCategory(category.categoryId));
+            this.clearSelectedItems();
+            menuItem.element.classList.add('menu__item-active');
+            this.closeMenu();
+          });
+        }
+      });
+    });
     this.addCloseMenuHandler();
     this.addMenuBottom()
     this.renderChildElement(menuWrapper, `menu-placeholder`);
@@ -96,6 +96,7 @@ export default class Menu extends Component {
     loginBtn.classList.add('menu__item', 'login-btn');
     loginBtn.innerHTML = 'Login';
     loginBtn.addEventListener('click', () => {
+      this.closeMenu();
       this.app.showPopup('login-popup');
     });
     menuBottom.append(statisticLink);

@@ -25,11 +25,11 @@ export default class HomePage extends Component {
     const categoriesWrapper = document.createElement('div');
     categoriesWrapper.classList.add('categories-wrap');
     this.renderCategoriesCards(categoriesWrapper);
-    this.renderChildElement(categoriesWrapper,'categories-placeholder');
+    this.renderChildElement(categoriesWrapper, 'categories-placeholder');
 
     const loginForm = new LoginForm(this.app);
-    const loginPopUp = new PopUp('login-popup',loginForm);
-    this.renderChildComponent(loginPopUp,'login-pop-up-placeholder');
+    const loginPopUp = new PopUp('login-popup', loginForm);
+    this.renderChildComponent(loginPopUp, 'login-pop-up-placeholder');
   }
 
   buildHtml(): string {
@@ -53,12 +53,23 @@ export default class HomePage extends Component {
   }
 
   renderCategoriesCards(categoriesWrapper: HTMLElement): void {
+    this.app.apiService.getCategories().then(categories => {
+      categories.forEach((category, index) => {
+        if (!category.name)
+          return;
+        this.app.apiService.getWords(category.categoryId).then(categoryWords => {
+          let categoryImage = 'no-image.jpg';
+          if (categoryWords[0]) {
+            categoryImage = categoryWords[0].image;
+          }
+          const newCategoryCard = new CategoryCard({title: category.name, image: categoryImage});
+          newCategoryCard.render();
+          this.addCardHandler(newCategoryCard.element, index);
+          categoriesWrapper.append(newCategoryCard.element);
+        })
 
-    this.app.gameService.categories.forEach((category,index) => {
-      const newCategoryCard = new CategoryCard({title:category, image: `${this.categoriesImages[index]}`});
-      newCategoryCard.render();
-      this.addCardHandler(newCategoryCard.element, index);
-      categoriesWrapper.append(newCategoryCard.element);
+      })
+
     })
   }
 

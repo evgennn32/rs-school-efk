@@ -3,7 +3,7 @@ import {cards, categories} from "../assets/cards/cards";
 export default class APIService {
   private readonly apiUrl: string;
 
-  private path: { words: string; file: string; singleWord: string; category: string };
+  private path: { words: string; file: string; singleWord: string; category: string; login: string };
 
 
   constructor() {
@@ -13,30 +13,9 @@ export default class APIService {
       words: 'words',
       singleWord: 'words/word',
       file: 'file',
+      login: 'auth',
     }
   }
-
-  addDefaultCategories(): void {
-    categories.forEach((category) => {
-      this.addCategory(category).then(() => {
-        // console.log('category added')
-      }).catch((e) => {
-        throw Error(e);
-      })
-    })
-  }
-
-  addDefaultWords(): void {
-    cards.forEach((cardsCollection) => {
-      cardsCollection.forEach(word => {
-        this.addWord(word).then(() => {
-        }).catch((e) => {
-          throw Error(e);
-        })
-      });
-    })
-  }
-
 
   async getCategories(): Promise<{ name: string; categoryId: number; }[]> {
     try {
@@ -187,7 +166,7 @@ export default class APIService {
     categoryId: number
   }): Promise<{word: string; translation: string;image: string; audioSrc: string; wordId: number; categoryId: number}> {
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.singleWord}`, {
+      const response = await fetch(`${this.apiUrl}${this.path.words}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
@@ -239,7 +218,23 @@ export default class APIService {
     } catch (e) {
       throw Error(e);
     }
+  }
 
+  async login(name: string, password: string): Promise<{ error: string; message: string }> {
+    const loginData = {name, password}
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.login}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(loginData)
+      });
+      return await response.json();
+
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 }
 

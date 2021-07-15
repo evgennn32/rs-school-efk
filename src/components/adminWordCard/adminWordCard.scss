@@ -21,6 +21,10 @@
     width: 100%;
   }
 
+  &__image-wrap {
+    min-height: 220px;
+  }
+
   &__btns {
     display: flex;
     justify-content: space-around;
@@ -30,6 +34,11 @@
       height: 70px;
       font-size: 30px;
     }
+  }
+
+  .admin-categories__btns {
+    height: 100%;
+    align-items: center;
   }
 
   .play-btn {

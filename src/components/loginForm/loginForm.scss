@@ -17,6 +17,12 @@
       padding-top: 20px;
     }
 
+    .error {
+      text-align: center;
+      font-size: 20px;
+      color: red;
+    }
+
   }
   &__top {
     display: flex;
@@ -68,6 +74,4 @@
   &__btn:hover {
     opacity: 0.7;
   }
-
-
 }

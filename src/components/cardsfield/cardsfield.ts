@@ -19,6 +19,7 @@ export default class CardsField extends Component {
     this.app.gameService.gameData.gameMode = currentGameMode
     this.cards = this.app.gameService.cardsData[this.app.appData.categoryId];
     this.app.apiService.getWords(this.app.appData.categoryId).then((categoryCards) => {
+      console.log(this.app.appData.categoryId)
       this.cards = categoryCards;
       this.render();
     })

@@ -17,9 +17,11 @@ export default class AdminHeader extends Component {
     const categoryNav = document.createElement('a');
     categoryNav.href = '/admin/categories';
     categoryNav.innerHTML = 'Categories';
+    this.addRoutHandler(categoryNav);
     const wordsNav = document.createElement('a');
     wordsNav.href = '/admin/words';
     wordsNav.innerHTML = 'Words';
+    this.addRoutHandler(wordsNav);
     const logoutBtn = document.createElement('a');
     logoutBtn.href = '/';
     logoutBtn.innerHTML = 'Log out';
@@ -40,5 +42,12 @@ export default class AdminHeader extends Component {
     return this.html;
   }
 
+  addRoutHandler(element: HTMLAnchorElement ): void {
+
+    element.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.app.navigatePage(element.href);
+    })
+  }
 
 }
