@@ -10,7 +10,7 @@ export default class CardsField extends Component {
 
   private activeCard?: Card;
 
-  private readonly html: string;
+  private html: string;
 
   constructor(private app: App) {
     super('div', ['game__cards-field']);
@@ -19,18 +19,20 @@ export default class CardsField extends Component {
     this.app.gameService.gameData.gameMode = currentGameMode
     this.cards = this.app.gameService.cardsData[this.app.appData.categoryId];
     this.app.apiService.getWords(this.app.appData.categoryId).then((categoryCards) => {
-      console.log(this.app.appData.categoryId)
       this.cards = categoryCards;
       this.render();
     })
-    this.html = `<div class="rating" id="rating"></div>
-                  <h1 class="h1">${this.app.gameService.categories[this.app.appData.categoryId]}</h1>
-
-`;
+    this.html = ``;
   }
 
   render(): void {
     super.render();
+    this.app.apiService.getCategory(this.app.appData.categoryId).then(category => {
+      const pageTitle = document.createElement('h1');
+      pageTitle.classList.add('h1');
+      pageTitle.innerHTML = category.name
+      this.renderChildElement(pageTitle, 'h1-plh');
+    })
     if (this.app.gameService.gameData.gameMode) {
       this.element.classList.add('game-mode')
     }
@@ -96,6 +98,9 @@ export default class CardsField extends Component {
   }
 
   buildHtml(): string {
+    this.html = `<div class="rating" id="rating"></div>
+                  <div class="h1-plh"></div>
+                  `;
     return this.html;
   }
 }

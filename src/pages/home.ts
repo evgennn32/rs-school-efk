@@ -54,7 +54,7 @@ export default class HomePage extends Component {
 
   renderCategoriesCards(categoriesWrapper: HTMLElement): void {
     this.app.apiService.getCategories().then(categories => {
-      categories.forEach((category, index) => {
+      categories.forEach((category) => {
         if (!category.name)
           return;
         this.app.apiService.getWords(category.categoryId).then(categoryWords => {
@@ -64,19 +64,17 @@ export default class HomePage extends Component {
           }
           const newCategoryCard = new CategoryCard({title: category.name, image: categoryImage});
           newCategoryCard.render();
-          this.addCardHandler(newCategoryCard.element, index);
+          this.addCardHandler(newCategoryCard.element, category.categoryId);
           categoriesWrapper.append(newCategoryCard.element);
-        })
-
-      })
-
-    })
+        });
+      });
+    });
   }
 
   addCardHandler(card: HTMLElement, categoryId: number): void {
     card.addEventListener('click', ev => {
       ev.preventDefault();
       this.app.store.dispatch(changeCategory(categoryId));
-    })
+    });
   }
 }

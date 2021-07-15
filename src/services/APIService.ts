@@ -1,5 +1,3 @@
-import {cards, categories} from "../assets/cards/cards";
-
 export default class APIService {
   private readonly apiUrl: string;
 
@@ -7,7 +5,7 @@ export default class APIService {
 
 
   constructor() {
-    this.apiUrl = 'http://evgennn32.cloudno.de/api/';
+    this.apiUrl = 'https://evgennn32.cloudno.de/api/';
     this.path = {
       category: 'category',
       words: 'words',
@@ -22,6 +20,16 @@ export default class APIService {
       const response = await fetch(`${this.apiUrl}${this.path.category}`);
       const responseData = await response.json()
       return responseData.data
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async getCategory(categoryId: number): Promise<{ name: string; categoryId: number; }> {
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.category}/${categoryId}`);
+      const responseData = await response.json();
+      return responseData.data;
     } catch (e) {
       throw new Error(e);
     }
@@ -150,9 +158,8 @@ export default class APIService {
         },
         body: JSON.stringify(category)
       });
-      const responseData = await response.json()
-      console.log(response);
-      return responseData.data
+      const responseData = await response.json();
+      return responseData.data;
     } catch (e) {
       throw new Error(e);
     }
@@ -197,8 +204,8 @@ export default class APIService {
         },
         body: JSON.stringify(wordData)
       });
-      const responseData = await response.json()
-      // eslint-disable-next-line no-underscore-dangle
+      await response.json();
+
       return await this.getWord(wordData.wordId);
     } catch (e) {
       throw new Error(e);

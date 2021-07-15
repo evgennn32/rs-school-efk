@@ -2,6 +2,7 @@ import Component from "../Component";
 import './adminCategoryCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
+// eslint-disable-next-line import/no-cycle
 import UpdateCategoryCard from "./updateCategoryCard";
 
 
@@ -26,12 +27,7 @@ export default class AdminCategoryCard extends Component {
     this.renderChildElement(removeBtn, 'remove-btn-plh');
     addWordBtn.element.addEventListener('click', () => {
       this.app.appData.adminWordsCategory = this.category.categoryId;
-      console.log('cat id', this.category.categoryId)
       this.app.renderPage('adminWords')
-      // this.app.navigatePage(`${this.category.name.toLowerCase().replace(/\s/g, "-")}/words`);
-      // this.app.apiService.getCategoryWords(1).then((words) => {
-      //   console.log(words)
-      // })
     })
 
 
@@ -57,8 +53,10 @@ export default class AdminCategoryCard extends Component {
 
   addRemoveBtnHandler(removeBtn: HTMLElement): void {
     removeBtn.addEventListener("click", () => {
-      this.app.apiService.removeCategory(this.category.categoryId).then((data) => {
+      this.app.apiService.removeCategory(this.category.categoryId).then(() => {
         this.element.remove();
+      }).catch((err) => {
+        throw Error(err);
       })
     })
   }

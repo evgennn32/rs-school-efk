@@ -2,7 +2,8 @@ import Component from "../Component";
 import './adminWordCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
-import {APP_STORAGE, IMAGE_STORAGE} from "../../shared/constants";
+import {IMAGE_STORAGE} from "../../shared/constants";
+// eslint-disable-next-line import/no-cycle
 import NewWordCard from "./newWordCard";
 
 

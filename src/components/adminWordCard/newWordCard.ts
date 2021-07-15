@@ -4,6 +4,7 @@ import type App from "../../app";
 import Button from "../button/button";
 import Input from "../input/input";
 import Loader from "../loader/loader";
+// eslint-disable-next-line import/no-cycle
 import AdminWordCard from "./adminWordCard";
 
 
@@ -154,6 +155,10 @@ export default class NewWordCard extends Component {
   }
 
   validateFields(): boolean {
+    const inputElement = this.nameInput.element as HTMLInputElement
+    if(!inputElement.value){
+      return false;
+    }
     // TODO add fields validation
     return true
   }

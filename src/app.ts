@@ -3,6 +3,7 @@ import {applyMiddleware, createStore} from 'redux'
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk';
+// eslint-disable-next-line import/no-cycle
 import HomePage from './pages/home';
 // eslint-disable-next-line import/no-cycle
 import RoutService from "./services/routService";
@@ -12,10 +13,13 @@ import GameService from "./services/gameService";
 // eslint-disable-next-line import/no-cycle
 import CardsField from "./components/cardsfield/cardsfield";
 import StatisticService from "./services/statisticService";
+// eslint-disable-next-line import/no-cycle
 import StatisticTable from "./components/statisticTable/statisticTable";
 import rootReducer from "./redux/reducers/rootReducer";
+// eslint-disable-next-line import/no-cycle
 import AdminPage from "./pages/admin";
 import APIService from "./services/APIService";
+// eslint-disable-next-line import/no-cycle
 import AdminWordsPage from "./pages/adminWordsPage";
 
 
@@ -29,7 +33,7 @@ export default class App {
 
   public statisticService: StatisticService;
 
-  public store: any ;
+  public store: any;
 
   public apiService: APIService;
 
@@ -39,23 +43,19 @@ export default class App {
     this.apiService = new APIService();
     this.store = createStore(rootReducer,composeWithDevTools(
       applyMiddleware(thunk, logger)
-    ))
+    ));
     this.gameService = new GameService(this);
     this.statisticService = new StatisticService();
     this.rootElement = rootElement;
     this.router = new RoutService({root: '/'}, this);
     const homePage = new HomePage(this);
     this.pageToDisplay = homePage.element;
-    // this.navigatePage('admin/categories');
     this.appData = {
       categoryId: -1,
       adminActivePage: 'categories',
       adminWordsCategory: 0
     }
-
     this.subscribeStore();
-
-
     rootElement.appendChild(this.pageToDisplay);
   }
 

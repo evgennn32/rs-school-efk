@@ -1,6 +1,6 @@
 import Component from "../Component";
 import './card.scss';
-import {APP_STORAGE, IMAGE_STORAGE} from "../../shared/constants";
+import {IMAGE_STORAGE} from "../../shared/constants";
 
 export default class Card extends Component {
 
