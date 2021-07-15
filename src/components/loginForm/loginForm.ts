@@ -21,7 +21,7 @@ export default class LoginForm extends Component {
     LoginForm.addCancelBtnHandler(btnCancel);
     btnCancel.element.id = 'cancel-login-btn';
     const btnLogin = new Button("Login", ['login-form__btn'], 'submit');
-    LoginForm.addCancelBtnHandler(btnLogin);
+    this.addSubmitBtnHandler(btnLogin)
     this.renderChildComponent(btnCancel,'cancel-btn-placeholder');
     this.renderChildComponent(btnLogin,'login-btn-placeholder');
   }
@@ -33,11 +33,13 @@ export default class LoginForm extends Component {
                     <input type="text"
                      class="login-form__login login-form__input"
                      name="login"
-                     placeholder="Login">
+                     placeholder="Login"
+                     value="admin">
                     <input type="password"
                      class="login-form__password login-form__input"
                      name="password"
-                     placeholder="Password">
+                     placeholder="Password"
+                     value="admin" >
                   </div>
                   <div class="login-form__bottom">
                     <div class="cancel-btn-placeholder"></div>
@@ -60,8 +62,10 @@ export default class LoginForm extends Component {
   }
 
   addSubmitBtnHandler (btn: Button): void {
-    btn.element.addEventListener('click', () => {
-      this.app.navigatePage('/')
+    btn.element.addEventListener('click', (e) => {
+      e.preventDefault();
+      // TODO add authorization
+      this.app.navigatePage('admin/categories');
     })
   }
 

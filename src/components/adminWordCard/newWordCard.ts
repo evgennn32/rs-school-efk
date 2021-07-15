@@ -27,8 +27,8 @@ export default class NewWordCard extends Component {
   private word: string | null;
 
   constructor(
-    protected app: App,
-    protected wordData: {
+    private app: App,
+    private wordData: {
       wordCard: AdminWordCard;
       word: string;
       translation: string;
@@ -92,17 +92,22 @@ export default class NewWordCard extends Component {
     <div class="name-input-plh"></div>
     <div class="admin-words__name">Translation:</div>
     <div class="translation-input-plh"></div>
-    <div class="admin-words__file"> Sound:</div>
-    <label for="sound-input" class="custom-file-upload btn avatar-btn">
-      Upload
-      <div class="sound-input-plh"></div>
-    </label>
+    <div id="sound-wrap" class="admin-words__file-wrap">
+      <div class="admin-words__file-name">Sound:</div>
+      <label for="sound-input" class="custom-file-upload btn avatar-btn">
+        Select file
+        <div class="sound-input-plh"></div>
+      </label>
+    </div>
     <div class="admin-words__file-src"><span>${this.soundSource || ''}</span></div>
-    <div class="admin-words__file">Image:</div>
-    <label for="image-input" class="custom-file-upload btn avatar-btn">
-      Upload
-      <div class="image-input-plh"></div>
-    </label>
+    <div id="image-wrap" class="admin-words__file-wrap">
+      <div class="admin-words__file-name">Image:</div>
+      <label for="image-input" class="custom-file-upload btn avatar-btn">
+        Select file
+        <div class="image-input-plh"></div>
+      </label>
+    </div>
+
     <div class="admin-words__file-src"><span>${this.imageSource || ''}</span></div>
     <div class="admin-categories__btns">
       <div class="create-btn-plh"></div>
@@ -174,17 +179,12 @@ export default class NewWordCard extends Component {
           }
           if(this.wordData) {
             this.app.apiService.updateWord(wordData).then((newCardData) => {
-              // const newCard = new AdminWordCard(this.app, newCardData)
-              // newCard.render()
               if(this.wordData) {
                 this.wordData.wordCard.word = newCardData;
                 this.wordData.wordCard.render();
                 this.wordData.wordCard.element.classList.remove('hidden');
-
-
                 this.element.remove();
               }
-
             });
           } else {
 
@@ -211,9 +211,10 @@ export default class NewWordCard extends Component {
     })
   }
 
-  uploadFile(type: string, itputId: string): Promise<{ fileName: string; error: string }> {
+  uploadFile(type: string, inputId: string): Promise<{ fileName: string; error: string }> {
+    this.removeErrors();
     return new Promise((resolve, reject) => {
-      const fileInput = <HTMLInputElement>document.querySelector(`#${itputId}`);
+      const fileInput = <HTMLInputElement>document.querySelector(`#${inputId}`);
       if (fileInput && fileInput.files) {
         const file = fileInput.files[0];
 
@@ -222,11 +223,33 @@ export default class NewWordCard extends Component {
           if (!response.error) {
             resolve(response);
           } else {
-            reject(response.error)
+            this.showError(inputId,response.error)
+            reject(response.error);
           }
         });
       }
     });
+  }
+
+  showError(nodeId: string, message: string): void {
+    const node = this.element.querySelector(`#${nodeId}`);
+    if(node){
+      const messageNode = document.createElement('div');
+      messageNode.classList.add('error');
+      messageNode.innerHTML = message;
+
+      const parent = node.parentNode as HTMLElement;
+      if(parent) {
+        parent.after(messageNode);
+      }
+    }
+  }
+
+  removeErrors(): void {
+    const allErrors = this.element.querySelectorAll('.error');
+    allErrors.forEach(error => {
+      error.remove();
+    })
   }
 
 

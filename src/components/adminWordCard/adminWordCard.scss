@@ -76,7 +76,43 @@
     transform: rotate(-45deg);
   }
 
+  &__name,
   &__image-wrap {
     margin: 0 20px;
+  }
+
+  &__name-input,
+  &__translation-input {
+    margin: 0 20px 30px 20px;
+    width: 88%;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #000;
+    font-size: 22px
+  }
+
+  &__translation-input:focus-visible,
+  &__name-input:focus-visible {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #000;
+  }
+
+  &__file-wrap{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    flex-wrap: wrap;
+  }
+
+  &__file-src {
+    font-size: 17px;
+    margin: 20px 20px 20px 20px;
+  }
+
+  .error {
+    width: 80%;
+    color: red;
+    font-size: 17px;
   }
 }
