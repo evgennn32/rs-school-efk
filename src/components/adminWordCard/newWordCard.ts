@@ -47,7 +47,6 @@ export default class NewWordCard extends Component {
     nameInput.minLength = 2;
     nameInput.required = true;
     nameInput.value = this.word || '';
-
     this.translationInput = new Input(
       'translation', ['admin-words__translation-input'], 'text', 'translation-input');
     const translationInput = this.translationInput.element as HTMLInputElement
@@ -156,6 +155,8 @@ export default class NewWordCard extends Component {
 
   addCreateBtnHandler(btn: Button): void {
     btn.element.addEventListener('click', (e) => {
+      const btnElement = btn.element as HTMLButtonElement
+      btnElement.disabled = true;
       e.preventDefault();
       if (this.validateFields()) {
         const nameInput = this.nameInput.element as HTMLInputElement
@@ -173,11 +174,17 @@ export default class NewWordCard extends Component {
           }
           if(this.wordData) {
             this.app.apiService.updateWord(wordData).then((newCardData) => {
-              const newCard = new AdminWordCard(this.app, newCardData)
-              newCard.render()
-              if(this.wordData)
-                this.wordData.wordCard.element.replaceWith(newCard.element);
-              this.element.remove();
+              // const newCard = new AdminWordCard(this.app, newCardData)
+              // newCard.render()
+              if(this.wordData) {
+                this.wordData.wordCard.word = newCardData;
+                this.wordData.wordCard.render();
+                this.wordData.wordCard.element.classList.remove('hidden');
+
+
+                this.element.remove();
+              }
+
             });
           } else {
 

@@ -11,7 +11,7 @@ export default class AdminWordCard extends Component {
   private html: string;
 
   constructor(protected app: App,
-    private word: {
+    public word: {
       word: string;
       translation: string;
       image: string;
