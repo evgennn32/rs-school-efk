@@ -119,7 +119,7 @@ export default class App {
     this.store.subscribe(() => {
       const state = this.store.getState();
       this.appData.categoryId = state.category.activeCategory;
-      this.navigatePage('cards');
+      this.navigatePage('/cards');
       this.renderGameField();
     });
   }

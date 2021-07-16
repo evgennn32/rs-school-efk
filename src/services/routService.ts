@@ -9,43 +9,63 @@ export default class RoutService {
 
   public current: string;
 
-  private routes: ({ path: string; cb: () => void })[];
+  private routes: ({ path: RegExp | string; cb: () => void })[];
 
   constructor(options: { root: string }, protected app: App) {
-    this.mode = 'history';
+    this.mode = 'hash';
     this.root = '/';
     this.listen();
-    this.current = '/'
+    this.current = ''
     this.routes = [
-      {
-        path: 'cards', cb: () => {
 
+      {
+        path: /cards/, cb: () => {
+          if(this.app.appData.categoryId > 0) {
+            this.app.renderGameField();
+          }
         }
       },
       {
-        path: 'statistic', cb: () => {
+        path: /statistic/, cb: () => {
           this.app.renderStatisticField();
         }
       },
       {
-        path: 'admin', cb: () => {
-          this.app.renderPage('admin');
+        path: /admin\/categories\/(.*)/, cb: () => {
+          this.app.apiService.userLogged().then(isLogged => {
+            if(isLogged){
+              this.app.renderPage('adminWords');
+            } else {
+              this.navigate('/');
+            }
+          });
+        }
+      },
+      {
+        path: /admin/, cb: () => {
+          this.app.apiService.userLogged().then(isLogged => {
+            if(isLogged){
+              this.app.renderPage('admin');
+            } else {
+              this.navigate('/');
+            }
+          });
         }
       },
       {
         path: '', cb: () => {
-          this.app.renderPage('home')
+          this.app.renderPage('');
         }
-      }
+      },
     ];
   }
 
-  add = (path: string, cb: () => void): RoutService => {
+  add = (path: RegExp, cb: () => void): RoutService => {
     this.routes.push({path, cb});
     return this;
   };
 
-  remove = (path: string): RoutService => {
+  remove = (path: RegExp): RoutService => {
     for (let i = 0; i < this.routes.length; i += 1) {
       if (this.routes[i].path === path) {
         this.routes.slice(i, 1);
@@ -98,7 +118,10 @@ export default class RoutService {
   interval = setInterval(() => {},50);
 
   intervalFn = (): string | boolean | undefined => {
-    if (this.current === this.getFragment()) return;
+    if (this.current === this.getFragment()){
+      // console.log("current", this.current)
+      return;
+    }
     this.current = this.getFragment();
     this.routes.some(route => {
       const match = <[]> this.current.match(route.path);

@@ -3,9 +3,11 @@ export default class APIService {
 
   private path: { words: string; file: string; singleWord: string; category: string; login: string };
 
+  private cookieTokenName: string;
 
   constructor() {
     this.apiUrl = 'https://evgennn32.cloudno.de/api/';
+    this.cookieTokenName = 'userToken'
     this.path = {
       category: 'category',
       words: 'words',
@@ -13,11 +15,12 @@ export default class APIService {
       file: 'file',
       login: 'auth',
     }
+
   }
 
-  async getCategories(): Promise<{ name: string; categoryId: number; }[]> {
+  async getCategories(limit = 0, last = 0): Promise<{ name: string; categoryId: number; }[]> {
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.category}`);
+      const response = await fetch(`${this.apiUrl}${this.path.category}?_limit=${limit}&_last=${last}`);
       const responseData = await response.json()
       return responseData.data
     } catch (e) {
@@ -79,7 +82,7 @@ export default class APIService {
     }
   }
 
-  async getWords(categoryId: number): Promise<{
+  async getWords(categoryId: number, limit = 0, last = 0): Promise<{
     word: string;
     translation: string;
     image: string;
@@ -88,7 +91,9 @@ export default class APIService {
     categoryId: number;
   }[]> {
     try {
-      const response = await fetch(`${this.apiUrl}${this.path.words}/${categoryId || ''}`);
+      const response = await fetch(
+        `${this.apiUrl}${this.path.words}/${categoryId || ''}?_limit=${limit}&_last=${last}`
+      );
       const responseData = await response.json()
       return responseData.data
     } catch (e) {
@@ -101,7 +106,8 @@ export default class APIService {
       const response = await fetch(`${this.apiUrl}${this.path.singleWord}/${wordId}`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
         }
       });
       return await response.json()
@@ -122,7 +128,8 @@ export default class APIService {
       const response = await fetch(`${this.apiUrl}${this.path.category}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
         },
         body: JSON.stringify(category)
       });
@@ -139,7 +146,8 @@ export default class APIService {
       const response = await fetch(`${this.apiUrl}${this.path.category}/${categoryId}`, {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
         }
       });
       return await response.json()
@@ -154,7 +162,8 @@ export default class APIService {
       const response = await fetch(`${this.apiUrl}${this.path.category}/${categoryId}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
         },
         body: JSON.stringify(category)
       });
@@ -171,12 +180,19 @@ export default class APIService {
     image: string;
     audioSrc: string;
     categoryId: number
-  }): Promise<{word: string; translation: string;image: string; audioSrc: string; wordId: number; categoryId: number}> {
+  }): Promise<{
+      word: string;
+      translation: string;
+      image: string;
+      audioSrc: string;
+      wordId: number;
+      categoryId: number }> {
     try {
       const response = await fetch(`${this.apiUrl}${this.path.words}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
         },
         body: JSON.stringify(wordData)
       });
@@ -195,12 +211,19 @@ export default class APIService {
     audioSrc: string;
     wordId: number;
     categoryId: number
-  }): Promise<{word: string; translation: string;image: string; audioSrc: string; wordId: number; categoryId: number}> {
+  }): Promise<{
+      word: string;
+      translation: string;
+      image: string;
+      audioSrc: string;
+      wordId: number;
+      categoryId: number }> {
     try {
       const response = await fetch(`${this.apiUrl}${this.path.singleWord}/${wordData.wordId}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
         },
         body: JSON.stringify(wordData)
       });
@@ -219,6 +242,9 @@ export default class APIService {
     try {
       const response = await fetch(`${this.apiUrl}${this.path.file}`, {
         method: 'POST',
+        headers: {
+          'Authorization': this.getUserAuthToken()
+        },
         body: data
       });
       return await response.json()
@@ -237,12 +263,58 @@ export default class APIService {
         },
         body: JSON.stringify(loginData)
       });
-      return await response.json();
+      const responseData = await response.json();
+
+      if (responseData.token) {
+        this.setUserAuthToken(responseData.token)
+      }
+      return responseData;
 
     } catch (e) {
       throw new Error(e);
     }
   }
+
+  setUserAuthToken(token: string): void {
+    document.cookie = `${this.cookieTokenName}=Bearer ${token}; max-age=3600`;
+  }
+
+
+  getUserAuthToken(): string {
+    const matches = document.cookie.match(new RegExp(
+      `(?:^|; )${this.cookieTokenName}=([^;]*)`
+    ));
+    return matches ? decodeURIComponent(matches[1]) : '';
+  }
+
+  deleteUserAuthToken(): void {
+    document.cookie = `${this.cookieTokenName}=; max-age=-10`;
+  }
+
+  async userLogged(): Promise<boolean> {
+    if(!this.getUserAuthToken()){
+      return false;
+    }
+    try {
+      const response = await fetch(`${this.apiUrl}${this.path.login}`, {
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'Authorization': this.getUserAuthToken()
+        }
+      });
+      const responseData = await response.json()
+      if(responseData.success){
+        return true;
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
+    return false;
+  }
+
+
+
+
 }
 
 

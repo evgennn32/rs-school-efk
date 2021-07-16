@@ -8,10 +8,16 @@ import AddNewCategoryCard from "../adminCategoryCard/addNewCategoryCard";
 export default class AdminCategories extends Component {
   private html: string;
 
+  private loadLimit: number;
+
+  private lastLoadedCategory: number;
+
   constructor(protected app: App) {
     super('div', ['admin-categories']);
     this.app = app;
     this.html = '';
+    this.loadLimit = 3;
+    this.lastLoadedCategory = 5
   }
 
   render(): void {
@@ -19,6 +25,7 @@ export default class AdminCategories extends Component {
     const addNewCategoryCard = new AddNewCategoryCard(this.app);
     addNewCategoryCard.render()
     this.element.append(addNewCategoryCard.element);
+    const firstLoadLimit = 5;
     try {
       const categories = this.app.apiService.getCategories();
       categories.then((allCategories) => {
@@ -40,12 +47,15 @@ export default class AdminCategories extends Component {
 
 
 
+
   }
 
   buildHtml(): string {
 
     return this.html;
   }
+
+
 
 
 }

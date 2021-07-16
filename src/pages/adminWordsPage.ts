@@ -2,6 +2,7 @@ import Component from "../components/Component";
 import type App from "../app";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import AdminWords from "../components/adminWords/adminWords";
+import AdminFooter from "../components/adminFooter/adminFooter";
 
 
 export default class AdminWordsPage extends Component {
@@ -19,6 +20,8 @@ export default class AdminWordsPage extends Component {
     this.renderChildComponent(header, 'header-placeholder');
     const wordsField = new AdminWords(this.app);
     this.renderChildComponent(wordsField, 'active-page-placeholder');
+    const footer = new AdminFooter();
+    this.renderChildComponent(footer,'footer-plh');
   }
 
   buildHtml(): string {
@@ -29,9 +32,7 @@ export default class AdminWordsPage extends Component {
                 <div class="active-page-placeholder"></div>
               </div>
             </main>
-            <footer>
-
-            </footer>
+            <footer class="footer-plh"></footer>
             `;
     return this.html;
   }

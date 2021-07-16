@@ -2,7 +2,7 @@ import Component from "../Component";
 import './adminWordCard.scss';
 import type App from "../../app";
 import Button from "../button/button";
-import {IMAGE_STORAGE} from "../../shared/constants";
+import {DEFAULT_WORDS, IMAGE_STORAGE} from "../../shared/constants";
 // eslint-disable-next-line import/no-cycle
 import NewWordCard from "./newWordCard";
 
@@ -35,6 +35,10 @@ export default class AdminWordCard extends Component {
     const playBtn = document.createElement('div');
     playBtn.classList.add('play-btn');
     removeBtn.addEventListener('click', () => {
+      if(this.word.wordId < DEFAULT_WORDS) {
+        this.showDeleteDeprecation();
+        return;
+      }
       this.app.apiService.removeWord(this.word.wordId)
         .then(() =>{
           this.element.remove()
@@ -81,6 +85,21 @@ export default class AdminWordCard extends Component {
     updateCard.render();
     this.element.classList.add('hidden');
     this.element.after(updateCard.element);
+  }
+
+
+  showDeleteDeprecation(): void{
+    const oldError = this.element.querySelector('.error');
+    if(oldError){
+      return;
+    }
+    const message = document.createElement('div');
+    message.classList.add('error');
+    message.innerHTML = "You can't delete default word! Add new one, and try again!";
+    this.element.prepend(message);
+    setTimeout(() => {
+      message.remove();
+    },3000)
   }
 
 

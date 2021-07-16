@@ -15,14 +15,15 @@ export default class AdminHeader extends Component {
   render(): void {
     super.render();
     const categoryNav = document.createElement('a');
-    categoryNav.href = '/admin/categories';
+    categoryNav.href = '/#/admin/categories';
     categoryNav.innerHTML = 'Categories';
-    this.addRoutHandler(categoryNav);
     const wordsNav = document.createElement('a');
-    wordsNav.href = '/admin/words';
+    wordsNav.href = '/#/admin/words';
     wordsNav.innerHTML = 'Words';
-    this.addRoutHandler(wordsNav);
     const logoutBtn = document.createElement('a');
+    logoutBtn.addEventListener('click', () => {
+      this.app.apiService.deleteUserAuthToken();
+    })
     logoutBtn.href = '/';
     logoutBtn.innerHTML = 'Log out';
     this.renderChildElement(categoryNav, 'category-btn-placeholder');
@@ -41,13 +42,4 @@ export default class AdminHeader extends Component {
                 `;
     return this.html;
   }
-
-  addRoutHandler(element: HTMLAnchorElement ): void {
-
-    element.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.app.navigatePage(element.href);
-    })
-  }
-
 }

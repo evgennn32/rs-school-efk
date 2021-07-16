@@ -25,7 +25,7 @@ export default class Menu extends Component {
     const homeLink = new MenuItem(['menu__item'], 'Main page');
     homeLink.element.classList.add('menu__item-active');
     homeLink.element.addEventListener('click', () => {
-      this.app.navigatePage('');
+      this.app.navigatePage('/');
     });
     menuWrapper.append(homeLink.element);
     this.app.apiService.getCategories().then((categories) => {
@@ -86,7 +86,7 @@ export default class Menu extends Component {
     statisticLink.classList.add('menu__item');
     statisticLink.innerHTML = 'Statistic';
     statisticLink.addEventListener('click', () => {
-      this.app.navigatePage('statistic')
+      this.app.navigatePage('/statistic')
       this.clearSelectedItems();
       statisticLink.classList.add('menu__item-active');
       this.closeMenu();

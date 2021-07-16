@@ -4,6 +4,7 @@ import type App from "../../app";
 import Button from "../button/button";
 // eslint-disable-next-line import/no-cycle
 import UpdateCategoryCard from "./updateCategoryCard";
+import {DEFAULT_CATEGORIES} from "../../shared/constants";
 
 
 export default class AdminCategoryCard extends Component {
@@ -27,7 +28,7 @@ export default class AdminCategoryCard extends Component {
     this.renderChildElement(removeBtn, 'remove-btn-plh');
     addWordBtn.element.addEventListener('click', () => {
       this.app.appData.adminWordsCategory = this.category.categoryId;
-      this.app.renderPage('adminWords')
+      this.app.navigatePage(`/admin/categories/${this.category.name.split(" ").join("-")}`);
     })
 
 
@@ -53,11 +54,16 @@ export default class AdminCategoryCard extends Component {
 
   addRemoveBtnHandler(removeBtn: HTMLElement): void {
     removeBtn.addEventListener("click", () => {
-      this.app.apiService.removeCategory(this.category.categoryId).then(() => {
-        this.element.remove();
-      }).catch((err) => {
-        throw Error(err);
-      })
+      if(this.category.categoryId > DEFAULT_CATEGORIES ){
+        this.app.apiService.removeCategory(this.category.categoryId).then(() => {
+          this.element.remove();
+        }).catch((err) => {
+          throw Error(err);
+        })
+      } else {
+        this.showDeleteDeprecation();
+      }
+
     })
   }
 
@@ -68,6 +74,20 @@ export default class AdminCategoryCard extends Component {
       updateCard.render()
       this.element.after(updateCard.element)
     })
+  }
+
+  showDeleteDeprecation(): void{
+    const oldError = this.element.querySelector('.error');
+    if(oldError){
+      return;
+    }
+    const message = document.createElement('div');
+    message.classList.add('error');
+    message.innerHTML = "You can't delete default category! Add new one, and try again!";
+    this.element.prepend(message);
+    setTimeout(() => {
+      message.remove()
+    },3000)
   }
 
 

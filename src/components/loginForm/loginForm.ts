@@ -79,7 +79,7 @@ export default class LoginForm extends Component {
             if (response.error) {
               this.showError(response.error);
             } else {
-              this.app.navigatePage('admin/categories');
+              this.app.navigatePage('/admin');
             }
           });
       });
