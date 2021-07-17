@@ -15,11 +15,16 @@ export default class Menu extends Component {
     this.element.id = 'sideMenu';
     this.ActivePageId = 1;
     this.detectActivePage();
-    this.html = `<div class='menu-placeholder'></div>`;
+    this.html = `
+                <div class='menu-top-plh'></div>
+                <div class='menu-placeholder'></div>
+                `;
+
   }
 
   render(): void {
     super.render();
+    this.addMenuBottom()
     const menuWrapper = document.createElement('ul');
     menuWrapper.classList.add('menu__wrapper');
     const homeLink = new MenuItem(['menu__item'], 'Main page');
@@ -45,7 +50,6 @@ export default class Menu extends Component {
       });
     });
     this.addCloseMenuHandler();
-    this.addMenuBottom()
     this.renderChildElement(menuWrapper, `menu-placeholder`);
   }
 
@@ -80,8 +84,8 @@ export default class Menu extends Component {
   }
 
   addMenuBottom(): void {
-    const menuBottom = document.createElement("ul");
-    menuBottom.classList.add('menu__wrapper', 'menu__wrapper_bottom');
+    const menuTop = document.createElement("ul");
+    menuTop.classList.add('menu__wrapper', 'menu__wrapper_bottom');
     const statisticLink = document.createElement('li');
     statisticLink.classList.add('menu__item');
     statisticLink.innerHTML = 'Statistic';
@@ -99,9 +103,10 @@ export default class Menu extends Component {
       this.closeMenu();
       this.app.showPopup('login-popup');
     });
-    menuBottom.append(statisticLink);
-    menuBottom.append(loginBtn);
-    this.element.append(menuBottom);
+    menuTop.append(statisticLink);
+    menuTop.append(loginBtn);
+    this.renderChildElement(menuTop,'menu-top-plh');
+    // this.element.append(menuTop);
   }
 
   addCloseMenuHandler(): void {

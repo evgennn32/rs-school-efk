@@ -25,9 +25,6 @@ export default class NewCategoryCard extends Component {
     this.renderChildElement(nameInput,'name-input-plh');
     this.addCreateBtnHandler(createBtn, nameInput);
     this.addCancelBtnHandler(cancelBtn);
-
-
-
   }
 
   buildHtml(): string {
@@ -49,14 +46,19 @@ export default class NewCategoryCard extends Component {
       const categoryName = nameInput.value;
       if(categoryName) {
         this.app.apiService.addCategory(categoryName).then((newCardData) => {
-          // eslint-disable-next-line no-underscore-dangle
-          this.app.apiService.getCategoryByDBId(newCardData._id).then(renderCardData => {
-            const newCard = new AdminCategoryCard( this.app, renderCardData, 0 );
-            newCard.render();
-            this.element.replaceWith(newCard.element);
-          }).catch((e) => {
-            throw Error(e.message)
-          })
+
+          const cb = () => {
+            // eslint-disable-next-line no-underscore-dangle
+            this.app.apiService.getCategoryByDBId(newCardData._id).then(renderCardData => {
+              const newCard = new AdminCategoryCard( this.app, renderCardData, 0 );
+              newCard.render();
+              this.element.replaceWith(newCard.element);
+            }).catch((e) => {
+              throw Error(e.message)
+            })
+          }
+          // timeout to create category ID in Database(creates as trigger after adding category)
+          setTimeout(cb, 300);
         })
       }
     })
